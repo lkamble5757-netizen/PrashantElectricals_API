@@ -34,7 +34,7 @@ namespace PrashantApi.Api.Controllers
 
             return Ok(response);
         }
-
+        //test purpose
         
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
