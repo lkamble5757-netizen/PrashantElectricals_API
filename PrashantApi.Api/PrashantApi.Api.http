@@ -1,0 +1,6 @@
+@PrashantApi.Api_HostAddress = http://localhost:5056
+
+GET {{PrashantApi.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
