@@ -9,7 +9,7 @@ namespace PrashantApi.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // optional if menu requires auth
+    [Authorize]
     public class MenuController : ControllerBase
     {
         private readonly IMenuService _menuService;
