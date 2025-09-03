@@ -1,5 +1,6 @@
 ﻿// Api/Controllers/BranchMasterController.cs
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PrashantApi.Application.DTOs;
 using PrashantApi.Application.DTOs.BranchMaster;
@@ -10,6 +11,7 @@ namespace PrashantApi.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class BranchMasterController : ControllerBase
     {
         private readonly IMediator _mediator;

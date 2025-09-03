@@ -45,7 +45,6 @@ namespace PrashantApi.Api.Controllers
             var response = await _userRegistrationService.RegisterAsync(request);
 
             if (!response.IsSuccess)
-                // return the whole CommandResult so client always sees { isSuccess, failureReason, output }
                 return Conflict(response);
 
             return Ok(response);
