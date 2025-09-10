@@ -57,7 +57,9 @@ public static class DependencyInjection
         services.AddScoped<IMenuService, MenuService>(); 
         services.AddScoped<ILoggerWrapper, LoggerWrapper>(); 
         services.AddScoped<ISqlServerDataAccess, SqlServerDataAccess>(); 
-        services.AddScoped<ISqlDbConnection, SqlDbConnection>(); 
+        services.AddScoped<ISqlDbConnection, SqlDbConnection>();
+        services.AddScoped<IItemMasterService, ItemMasterService>();
+
 
 
         return services;

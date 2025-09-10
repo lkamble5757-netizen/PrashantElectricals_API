@@ -6,6 +6,7 @@
         {
             //public const string usp_ItemMaster = "dbo.usp_ItemMaster";
             public const string usp_ItemMaster = "dbo.usp_AreaMaster";
+            public const string usp_SaveItem = "dbo.usp_SaveItem";
         }    
         public static class UserMaster
         {
@@ -16,7 +17,7 @@
         {
             //public const string usp_ItemMaster = "dbo.usp_ItemMaster";
             public const string usp_GetUserMenuDetail = "dbo.usp_GetUserMenuDetail";
-        }  
+        }        
         public static class UserRegistration
         {
             //public const string usp_ItemMaster = "dbo.usp_ItemMaster";
