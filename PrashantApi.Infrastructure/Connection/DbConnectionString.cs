@@ -1,12 +1,18 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
-namespace PrashantApi.Infrastructure.Connection
+namespace PrashantEle.API.PrashantEle.Infrastructure.Connection
 {
-    public class DbConnectionString(IConfiguration config) : IDbConnectionString
+    public class DbConnectionString : IDbConnectionString
     {
-        private readonly string _prashantConn = config.GetConnectionString("PrashantConnectionString");
+        private readonly string _prashantConn;
         private readonly string _evaluationConn;
+
+        public DbConnectionString(IConfiguration config)
+        {
+            _prashantConn = config.GetConnectionString("PrashantConnectionString");
+            //_evaluationConn = config.GetConnectionString("evaluationConnectionString");
+        }
 
         public SqlConnection GetConnection()
         {
@@ -19,7 +25,7 @@ namespace PrashantApi.Infrastructure.Connection
         //    return BuildConnection(_evaluationConn);
         //}
 
-        private static SqlConnection BuildConnection(string connString)
+        private SqlConnection BuildConnection(string connString)
         {
             return new SqlConnection(connString);
         }

@@ -17,16 +17,16 @@ using PrashantApi.Infrastructure.Repositories;
 using PrashantApi.Infrastructure.Repositories.BranchMaster;
 using PrashantApi.Infrastructure.Services;
 using PrashantEle.API.PrashantEle.Domain.Logging;
+using PrashantEle.API.PrashantEle.Infrastructure.Connection;
 using System.Reflection;
 using System.Security.Claims;
-using PrashantApi.Application.Interfaces.ItemMaster;
+
 namespace PrashantApi.Infrastructure;
 
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        ArgumentNullException.ThrowIfNull(configuration);
         services.AddMediatR(cfg =>
        cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
@@ -50,7 +50,6 @@ public static class DependencyInjection
         services.AddScoped<IMenuRepository, MenuRepository>();
         services.AddScoped<IUserRegistrationRepository, UserRegistrationRepository>();
         services.AddScoped<IBranchMasterRepository, BranchMasterRepository>();
-        services.AddScoped<IItemMasterRepository, ItemMasterRepository>();
         //  Services
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IJwtService, JwtService>();
