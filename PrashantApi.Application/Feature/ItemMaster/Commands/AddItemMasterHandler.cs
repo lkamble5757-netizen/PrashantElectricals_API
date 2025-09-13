@@ -15,16 +15,10 @@ using System.Threading.Tasks;
 
 namespace PrashantApi.Application.Feature.ItemMaster.Handlers
 {
-    public class AddItemMasterHandler : IRequestHandler<AddItemMasterCommand, int>
+    public class AddItemMasterHandler(IItemMasterService service, IMapper mapper) : IRequestHandler<AddItemMasterCommand, int>
     {
-        private readonly IItemMasterService _service;
-        private readonly IMapper _mapper;
-
-        public AddItemMasterHandler(IItemMasterService service, IMapper mapper)
-        {
-            _service = service;
-            _mapper = mapper;
-        }
+        private readonly IItemMasterService _service = service;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<int> Handle(AddItemMasterCommand request, CancellationToken cancellationToken)
         {

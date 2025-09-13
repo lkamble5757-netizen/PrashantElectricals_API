@@ -38,7 +38,8 @@ namespace PrashantApi.Infrastructure.Services
                 ModifiedBy = dto.ModifiedBy ?? string.Empty,
                 ModifiedOn = DateTime.Now,
                 IsActive = dto.IsActive,
-                LedgerId = dto.LedgerId
+                LedgerId = dto.LedgerId,
+                HsnNo = dto.HsnNo
             };
 
             return await _itemMasterRepository.AddAsync(entity);
@@ -61,7 +62,8 @@ namespace PrashantApi.Infrastructure.Services
                 ModifiedBy = dto.ModifiedBy ?? string.Empty,
                 ModifiedOn = DateTime.Now,
                 IsActive = dto.IsActive,
-                LedgerId = dto.LedgerId
+                LedgerId = dto.LedgerId,
+                HsnNo = dto.HsnNo
             };
 
             return await _itemMasterRepository.UpdateAsync(entity);
@@ -91,7 +93,8 @@ namespace PrashantApi.Infrastructure.Services
                     ModifiedBy = entity.ModifiedBy,
                     ModifiedOn = entity.ModifiedOn,
                     IsActive = entity.IsActive,
-                    LedgerId = entity.LedgerId
+                    LedgerId = entity.LedgerId,
+                    HsnNo = entity.HsnNo
                 });
             }
 
@@ -121,7 +124,8 @@ namespace PrashantApi.Infrastructure.Services
                 ModifiedBy = entity.ModifiedBy,
                 ModifiedOn = entity.ModifiedOn,
                 IsActive = entity.IsActive,
-                LedgerId = entity.LedgerId
+                LedgerId = entity.LedgerId,
+                HsnNo = entity.HsnNo
             };
         }
 

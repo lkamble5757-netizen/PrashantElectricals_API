@@ -42,6 +42,7 @@ namespace PrashantApi.Infrastructure.Repositories
             parameters.Add("@ModifiedBy", entity.ModifiedBy);
             parameters.Add("@IsActive", entity.IsActive);
             parameters.Add("@LedgerId", entity.LedgerId);
+            parameters.Add("@HsnNo", entity.HsnNo);
             parameters.Add("@mode", "INSERT");
 
             return await connection.QuerySingleAsync<int>(
@@ -67,9 +68,11 @@ namespace PrashantApi.Infrastructure.Repositories
             parameters.Add("@OpeningStockAsOn", entity.OpeningStockAsOn);
             parameters.Add("@ItemStock", entity.ItemStock);
             parameters.Add("@PerUnitPrice", entity.PerUnitPrice);
+            parameters.Add("@CreatedBy", entity.CreatedBy);
             parameters.Add("@ModifiedBy", entity.ModifiedBy);
             parameters.Add("@IsActive", entity.IsActive);
             parameters.Add("@LedgerId", entity.LedgerId);
+             parameters.Add("@HsnNo", entity.HsnNo);
             parameters.Add("@mode", "UPDATE");
 
             return await connection.QuerySingleAsync<int>(

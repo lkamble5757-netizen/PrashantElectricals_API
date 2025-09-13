@@ -9,18 +9,13 @@ using System.Data;
 using Dapper;
 using PrashantApi.Application.Interfaces.Logging;
 using PrashantApi.Infrastructure.Entities;
+using PrashantApi.Infrastructure.Connection;
 namespace PrashantApi.Infrastructure.Repositories;
 
-public class UserRepository :  IUserRepository  
+public class UserRepository(IDbConnectionString connectionString, ILog log) :  IUserRepository  
 {
-    private readonly IDbConnectionString _connectionString;
-    private readonly ILog _log;
-
-    public UserRepository(IDbConnectionString connectionString, ILog log)
-    {
-        _connectionString = connectionString;
-        _log = log;
-    }
+    private readonly IDbConnectionString _connectionString = connectionString;
+    private readonly ILog _log = log;
 
     public async Task<CommandResult<UserModel>> LoginAsync(string userName, string password)  
     {

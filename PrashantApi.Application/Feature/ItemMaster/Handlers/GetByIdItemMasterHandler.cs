@@ -11,16 +11,10 @@ using PrashantApi.Application.Interfaces;
 
 namespace PrashantApi.Application.Feature.ItemMaster.Handlers
 {
-    public class GetByIdItemMasterHandler : IRequestHandler<GetByIdItemMasterQuery, ItemMasterDto>
+    public class GetByIdItemMasterHandler(IItemMasterService service, IMapper mapper) : IRequestHandler<GetByIdItemMasterQuery, ItemMasterDto>
     {
-        private readonly IItemMasterService _service;
-        private readonly IMapper _mapper;
-
-        public GetByIdItemMasterHandler(IItemMasterService service, IMapper mapper)
-        {
-            _service = service;
-            _mapper = mapper;
-        }
+        private readonly IItemMasterService _service = service;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<ItemMasterDto> Handle(GetByIdItemMasterQuery request, CancellationToken cancellationToken)
         {

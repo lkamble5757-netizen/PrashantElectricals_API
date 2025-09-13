@@ -8,6 +8,7 @@ namespace PrashantApi.Domain.Entities.ItemMaster
 {
     public class ItemMasterModel
     {
+
         public int Id { get; set; }
         public string ItemCode { get; set; } = string.Empty;
         public string ItemName { get; set; } = string.Empty;
@@ -17,12 +18,13 @@ namespace PrashantApi.Domain.Entities.ItemMaster
         public DateTime? OpeningStockAsOn { get; set; }
         public decimal ItemStock { get; set; }
         public decimal PerUnitPrice { get; set; }
-        public string CreatedBy { get; set; } = string.Empty;
+        public string CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public string? ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public bool IsActive { get; set; }
         public int? LedgerId { get; set; }
+        public required string HsnNo { get; set; }
     }
 }
 
