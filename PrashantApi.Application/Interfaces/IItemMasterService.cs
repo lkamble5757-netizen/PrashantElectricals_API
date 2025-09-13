@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PrashantApi.Application.DTOs.ItemMaster;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PrashantApi.Application.Interfaces
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using PrashantApi.Application.DTOs.ItemMaster;
-
-    public interface IItemMasterService
+    public interface IItemMasterService 
     {
-        Task<int> AddOrUpdateItemAsync(ItemMasterDto itemDto);
-        //Task<int> UpdateItemMaster(ItemMasterDto itemDto);
-        Task<int> UpdateItemMaster(ItemMasterDto itemDto);
+        Task<int> AddAsync(ItemMasterDto dto);
+        Task<int> UpdateAsync(ItemMasterDto dto);
+        Task<List<ItemMasterDto>> GetAllAsync();
+        Task<ItemMasterDto> GetByIdAsync(int id);
 
-        Task<ItemMasterDto> GetItemByIdAsync(int id);
-        Task<List<ItemMasterDto>> GetAllItemsAsync();
     }
-
 }
