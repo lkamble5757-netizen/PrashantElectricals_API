@@ -17,12 +17,13 @@ namespace PrashantApi.Application.DTOs.ItemMaster
         public DateTime? OpeningStockAsOn { get; set; }
         public decimal ItemStock { get; set; }
         public decimal PerUnitPrice { get; set; }
-        public string CreatedBy { get; set; } = string.Empty;
+        public string CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public string? ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public bool IsActive { get; set; }
         public int? LedgerId { get; set; }
+        public required string HsnNo { get; set; }
     }
 }
 

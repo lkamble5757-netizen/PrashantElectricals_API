@@ -11,16 +11,10 @@ using System.Threading;
 
 namespace PrashantApi.Application.Feature.ItemMaster.Commands
 {
-    public class UpdateItemMasterHandler : IRequestHandler<UpdateItemMasterCommand, int>
+    public class UpdateItemMasterHandler(IItemMasterService service, IMapper mapper) : IRequestHandler<UpdateItemMasterCommand, int>
     {
-        private readonly IItemMasterService _service;
-        private readonly IMapper _mapper;
-
-        public UpdateItemMasterHandler(IItemMasterService service, IMapper mapper)
-        {
-            _service = service;
-            _mapper = mapper;
-        }
+        private readonly IItemMasterService _service = service;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<int> Handle(UpdateItemMasterCommand request, CancellationToken cancellationToken)
         {

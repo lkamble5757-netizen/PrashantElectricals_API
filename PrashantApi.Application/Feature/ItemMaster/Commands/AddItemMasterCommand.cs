@@ -20,6 +20,7 @@ namespace PrashantApi.Application.Feature.ItemMaster.Commands
         public string CreatedBy { get; set; }
         public bool IsActive { get; set; }
         public int LedgerId { get; set; }
+        public string HsnNo { get; set; }
     }
 }
 
