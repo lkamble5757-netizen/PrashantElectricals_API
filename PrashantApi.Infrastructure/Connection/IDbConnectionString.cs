@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 
-namespace PrashantEle.API.PrashantEle.Infrastructure.Connection
+namespace PrashantApi.Infrastructure.Connection
 {
     public interface IDbConnectionString
     {

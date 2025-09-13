@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using PrashantApi.Application.Interfaces.Logging;
-using PrashantEle.API.PrashantEle.Infrastructure.Connection;
+using PrashantApi.Infrastructure.Connection;
 using System.Collections;
 using System.Data;
 using System.Text;

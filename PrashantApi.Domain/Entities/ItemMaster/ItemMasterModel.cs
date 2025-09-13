@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PrashantApi.Application.DTOs.ItemMaster
+namespace PrashantApi.Domain.Entities.ItemMaster
 {
-    public class ItemMasterDto
+    public class ItemMasterModel
     {
         public int Id { get; set; }
-        public string? ItemCode { get; set; }
-        public string? ItemName { get; set; }
+        public string ItemCode { get; set; } = string.Empty;
+        public string ItemName { get; set; } = string.Empty;
         public int CategoryId { get; set; }
         public int? SubCategoryId { get; set; }
         public decimal OpeningStock { get; set; }
