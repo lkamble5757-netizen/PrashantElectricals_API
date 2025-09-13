@@ -10,14 +10,12 @@ namespace PrashantApi.Application
         {
             // Register MediatR from Application assembly
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
             // Register AutoMapper from Application assembly
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
-
-
             return services;
         }
+
     }
 }
