@@ -17,6 +17,7 @@
         {
             //public const string usp_ItemMaster = "dbo.usp_ItemMaster";
             public const string usp_GetUserMenuDetail = "dbo.usp_GetUserMenuDetail";
+            public const string usp_GetRoleWiseMenuDetails = "dbo.usp_GetRoleWiseMenuDetail";
         }        
         public static class UserRegistration
         {
