@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using PrashantApi.Application.Configurations;
 using PrashantApi.Application.Interfaces;
 using PrashantApi.Application.Interfaces.BranchMaster;
+using PrashantApi.Application.Interfaces.CustomerMaster;
+using PrashantApi.Application.Interfaces.ItemMaster;
 using PrashantApi.Application.Interfaces.Logging;
 using PrashantApi.Application.Interfaces.Menu;
 using PrashantApi.Application.Interfaces.UserRegistration;
@@ -15,11 +17,11 @@ using PrashantApi.Infrastructure.Data;
 using PrashantApi.Infrastructure.Logger;
 using PrashantApi.Infrastructure.Repositories;
 using PrashantApi.Infrastructure.Repositories.BranchMaster;
+using PrashantApi.Infrastructure.Repositories.CustomerMaster;
 using PrashantApi.Infrastructure.Services;
 using PrashantEle.API.PrashantEle.Domain.Logging;
 using System.Reflection;
 using System.Security.Claims;
-using PrashantApi.Application.Interfaces.ItemMaster;
 namespace PrashantApi.Infrastructure;
 
 public static class DependencyInjection
@@ -51,6 +53,7 @@ public static class DependencyInjection
         services.AddScoped<IUserRegistrationRepository, UserRegistrationRepository>();
         services.AddScoped<IBranchMasterRepository, BranchMasterRepository>();
         services.AddScoped<IItemMasterRepository, ItemMasterRepository>();
+        services.AddScoped<ICustomerMasterRepository, CustomerMasterRepository>();
         //  Services
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IJwtService, JwtService>();
@@ -60,6 +63,7 @@ public static class DependencyInjection
         services.AddScoped<ISqlServerDataAccess, SqlServerDataAccess>(); 
         services.AddScoped<ISqlDbConnection, SqlDbConnection>();
         services.AddScoped<IItemMasterService, ItemMasterService>();
+        services.AddScoped<ICustomerMasterService, CustomerMasterService>();
 
 
 

@@ -41,7 +41,8 @@ namespace PrashantApi.Infrastructure.Repositories
                 using var connection = _dbConnectionString.GetConnection();
 
                 var menuDetails = (await connection.QueryAsync<MenuDetailDTO>(
-                        SqlConstants.MenuDetails.usp_GetUserMenuDetail,
+                        //SqlConstants.MenuDetails.usp_GetMenuDetail,
+                        SqlConstants.MenuDetails.usp_GetRoleWiseMenuDetails,
                         new { roleId = _context?.User?.FindFirst("RoleIds")?.Value },
                         commandType: CommandType.StoredProcedure)).ToList();
 

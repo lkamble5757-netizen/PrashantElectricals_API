@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using PrashantApi.Application.DTOs.CustomerMaster;
 using PrashantApi.Application.DTOs.ItemMaster;
+using PrashantApi.Application.Feature.CustomerMaster.Commands;
 using PrashantApi.Application.Feature.ItemMaster.Commands;
 using PrashantEle.API.PrashantEle.Domain.DTO.MenuDetail;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using PrashantApi.Domain.Entities.CustomerMaster;        // ✅ Added
+
 
 namespace PrashantApi.Application.Mapping;
 
@@ -10,9 +14,9 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        // Example mappings – adapt as needed
-        CreateMap<MenuDetailDTO, MenuDetailDTO>(); // identity map (placeholder)
-        CreateMap<MenuList, MenuList>();           // identity map (placeholder)
+        // ItemMaster mappings
+        CreateMap<MenuDetailDTO, MenuDetailDTO>(); 
+        CreateMap<MenuList, MenuList>();    
         CreateMap<ItemMasterDto, ItemMasterDto>();
 
         CreateMap<AddItemMasterCommand, ItemMasterDto>();
@@ -22,6 +26,14 @@ public class MappingProfile : Profile
         CreateMap<ItemMasterDto, UpdateItemMasterCommand>();
 
 
-        // Add real mappings between DB DTOs -> API models if you introduce view models later
+        // CustomerMaster mappings
+        CreateMap<CustomerMasterDto, CustomerMasterModel>().ReverseMap();
+
+        CreateMap<AddCustomerMasterCommand, CustomerMasterDto>().ReverseMap();
+        CreateMap<UpdateCustomerMasterCommand, CustomerMasterDto>().ReverseMap();
+
+        CreateMap<AddCustomerMasterCommand, CustomerMasterModel>().ReverseMap();
+        CreateMap<UpdateCustomerMasterCommand, CustomerMasterModel>().ReverseMap();
     }
+
 }
