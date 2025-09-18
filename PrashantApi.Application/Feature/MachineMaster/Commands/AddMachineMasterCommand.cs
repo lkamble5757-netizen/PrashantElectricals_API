@@ -10,7 +10,7 @@ namespace PrashantApi.Application.Feature.MachineMaster.Commands
     public class AddMachineMasterCommand : IRequest<int>
     {
         public string BrandName { get; set; } = string.Empty;
-        public string? HP_KW { get; set; }
+        public int? HP_KW { get; set; }
         public int? Slot { get; set; }
         public int? RPM { get; set; }
         public string? Pitch { get; set; }
@@ -18,7 +18,7 @@ namespace PrashantApi.Application.Feature.MachineMaster.Commands
         public string? AlterGauge { get; set; }
         public int? Turn { get; set; }
         public string? CoilMeasurement { get; set; }
-        public string? WindingType { get; set; }
+        public int? WindingType { get; set; }
         public string? ConnectionType { get; set; }
         public string? StatorLobby { get; set; }
         public decimal? CoilGroupWeight { get; set; }
