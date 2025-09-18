@@ -21,6 +21,8 @@ namespace PrashantApi.Api.Controllers
             _mediator = mediator;
         }
 
+
+        //testing
         [HttpGet("{id}")]
         public async Task<ActionResult<BranchMasterDto>> GetById(int id)
         {
@@ -35,13 +37,5 @@ namespace PrashantApi.Api.Controllers
             var newId = await _mediator.Send(command);
             return Ok(newId);
         }
-
-        ///test comment changes
-        ///
-
-        ///test comment changes
-        /// ///test comment changes
-        ///  ///test comment changes
-        ///   ///test comment changes
     }
 }
