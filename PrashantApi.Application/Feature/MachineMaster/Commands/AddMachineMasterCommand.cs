@@ -10,7 +10,7 @@ namespace PrashantApi.Application.Feature.MachineMaster.Commands
     public class AddMachineMasterCommand : IRequest<int>
     {
         public string BrandName { get; set; } = string.Empty;
-        public int? HP_KW { get; set; }
+        public int? HpKw { get; set; }
         public int? Slot { get; set; }
         public int? RPM { get; set; }
         public string? Pitch { get; set; }
@@ -26,7 +26,7 @@ namespace PrashantApi.Application.Feature.MachineMaster.Commands
         public string? PhaseSize { get; set; }
         public decimal? Amperes { get; set; }
         public DateTime? WindingDate { get; set; }
-        public string? GPDC { get; set; }
+        public string? GpDc { get; set; }
         public string CreatedBy { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
     }

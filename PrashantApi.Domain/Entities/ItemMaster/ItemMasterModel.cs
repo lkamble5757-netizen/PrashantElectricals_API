@@ -18,7 +18,7 @@ namespace PrashantApi.Domain.Entities.ItemMaster
         public DateTime? OpeningStockAsOn { get; set; }
         public decimal ItemStock { get; set; }
         public decimal PerUnitPrice { get; set; }
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public string? ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }

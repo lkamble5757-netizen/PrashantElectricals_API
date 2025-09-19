@@ -18,7 +18,7 @@ namespace PrashantApi.Api.Controllers
     {
         private readonly IMediator _mediator = mediator;
 
-        [HttpPost]
+        [HttpPost("Add")]
         public async Task<ActionResult<int>> Add(AddItemMasterCommand command)
         {
 
@@ -27,7 +27,7 @@ namespace PrashantApi.Api.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut("Update")]
         public async Task<ActionResult<int>> Update(UpdateItemMasterCommand command)
         {
             var updatedId = await _mediator.Send(command);
@@ -35,7 +35,7 @@ namespace PrashantApi.Api.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<List<ItemMasterDto>>> GetAll()
         {
             var items = await _mediator.Send(new GetAllItemMasterQuery());
@@ -43,7 +43,7 @@ namespace PrashantApi.Api.Controllers
         }
 
 
-        [HttpGet("{id}")]
+        [HttpGet("GetBy{id}")]
         public async Task<ActionResult<ItemMasterDto>> GetById(int id)
         {
             var item = await _mediator.Send(new GetByIdItemMasterQuery { Id = id });
