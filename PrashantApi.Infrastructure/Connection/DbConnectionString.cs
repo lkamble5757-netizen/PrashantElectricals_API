@@ -6,7 +6,7 @@ namespace PrashantApi.Infrastructure.Connection
     public class DbConnectionString(IConfiguration config) : IDbConnectionString
     {
         private readonly string _prashantConn = config.GetConnectionString("PrashantConnectionString");
-        private readonly string _evaluationConn;
+        private readonly string? _evaluationConn;
 
         public SqlConnection GetConnection()
         {

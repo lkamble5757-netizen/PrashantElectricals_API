@@ -22,7 +22,7 @@ namespace PrashantApi.Infrastructure.Repositories.MachineMaster
             var parameters = new DynamicParameters();
             parameters.Add("@Id", 0);
             parameters.Add("@BrandName", entity.BrandName);
-            parameters.Add("@HP_KW", entity.HP_KW);
+            parameters.Add("@HpKw", entity.HpKw);
             parameters.Add("@Slot", entity.Slot);
             parameters.Add("@RPM", entity.RPM);
             parameters.Add("@Pitch", entity.Pitch);
@@ -38,7 +38,7 @@ namespace PrashantApi.Infrastructure.Repositories.MachineMaster
             parameters.Add("@PhaseSize", entity.PhaseSize);
             parameters.Add("@Amperes", entity.Amperes);
             parameters.Add("@WindingDate", entity.WindingDate);
-            parameters.Add("@GPDC", entity.GPDC);
+            parameters.Add("@GpDc", entity.GpDc);
             parameters.Add("@CreatedBy", entity.CreatedBy);
             parameters.Add("@IsActive", entity.IsActive);
             parameters.Add("@mode", "INSERT");
@@ -57,7 +57,7 @@ namespace PrashantApi.Infrastructure.Repositories.MachineMaster
             var parameters = new DynamicParameters();
             parameters.Add("@Id", entity.Id);
             parameters.Add("@BrandName", entity.BrandName);
-            parameters.Add("@HP_KW", entity.HP_KW);
+            parameters.Add("@HpKw", entity.HpKw);
             parameters.Add("@Slot", entity.Slot);
             parameters.Add("@RPM", entity.RPM);
             parameters.Add("@Pitch", entity.Pitch);
@@ -73,7 +73,7 @@ namespace PrashantApi.Infrastructure.Repositories.MachineMaster
             parameters.Add("@PhaseSize", entity.PhaseSize);
             parameters.Add("@Amperes", entity.Amperes);
             parameters.Add("@WindingDate", entity.WindingDate);
-            parameters.Add("@GPDC", entity.GPDC);
+            parameters.Add("@GpDc", entity.GpDc);
             parameters.Add("@ModifiedBy", entity.ModifiedBy);
             parameters.Add("@IsActive", entity.IsActive);
             parameters.Add("@mode", "UPDATE");

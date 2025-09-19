@@ -5,6 +5,7 @@ using PrashantApi.Domain.Entities.ItemMaster;
 using PrashantApi.Infrastructure.Common;
 using PrashantApi.Infrastructure.Connection;
 using PrashantApi.Infrastructure.Data;
+using PrashantApi.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
