@@ -5,11 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PrashantApi.Application;
 using PrashantApi.Application.Configurations;
-using PrashantApi.Application.Interfaces;
-using PrashantApi.Application.Mapping;
 using PrashantApi.Infrastructure;
-using PrashantApi.Infrastructure.Repositories;
-using PrashantApi.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
