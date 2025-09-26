@@ -13,6 +13,7 @@ using PrashantApi.Application.Interfaces.MachineMaster;
 using PrashantApi.Application.Interfaces.MachineMaster.Mapping;
 using PrashantApi.Application.Interfaces.Menu;
 using PrashantApi.Application.Interfaces.ReferenceDataMaster;
+using PrashantApi.Application.Interfaces.RoleMaster;
 using PrashantApi.Application.Interfaces.UserRegistration;
 using PrashantApi.Infrastructure.Common;
 using PrashantApi.Infrastructure.Connection;
@@ -23,17 +24,19 @@ using PrashantApi.Infrastructure.Repositories.BranchMaster;
 using PrashantApi.Infrastructure.Repositories.CustomerMaster;
 using PrashantApi.Infrastructure.Repositories.MachineMaster;
 using PrashantApi.Infrastructure.Repositories.ReferenceDataMaster;
+using PrashantApi.Infrastructure.Repositories.RoleMaster;
 using PrashantApi.Infrastructure.Services;
 using PrashantEle.API.PrashantEle.Domain.Logging;
+using PrashantEle.API.PrashantEle.Infrastructure.Connection;
 using System.Reflection;
 using System.Security.Claims;
+
 namespace PrashantApi.Infrastructure;
 
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        ArgumentNullException.ThrowIfNull(configuration);
         services.AddMediatR(cfg =>
        cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
@@ -60,20 +63,22 @@ public static class DependencyInjection
         services.AddScoped<IItemMasterRepository, ItemMasterRepository>();
         services.AddScoped<ICustomerMasterRepository, CustomerMasterRepository>();
         services.AddScoped<IMachineMasterRepository, MachineMasterRepository>();
+        services.AddScoped<IRoleMasterRepository, RoleMasterRepository>();
         services.AddScoped<IReferenceDataMasterRepository, ReferenceDataMasterRepository>();
 
         //  Services
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IUserRegistrationService, UserRegistrationService>();
-        services.AddScoped<IMenuService, MenuService>(); 
-        services.AddScoped<ILoggerWrapper, LoggerWrapper>(); 
-        services.AddScoped<ISqlServerDataAccess, SqlServerDataAccess>(); 
+        services.AddScoped<IMenuService, MenuService>();
+        services.AddScoped<ILoggerWrapper, LoggerWrapper>();
+        services.AddScoped<ISqlServerDataAccess, SqlServerDataAccess>();
         services.AddScoped<ISqlDbConnection, SqlDbConnection>();
         services.AddScoped<IItemMasterService, ItemMasterService>();
         services.AddScoped<ICustomerMasterService, CustomerMasterService>();
         services.AddScoped<IMachineMasterService, MachineMasterService>();
         services.AddAutoMapper(typeof(MachineMasterProfile).Assembly);
+        services.AddTransient<IRoleMasterService, RoleMasterService>();
         services.AddTransient<IReferenceDataMasterService, ReferenceDataMasterService>();
 
 
