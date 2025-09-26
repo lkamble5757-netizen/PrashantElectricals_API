@@ -14,6 +14,7 @@ using PrashantApi.Application.Interfaces.MachineMaster.Mapping;
 using PrashantApi.Application.Interfaces.Menu;
 using PrashantApi.Application.Interfaces.ReferenceDataMaster;
 using PrashantApi.Application.Interfaces.RoleMaster;
+using PrashantApi.Application.Interfaces.RoleWiseMenuMaster;
 using PrashantApi.Application.Interfaces.UserRegistration;
 using PrashantApi.Infrastructure.Common;
 using PrashantApi.Infrastructure.Connection;
@@ -25,6 +26,7 @@ using PrashantApi.Infrastructure.Repositories.CustomerMaster;
 using PrashantApi.Infrastructure.Repositories.MachineMaster;
 using PrashantApi.Infrastructure.Repositories.ReferenceDataMaster;
 using PrashantApi.Infrastructure.Repositories.RoleMaster;
+using PrashantApi.Infrastructure.Repositories.RoleWiseMenuMaster;
 using PrashantApi.Infrastructure.Services;
 using PrashantEle.API.PrashantEle.Domain.Logging;
 using PrashantEle.API.PrashantEle.Infrastructure.Connection;
@@ -64,6 +66,7 @@ public static class DependencyInjection
         services.AddScoped<ICustomerMasterRepository, CustomerMasterRepository>();
         services.AddScoped<IMachineMasterRepository, MachineMasterRepository>();
         services.AddScoped<IRoleMasterRepository, RoleMasterRepository>();
+        services.AddScoped<IRoleWiseMenuMasterRepository, RoleWiseMenuMasterRepository>();
         services.AddScoped<IReferenceDataMasterRepository, ReferenceDataMasterRepository>();
 
         //  Services
@@ -79,6 +82,7 @@ public static class DependencyInjection
         services.AddScoped<IMachineMasterService, MachineMasterService>();
         services.AddAutoMapper(typeof(MachineMasterProfile).Assembly);
         services.AddTransient<IRoleMasterService, RoleMasterService>();
+        services.AddTransient<IRoleWiseMenuMasterService, RoleWiseMenuMasterService>();
         services.AddTransient<IReferenceDataMasterService, ReferenceDataMasterService>();
 
 
