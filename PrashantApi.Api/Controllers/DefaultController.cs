@@ -10,4 +10,5 @@ public class DefaultController : ControllerBase
 {
     [HttpGet]
     public IActionResult Get() => Ok(new { Message = "You are authenticated!" });
+    //test
 }
