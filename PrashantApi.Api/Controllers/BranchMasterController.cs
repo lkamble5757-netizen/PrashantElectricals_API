@@ -28,20 +28,12 @@ namespace PrashantApi.Api.Controllers
             if (result == null) return NotFound();
             return Ok(result);
         }
-
+        //test
         [HttpPost]
         public async Task<ActionResult<int>> Add(AddBranchMasterCommand command)
         {
             var newId = await _mediator.Send(command);
             return Ok(newId);
         }
-
-        ///test comment changes
-        ///
-
-        ///test comment changes
-        /// ///test comment changes
-        ///  ///test comment changes
-        ///   ///test comment changes
     }
 }
