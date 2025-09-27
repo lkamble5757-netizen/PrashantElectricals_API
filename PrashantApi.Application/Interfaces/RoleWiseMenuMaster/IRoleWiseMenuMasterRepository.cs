@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PrashantApi.Domain.Entities.RoleWiseMenuMaster;
+using PrashantEle.API.PrashantEle.Application.Common;
 
 namespace PrashantApi.Application.Interfaces.RoleWiseMenuMaster
 {
     public interface IRoleWiseMenuMasterRepository
     {
-        Task AddAsync(RoleWiseMenuMasterModel entity);
-        Task UpdateAsync(RoleWiseMenuMasterModel entity);
+        Task<CommandResult> AddAsync(RoleWiseMenuMasterModel entity);
+        Task<CommandResult> UpdateAsync(RoleWiseMenuMasterModel entity);
         Task<List<dynamic>> GetAllAsync();
         Task<List<dynamic>> GetByIdAsync(int id);
     }

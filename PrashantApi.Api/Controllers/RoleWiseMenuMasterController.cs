@@ -17,10 +17,22 @@ namespace PrashantApi.Api.Controllers
         [HttpPost("Add")]
         public async Task<ActionResult> Add(AddRoleWiseMenuMasterCommand command)
         {
-            await _mediator.Send(command);
-            return Ok("Record inserted successfully.");
-        }
+            var dto = new RoleWiseMenuMasterDto
+            {
+                RoleId = command.RoleId,
+                MenuId = command.MenuId,
+                IsActive = command.IsActive,
+                IsObsolete = command.IsObsolete,
+                CreatedBy = command.CreatedBy
+            };
 
+            var response = await _service.AddAsync(dto);
+
+            if (!response.IsSuccess)
+                return BadRequest(response.FailureReason);
+
+            return Ok(response);
+        }
 
         [HttpPut("Update")]
         public async Task<ActionResult> Update([FromBody] UpdateRoleWiseMenuMasterCommand command)
@@ -28,17 +40,31 @@ namespace PrashantApi.Api.Controllers
             if (command == null)
                 return BadRequest("Invalid request body.");
 
-            await _mediator.Send(command);
-            return Ok("Record updated successfully.");
+            var dto = new RoleWiseMenuMasterDto
+            {
+                Id = command.Id,
+                RoleId = command.RoleId,
+                MenuId = command.MenuId,
+                IsActive = command.IsActive,
+                IsObsolete = command.IsObsolete,
+                ModifiedBy = command.ModifiedBy
+            };
+
+            var response = await _service.UpdateAsync(dto);
+
+            if (!response.IsSuccess)
+                return BadRequest(response.FailureReason);
+
+            return Ok(response);
         }
 
 
 
-        [HttpGet("GetAll")]
+        [HttpGet("GetAllPagging")]
         public async Task<ActionResult> GetAll()
         {
             var roles = await _service.GetAllAsync();
-            return Ok(roles);
+            return Ok(roles);   
         }
 
         [HttpGet("GetBy/{id}")]

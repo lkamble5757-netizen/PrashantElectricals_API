@@ -8,6 +8,8 @@ using PrashantApi.Application.Interfaces.RoleWiseMenuMaster;
 using PrashantApi.Domain.Entities.RoleWiseMenuMaster;
 using PrashantApi.Infrastructure.Connection;
 using System.Data;
+using PrashantEle.API.PrashantEle.Application.Common;
+using PrashantEle.API.PrashantEle.Infrastructure.Constants;
 
 namespace PrashantApi.Infrastructure.Repositories.RoleWiseMenuMaster
 {
@@ -15,7 +17,7 @@ namespace PrashantApi.Infrastructure.Repositories.RoleWiseMenuMaster
     {
         private readonly IDbConnectionString _dbConnectionString = dbConnectionString;
 
-        public async Task AddAsync(RoleWiseMenuMasterModel entity)
+        public async Task<CommandResult> AddAsync(RoleWiseMenuMasterModel entity)
         {
             try
             {
@@ -40,18 +42,20 @@ namespace PrashantApi.Infrastructure.Repositories.RoleWiseMenuMaster
                 parameters.Add("@mode", "INSERT");
 
                 await connection.ExecuteAsync(
-                    "usp_SaveRoleWiseMenuMaster",
+                    SqlConstants.RoleWiseMenuMaster.usp_SaveRoleWiseMenuMaster,
                     parameters,
                     commandType: CommandType.StoredProcedure
                 );
+
+                return CommandResult.SuccessWithOutput("");
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                return CommandResult.Fail("");
             }
         }
 
-        public async Task UpdateAsync(RoleWiseMenuMasterModel entity)
+        public async Task<CommandResult> UpdateAsync(RoleWiseMenuMasterModel entity)
         {
             try
             {
@@ -68,33 +72,33 @@ namespace PrashantApi.Infrastructure.Repositories.RoleWiseMenuMaster
 
                 foreach (var menuId in entity.MenuId)
                 {
-                    table.Rows.Add(entity.Id, menuId, entity.RoleId, entity.CreatedBy, "", entity.IsActive, entity.IsObsolete);
+                    table.Rows.Add(entity.Id, menuId, entity.RoleId, entity.CreatedBy ?? "", "", entity.IsActive, entity.IsObsolete);
                 }
 
                 var parameters = new DynamicParameters();
-                parameters.Add("@RoleWiseMenuMasterTVP", table.AsTableValuedParameter("Type_RoleWiseMenuMasterNew"));
+                parameters.Add("@RoleWiseMenuMasterTVP", table.AsTableValuedParameter("dbo.Type_RoleWiseMenuMasterNew"));
                 parameters.Add("@mode", "UPDATE");
 
                 await connection.ExecuteAsync(
-                    "usp_SaveRoleWiseMenuMaster",
+                    SqlConstants.RoleWiseMenuMaster.usp_SaveRoleWiseMenuMaster,
                     parameters,
                     commandType: CommandType.StoredProcedure
                 );
+
+                return CommandResult.SuccessWithOutput("");
             }
             catch (Exception ex)
             {
-                throw ex;
+                return CommandResult.Fail("");
             }
         }
-
-
 
         public async Task<List<dynamic>> GetAllAsync()
         {
             using var connection = _dbConnectionString.GetConnection();
 
             var result = await connection.QueryAsync<dynamic>(
-                "usp_GetAllRoleWiseMenuMasters",
+                SqlConstants.RoleWiseMenuMaster.usp_GetAllRoleWiseMenuMasters,
                 commandType: CommandType.StoredProcedure
             );
 
@@ -108,12 +112,12 @@ namespace PrashantApi.Infrastructure.Repositories.RoleWiseMenuMaster
             parameters.Add("@Id", id);
 
             var result = await connection.QueryAsync<dynamic>(
-                "usp_GetRoleWiseMenuMasterById",
+                SqlConstants.RoleWiseMenuMaster.usp_GetRoleWiseMenuMasterById,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
 
-            return result.AsList(); // ✅ FIXED: QueryAsync + AsList()
+            return result.AsList();
         }
     }
 }
