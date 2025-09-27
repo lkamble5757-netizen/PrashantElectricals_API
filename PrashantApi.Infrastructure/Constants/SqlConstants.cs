@@ -17,12 +17,19 @@
         {
             //public const string usp_ItemMaster = "dbo.usp_ItemMaster";
             public const string usp_GetUserMenuDetail = "dbo.usp_GetUserMenuDetail";
-            public const string usp_GetRoleWiseMenuDetails = "dbo.usp_GetRoleWiseMenuDetail";
+            public const string usp_GetRoleWiseMenuDetails = "dbo.usp_GetRoleWiseMenuDetails";
         }        
         public static class UserRegistration
         {
             //public const string usp_ItemMaster = "dbo.usp_ItemMaster";
             public const string usp_UserRegister = "dbo.usp_UserRegister";
+        }
+
+        public static class RoleWiseMenuMaster
+        {
+            public const string usp_SaveRoleWiseMenuMaster = "dbo.usp_SaveRoleWiseMenuMaster";
+            public const string usp_GetAllRoleWiseMenuMasters = "dbo.usp_GetAllRoleWiseMenuMasters";
+            public const string usp_GetRoleWiseMenuMasterById = "dbo.usp_GetRoleWiseMenuMasterById";
         }
     }
 }

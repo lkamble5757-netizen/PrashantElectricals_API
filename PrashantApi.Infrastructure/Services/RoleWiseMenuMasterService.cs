@@ -8,6 +8,7 @@ using PrashantApi.Application.DTOs.RoleWiseMenuMaster;
 using PrashantApi.Application.Interfaces;
 using PrashantApi.Application.Interfaces.RoleWiseMenuMaster;
 using PrashantApi.Domain.Entities.RoleWiseMenuMaster;
+using PrashantEle.API.PrashantEle.Application.Common;
 
 namespace PrashantApi.Infrastructure.Services
 {
@@ -16,18 +17,19 @@ namespace PrashantApi.Infrastructure.Services
         private readonly IRoleWiseMenuMasterRepository _repository = repository;
         private readonly IMapper _mapper = mapper;
 
-        public async Task AddAsync(RoleWiseMenuMasterDto dto)
+
+        public async Task<CommandResult> AddAsync(RoleWiseMenuMasterDto dto)
         {
             var entity = _mapper.Map<RoleWiseMenuMasterModel>(dto);
             entity.CreatedOn = DateTime.Now;
-            await _repository.AddAsync(entity);
+            return await _repository.AddAsync(entity);
         }
 
-        public async Task UpdateAsync(RoleWiseMenuMasterDto dto)
+        public async Task<CommandResult> UpdateAsync(RoleWiseMenuMasterDto dto)
         {
             var entity = _mapper.Map<RoleWiseMenuMasterModel>(dto);
             entity.ModifiedOn = DateTime.Now;
-            await _repository.UpdateAsync(entity);
+            return await _repository.UpdateAsync(entity);
         }
 
         public async Task<List<dynamic>> GetAllAsync()
