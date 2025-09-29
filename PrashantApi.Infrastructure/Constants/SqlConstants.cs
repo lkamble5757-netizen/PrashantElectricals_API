@@ -31,5 +31,12 @@
             public const string usp_GetAllRoleWiseMenuMasters = "dbo.usp_GetAllRoleWiseMenuMasters";
             public const string usp_GetRoleWiseMenuMasterById = "dbo.usp_GetRoleWiseMenuMasterById";
         }
+
+        public static class UserRoleAssignMaster
+        {
+            public const string usp_SaveUserRoleAssignMaster = "dbo.usp_SaveUserRoleAssignMaster";
+            public const string usp_GetAllUserRoleAssignMasters = "dbo.usp_GetAllUserRoleAssignMasters";
+            public const string usp_GetUserRoleAssignMasterById = "dbo.usp_GetUserRoleAssignMasterById";
+        }
     }
 }
