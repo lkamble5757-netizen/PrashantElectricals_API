@@ -46,5 +46,12 @@
             public const string usp_GetJobEntryById = "dbo.usp_GetJobEntryById";
         }
 
+        public static class Estimate
+        {
+            public const string usp_Estimate = "dbo.usp_Estimate";
+            public const string usp_GetAllEstimates = "dbo.usp_GetAllEstimates";
+            public const string usp_GetEstimateById = "dbo.usp_GetEstimateById";
+        }
+
     }
 }
