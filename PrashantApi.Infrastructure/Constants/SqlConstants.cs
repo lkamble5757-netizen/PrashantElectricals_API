@@ -38,5 +38,13 @@
             public const string usp_GetAllUserRoleAssignMasters = "dbo.usp_GetAllUserRoleAssignMasters";
             public const string usp_GetUserRoleAssignMasterById = "dbo.usp_GetUserRoleAssignMasterById";
         }
+
+        public static class JobEntry
+        {
+            public const string usp_JobEntry = "dbo.usp_JobEntry";
+            public const string usp_GetAllJobEntries = "dbo.usp_GetAllJobEntries";
+            public const string usp_GetJobEntryById = "dbo.usp_GetJobEntryById";
+        }
+
     }
 }
