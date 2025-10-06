@@ -35,7 +35,14 @@ namespace PrashantApi.Api.Controllers
             return Ok(response);
         }
 
-        
+        /// <summary>
+        /// 
+        /// 
+        /// 
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
