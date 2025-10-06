@@ -8,6 +8,7 @@ using PrashantApi.Application.Interfaces;
 using PrashantApi.Application.Interfaces.BranchMaster;
 using PrashantApi.Application.Interfaces.CustomerMaster;
 using PrashantApi.Application.Interfaces.ItemMaster;
+using PrashantApi.Application.Interfaces.JobEntry;
 using PrashantApi.Application.Interfaces.Logging;
 using PrashantApi.Application.Interfaces.MachineMaster;
 using PrashantApi.Application.Interfaces.MachineMaster.Mapping;
@@ -16,6 +17,7 @@ using PrashantApi.Application.Interfaces.ReferenceDataMaster;
 using PrashantApi.Application.Interfaces.RoleMaster;
 using PrashantApi.Application.Interfaces.RoleWiseMenuMaster;
 using PrashantApi.Application.Interfaces.UserRegistration;
+using PrashantApi.Application.Interfaces.UserRoleAssignMaster;
 using PrashantApi.Infrastructure.Common;
 using PrashantApi.Infrastructure.Connection;
 using PrashantApi.Infrastructure.Data;
@@ -23,10 +25,12 @@ using PrashantApi.Infrastructure.Logger;
 using PrashantApi.Infrastructure.Repositories;
 using PrashantApi.Infrastructure.Repositories.BranchMaster;
 using PrashantApi.Infrastructure.Repositories.CustomerMaster;
+using PrashantApi.Infrastructure.Repositories.JobEntry;
 using PrashantApi.Infrastructure.Repositories.MachineMaster;
 using PrashantApi.Infrastructure.Repositories.ReferenceDataMaster;
 using PrashantApi.Infrastructure.Repositories.RoleMaster;
 using PrashantApi.Infrastructure.Repositories.RoleWiseMenuMaster;
+using PrashantApi.Infrastructure.Repositories.UserRoleAssignMaster;
 using PrashantApi.Infrastructure.Services;
 using PrashantEle.API.PrashantEle.Domain.Logging;
 using PrashantEle.API.PrashantEle.Infrastructure.Connection;
@@ -68,6 +72,8 @@ public static class DependencyInjection
         services.AddScoped<IRoleMasterRepository, RoleMasterRepository>();
         services.AddScoped<IRoleWiseMenuMasterRepository, RoleWiseMenuMasterRepository>();
         services.AddScoped<IReferenceDataMasterRepository, ReferenceDataMasterRepository>();
+        services.AddScoped<IUserRoleAssignMasterRepository, UserRoleAssignMasterRepository>();
+        services.AddScoped<IJobEntryRepository, JobEntryRepository>();
 
         //  Services
         services.AddScoped<IAuthService, AuthService>();
@@ -84,6 +90,8 @@ public static class DependencyInjection
         services.AddTransient<IRoleMasterService, RoleMasterService>();
         services.AddTransient<IRoleWiseMenuMasterService, RoleWiseMenuMasterService>();
         services.AddTransient<IReferenceDataMasterService, ReferenceDataMasterService>();
+        services.AddTransient<IUserRoleAssignMasterService, UserRoleAssignMasterService>();
+        services.AddTransient<IJobEntryService, JobEntryService>();
 
 
 
