@@ -31,5 +31,20 @@
             public const string usp_GetAllRoleWiseMenuMasters = "dbo.usp_GetAllRoleWiseMenuMasters";
             public const string usp_GetRoleWiseMenuMasterById = "dbo.usp_GetRoleWiseMenuMasterById";
         }
+
+        public static class UserRoleAssignMaster
+        {
+            public const string usp_SaveUserRoleAssignMaster = "dbo.usp_SaveUserRoleAssignMaster";
+            public const string usp_GetAllUserRoleAssignMasters = "dbo.usp_GetAllUserRoleAssignMasters";
+            public const string usp_GetUserRoleAssignMasterById = "dbo.usp_GetUserRoleAssignMasterById";
+        }
+
+        public static class JobEntry
+        {
+            public const string usp_JobEntry = "dbo.usp_JobEntry";
+            public const string usp_GetAllJobEntries = "dbo.usp_GetAllJobEntries";
+            public const string usp_GetJobEntryById = "dbo.usp_GetJobEntryById";
+        }
+
     }
 }
