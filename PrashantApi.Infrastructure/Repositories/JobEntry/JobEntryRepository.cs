@@ -28,7 +28,6 @@ namespace PrashantApi.Infrastructure.Repositories.JobEntry
                 parameters.Add("@JobNo", entity.JobNo);
                 parameters.Add("@DateReceived", entity.DateReceived);
                 parameters.Add("@CustomerID", entity.CustomerID);
-                parameters.Add("@CustomerName", entity.CustomerName);
                 parameters.Add("@MachineMake", entity.MachineMake);
                 parameters.Add("@Model", entity.Model);
                 parameters.Add("@HP", entity.HP);
@@ -69,7 +68,6 @@ namespace PrashantApi.Infrastructure.Repositories.JobEntry
                 parameters.Add("@JobNo", entity.JobNo);
                 parameters.Add("@DateReceived", entity.DateReceived);
                 parameters.Add("@CustomerID", entity.CustomerID);
-                parameters.Add("@CustomerName", entity.CustomerName);
                 parameters.Add("@MachineMake", entity.MachineMake);
                 parameters.Add("@Model", entity.Model);
                 parameters.Add("@HP", entity.HP);
