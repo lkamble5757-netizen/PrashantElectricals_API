@@ -12,7 +12,7 @@ namespace PrashantApi.Application.DTOs.JobEntry
         public string JobNo { get; set; } = string.Empty;
         public DateTime DateReceived { get; set; }
         public int CustomerID { get; set; }
-        public int CustomerName { get; set; }
+        public string? CustomerName { get; set; }
         public string? MachineMake { get; set; }
         public string? Model { get; set; }
         public string? HP { get; set; }
