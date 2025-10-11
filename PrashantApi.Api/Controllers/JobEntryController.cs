@@ -5,6 +5,7 @@ using PrashantApi.Application.DTOs.JobEntry;
 using PrashantApi.Application.Feature.JobEntry.Commands;
 using PrashantApi.Application.Interfaces;
 using PrashantEle.API.PrashantEle.Application.Common;
+using PrashantApi.Domain.Entities.JobEntry;
 
 namespace PrashantApi.Api.Controllers
 {
@@ -15,12 +16,25 @@ namespace PrashantApi.Api.Controllers
         private readonly IMediator _mediator = mediator;
         private readonly IJobEntryService _service = service;
 
+        //[HttpPost("Add")]
+        //public async Task<ActionResult<CommandResult>> Add(AddJobEntryCommand command)
+        //{
+        //    var result = await _mediator.Send(command);
+        //    return Ok(result);
+        //}
+
         [HttpPost("Add")]
-        public async Task<ActionResult<CommandResult>> Add(AddJobEntryCommand command)
+        public async Task<ActionResult<CommandResult>> Create(JobEntryDto dto)
         {
+            if (dto is null)
+                return BadRequest(CommandResult.Fail("Invalid Job Entry data."));
+
+            var command = new AddJobEntryCommand { JobEntry = dto };
             var result = await _mediator.Send(command);
-            return Ok(result);
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
+
 
         [HttpPut("Update")]
         public async Task<ActionResult<CommandResult>> Update(UpdateJobEntryCommand command)

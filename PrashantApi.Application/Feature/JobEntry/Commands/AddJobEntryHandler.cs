@@ -7,20 +7,37 @@ using AutoMapper;
 using MediatR;
 using PrashantApi.Application.DTOs.JobEntry;
 using PrashantApi.Application.Interfaces;
+using PrashantApi.Application.Interfaces.JobEntry;
+using PrashantApi.Domain.Entities.JobEntry;
 using PrashantEle.API.PrashantEle.Application.Common;
 
 namespace PrashantApi.Application.Feature.JobEntry.Commands
 {
-    public class AddJobEntryHandler(IJobEntryService service, IMapper mapper)
-        : IRequestHandler<AddJobEntryCommand, CommandResult>
+    public class AddJobEntryHandler : IRequestHandler<AddJobEntryCommand, CommandResult>
     {
-        private readonly IJobEntryService _service = service;
-        private readonly IMapper _mapper = mapper;
+        private readonly IJobEntryRepository _repository;
+        private readonly IMapper _mapper;
+
+        public AddJobEntryHandler(IJobEntryRepository repository, IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }
 
         public async Task<CommandResult> Handle(AddJobEntryCommand request, CancellationToken cancellationToken)
         {
-            var dto = _mapper.Map<JobEntryDto>(request);
-            return await _service.AddAsync(dto);
+            try
+            {
+                var entity = _mapper.Map<JobEntryModel>(request.JobEntry);
+                entity.CreatedOn = DateTime.UtcNow;
+
+                var result = await _repository.AddAsync(entity);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return CommandResult.Fail($"Error adding Job Entry: {ex.Message}");
+            }
         }
     }
 }
