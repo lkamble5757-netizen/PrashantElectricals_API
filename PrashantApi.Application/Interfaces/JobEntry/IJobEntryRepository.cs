@@ -12,8 +12,9 @@ namespace PrashantApi.Application.Interfaces.JobEntry
     {
         Task<CommandResult> AddAsync(JobEntryModel entity);
         Task<CommandResult> UpdateAsync(JobEntryModel entity);
-        Task<IEnumerable<JobEntryModel>> GetAllAsync();
-        Task<IEnumerable<JobEntryModel>> GetByIdAsync(int id);
+        Task<dynamic> GetAllAsync();
+        Task<dynamic> GetByIdAsync(int id);
+
     }
 
 }
