@@ -37,27 +37,34 @@ namespace PrashantApi.Api.Controllers
 
 
         [HttpPut("Update")]
-        public async Task<ActionResult<CommandResult>> Update(UpdateJobEntryCommand command)
+        public async Task<ActionResult<CommandResult>> Update(JobEntryDto dto)
         {
+            if (dto == null || dto.ID <= 0)
+                return BadRequest(CommandResult.Fail("Invalid Job Entry data."));
+
+            var command = new UpdateJobEntryCommand { JobEntry = dto };
             var result = await _mediator.Send(command);
-            return Ok(result);
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
+
         [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<JobEntryDto>>> GetAll()
+        public async Task<ActionResult<dynamic>> GetAll()
         {
             var entries = await _service.GetAllAsync();
             return Ok(entries);
         }
 
         [HttpGet("GetBy/{id}")]
-        public async Task<ActionResult<IEnumerable<JobEntryDto>>> GetById(int id)
+        public async Task<ActionResult<dynamic>> GetById(int id)
         {
             var entries = await _service.GetByIdAsync(id);
-            if (entries == null || !entries.Any())
+            if (entries == null)
                 return NotFound();
 
             return Ok(entries);
         }
+
     }
 }
