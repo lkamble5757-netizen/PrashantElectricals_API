@@ -76,7 +76,7 @@ public static class DependencyInjection
         services.AddScoped<IReferenceDataMasterRepository, ReferenceDataMasterRepository>();
         services.AddScoped<IUserRoleAssignMasterRepository, UserRoleAssignMasterRepository>();
         services.AddScoped<IJobEntryRepository, JobEntryRepository>();
-        services.AddScoped<IEstimateRepository, EstimateRepository>();
+        services.AddScoped<IEstimateMasterRepository, EstimateMasterRepository>();
 
         //  Services
         services.AddScoped<IAuthService, AuthService>();
@@ -95,7 +95,7 @@ public static class DependencyInjection
         services.AddTransient<IReferenceDataMasterService, ReferenceDataMasterService>();
         services.AddTransient<IUserRoleAssignMasterService, UserRoleAssignMasterService>();
         services.AddTransient<IJobEntryService, JobEntryService>();
-        services.AddTransient<IEstimateService, EstimateService>();
+        services.AddTransient<IEstimateMasterService, EstimateMasterService>();
 
 
 
