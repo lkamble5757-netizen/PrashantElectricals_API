@@ -98,24 +98,25 @@ namespace PrashantApi.Infrastructure.Repositories.JobEntry
         }
 
 
-        public async Task<IEnumerable<JobEntryModel>> GetAllAsync()
+        public async Task<dynamic> GetAllAsync()
         {
             using var connection = _dbConnectionString.GetConnection();
-            return await connection.QueryAsync<JobEntryModel>(
+            return await connection.QueryAsync<dynamic>(
                 SqlConstants.JobEntry.usp_GetAllJobEntries,
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<JobEntryModel>> GetByIdAsync(int id)
+        public async Task<dynamic> GetByIdAsync(int id)
         {
             using var connection = _dbConnectionString.GetConnection();
             var parameters = new DynamicParameters();
             parameters.Add("@ID", id);
 
-            return await connection.QueryAsync<JobEntryModel>(
+            return await connection.QueryAsync<dynamic>(
                 SqlConstants.JobEntry.usp_GetJobEntryById,
                 parameters,
                 commandType: CommandType.StoredProcedure);
         }
+
     }
 }

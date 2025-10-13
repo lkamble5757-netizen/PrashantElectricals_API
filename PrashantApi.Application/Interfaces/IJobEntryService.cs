@@ -12,7 +12,8 @@ namespace PrashantApi.Application.Interfaces
     {
         Task<CommandResult> AddAsync(JobEntryDto dto);
         Task<CommandResult> UpdateAsync(JobEntryDto dto);
-        Task<IEnumerable<JobEntryDto>> GetAllAsync();
-        Task<IEnumerable<JobEntryDto>> GetByIdAsync(int id);
+        Task<dynamic> GetAllAsync();
+        Task<dynamic> GetByIdAsync(int id);
+
     }
 }

@@ -31,16 +31,17 @@ namespace PrashantApi.Infrastructure.Services
             return await _repository.UpdateAsync(entity);
         }
 
-        public async Task<IEnumerable<JobEntryDto>> GetAllAsync()
+        public async Task<dynamic> GetAllAsync()
         {
             var entities = await _repository.GetAllAsync();
-            return _mapper.Map<IEnumerable<JobEntryDto>>(entities);
+            return entities;
         }
 
-        public async Task<IEnumerable<JobEntryDto>> GetByIdAsync(int id)
+        public async Task<dynamic> GetByIdAsync(int id)
         {
             var entities = await _repository.GetByIdAsync(id);
-            return _mapper.Map<IEnumerable<JobEntryDto>>(entities);
+            return entities;
         }
+
     }
 }

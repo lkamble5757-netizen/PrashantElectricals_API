@@ -1,26 +1,45 @@
-﻿using System;
+﻿using AutoMapper;
+using MediatR;
+using PrashantApi.Application.DTOs.JobEntry;
+using PrashantApi.Application.Interfaces;
+using PrashantApi.Application.Interfaces.JobEntry;
+using PrashantApi.Domain.Entities.JobEntry;
+using PrashantEle.API.PrashantEle.Application.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
-using PrashantApi.Application.DTOs.JobEntry;
-using PrashantApi.Application.Interfaces;
-using PrashantEle.API.PrashantEle.Application.Common;
 
 namespace PrashantApi.Application.Feature.JobEntry.Commands
 {
-    public class UpdateJobEntryHandler(IJobEntryService service, IMapper mapper)
-        : IRequestHandler<UpdateJobEntryCommand, CommandResult>
+    public class UpdateJobEntryHandler : IRequestHandler<UpdateJobEntryCommand, CommandResult>
     {
-        private readonly IJobEntryService _service = service;
-        private readonly IMapper _mapper = mapper;
+        private readonly IJobEntryRepository _repository;
+        private readonly IMapper _mapper;
+
+        public UpdateJobEntryHandler(IJobEntryRepository repository, IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }
 
         public async Task<CommandResult> Handle(UpdateJobEntryCommand request, CancellationToken cancellationToken)
         {
-            var dto = _mapper.Map<JobEntryDto>(request);
-            return await _service.UpdateAsync(dto);
+            try
+            {
+                // Map DTO to entity
+                var entity = _mapper.Map<JobEntryModel>(request.JobEntry);
+                entity.ModifiedOn = DateTime.UtcNow;
+
+                // Call repository update method
+                var result = await _repository.UpdateAsync(entity);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return CommandResult.Fail($"Error updating Job Entry: {ex.Message}");
+            }
         }
     }
 }
