@@ -54,6 +54,17 @@
             public const string usp_GetEstimateById = "dbo.usp_GetEstimateById";
             public const string usp_GetJobNoByCustomerID = "dbo.usp_GetJobNoByCustomerID";
         }
+        public static class RepairWork
+        {
+            // ✅ Existing stored procedures for main RepairWork table
+            public const string usp_SaveRepairWork = "dbo.usp_RepairWork";
+            public const string usp_GetAllRepairWork = "dbo.usp_GetAllRepairWork";
+            public const string usp_GetRepairWorkById = "dbo.usp_GetRepairWorkById";
 
+            // ✅ New stored procedures for child RepairWorkItem table
+            public const string usp_SaveRepairWorkItem = "dbo.usp_SaveRepairWorkDetails";
+            public const string usp_DeleteRepairWorkItemsByRepairWorkId = "dbo.usp_GetAllRepairWorkDetails";
+            public const string usp_GetRepairWorkItemsByRepairWorkId = "dbo.usp_GetRepairWorkDetailsById";
+        }
     }
 }
