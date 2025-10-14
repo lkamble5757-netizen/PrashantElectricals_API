@@ -36,8 +36,12 @@ using PrashantApi.Infrastructure.Repositories.UserRoleAssignMaster;
 using PrashantApi.Infrastructure.Services;
 using PrashantEle.API.PrashantEle.Domain.Logging;
 using PrashantEle.API.PrashantEle.Infrastructure.Connection;
+using PrashantApi.Infrastructure.Repositories.RepairWork;
+
+
 using System.Reflection;
 using System.Security.Claims;
+using PrashantApi.Application.Interfaces.RepairWork;
 
 namespace PrashantApi.Infrastructure;
 
@@ -77,6 +81,7 @@ public static class DependencyInjection
         services.AddScoped<IUserRoleAssignMasterRepository, UserRoleAssignMasterRepository>();
         services.AddScoped<IJobEntryRepository, JobEntryRepository>();
         services.AddScoped<IEstimateMasterRepository, EstimateMasterRepository>();
+        services.AddScoped<IRepairWorkRepository, RepairWorkRepository>();
 
         //  Services
         services.AddScoped<IAuthService, AuthService>();
@@ -96,6 +101,8 @@ public static class DependencyInjection
         services.AddTransient<IUserRoleAssignMasterService, UserRoleAssignMasterService>();
         services.AddTransient<IJobEntryService, JobEntryService>();
         services.AddTransient<IEstimateMasterService, EstimateMasterService>();
+        services.AddTransient<IRepairWorkService, RepairWorkService>();
+
 
 
 
