@@ -12,7 +12,7 @@ namespace PrashantApi.Application.Interfaces.UserRoleAssignMaster
     {
         Task<CommandResult> AddAsync(UserRoleAssignMasterModel entity);
         Task<CommandResult> UpdateAsync(UserRoleAssignMasterModel entity);
-        Task<IEnumerable<dynamic>> GetAllAsync();
-        Task<IEnumerable<dynamic>> GetByIdAsync(int id);
+        Task<dynamic> GetAllAsync();
+        Task<dynamic> GetByIdAsync(int id);
     }
 }

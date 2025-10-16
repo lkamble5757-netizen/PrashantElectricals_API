@@ -45,7 +45,7 @@ namespace PrashantApi.Infrastructure.Repositories.JobEntry
                 parameters.Add("@mode", "INSERT");
 
                 var output = await connection.ExecuteScalarAsync<int>(
-                    SqlConstants.JobEntry.usp_JobEntry,
+                    SqlConstants.JobEntry.JobEntryMaster,
                     parameters,
                     commandType: CommandType.StoredProcedure);
 
@@ -85,7 +85,7 @@ namespace PrashantApi.Infrastructure.Repositories.JobEntry
                 parameters.Add("@mode", "UPDATE");
 
                 var output = await connection.ExecuteScalarAsync<int>(
-                    SqlConstants.JobEntry.usp_JobEntry,
+                    SqlConstants.JobEntry.JobEntryMaster,
                     parameters,
                     commandType: CommandType.StoredProcedure);
 
@@ -102,7 +102,7 @@ namespace PrashantApi.Infrastructure.Repositories.JobEntry
         {
             using var connection = _dbConnectionString.GetConnection();
             return await connection.QueryAsync<dynamic>(
-                SqlConstants.JobEntry.usp_GetAllJobEntries,
+                SqlConstants.JobEntry.GetAllJobEntries,
                 commandType: CommandType.StoredProcedure);
         }
 
@@ -113,7 +113,7 @@ namespace PrashantApi.Infrastructure.Repositories.JobEntry
             parameters.Add("@ID", id);
 
             return await connection.QueryAsync<dynamic>(
-                SqlConstants.JobEntry.usp_GetJobEntryById,
+                SqlConstants.JobEntry.GetJobEntryById,
                 parameters,
                 commandType: CommandType.StoredProcedure);
         }

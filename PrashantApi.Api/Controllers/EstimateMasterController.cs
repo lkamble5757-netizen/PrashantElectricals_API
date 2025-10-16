@@ -1,19 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MediatR;
 using PrashantApi.Application.DTOs.Estimate;
 using PrashantApi.Application.Feature.Estimate.Commands;
 using PrashantApi.Application.Interfaces;
+using PrashantApi.Application.Interfaces.Estimate;
 using PrashantEle.API.PrashantEle.Application.Common;
 
 namespace PrashantApi.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EstimateMasterController(IMediator mediator, IEstimateMasterService service) : ControllerBase
+    public class EstimateMasterController(IMediator mediator, IEstimateMasterRepository repository) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
-        private readonly IEstimateMasterService _service = service;
+        private readonly IEstimateMasterRepository _repository = repository;
 
         [HttpPost("Add")]
         public async Task<ActionResult<CommandResult>> Create(EstimateMasterDto dto)
@@ -40,27 +41,29 @@ namespace PrashantApi.Api.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<dynamic>> GetAll() 
+        public async Task<ActionResult<dynamic>> GetAll()
         {
-            var result = await _service.GetAllAsync();
+            var result = await _repository.GetAllAsync();
             return Ok(result);
         }
 
         [HttpGet("GetBy/{id}")]
-        public async Task<ActionResult<dynamic>> GetById(int id) 
+        public async Task<ActionResult<dynamic>> GetById(int id)
         {
-            var result = await _service.GetByIdAsync(id);
-            if (result is not IEnumerable<object> list || !list.Any())
+            var result = await _repository.GetByIdAsync(id);
+
+            if (result == null)
                 return NotFound();
+
             return Ok(result);
         }
 
         [HttpGet("GetJobNoByCustomerID/{id}")]
         public async Task<ActionResult<dynamic>> GetJobNoByCustomerID(int id)
         {
-            var result = await _service.GetJobNoByCustomerID(id);
+            var result = await _repository.GetJobNoByCustomerID(id);
             return Ok(result);
         }
-
     }
+
 }

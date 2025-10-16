@@ -95,19 +95,8 @@ public static class DependencyInjection
         services.AddScoped<ICustomerMasterService, CustomerMasterService>();
         services.AddScoped<IMachineMasterService, MachineMasterService>();
         services.AddAutoMapper(typeof(MachineMasterProfile).Assembly);
-        services.AddTransient<IRoleMasterService, RoleMasterService>();
         services.AddTransient<IRoleWiseMenuMasterService, RoleWiseMenuMasterService>();
         services.AddTransient<IReferenceDataMasterService, ReferenceDataMasterService>();
-        services.AddTransient<IUserRoleAssignMasterService, UserRoleAssignMasterService>();
-        services.AddTransient<IJobEntryService, JobEntryService>();
-        services.AddTransient<IEstimateMasterService, EstimateMasterService>();
-        services.AddTransient<IRepairWorkService, RepairWorkService>();
-
-
-
-
-
-
 
 
         return services;

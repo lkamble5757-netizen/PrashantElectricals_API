@@ -1,17 +1,16 @@
-﻿using System;
+﻿using MediatR;
+using PrashantEle.API.PrashantEle.Application.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MediatR;
+using PrashantApi.Application.DTOs.RoleMaster;
 
 namespace PrashantApi.Application.Feature.RoleMaster.Commands
 {
-    public class AddRoleMasterCommand : IRequest<int>
+    public class AddRoleMasterCommand : IRequest<CommandResult>
     {
-        public string Role { get; set; } = string.Empty;
-        public string? Description { get; set; }
-        public string CreatedBy { get; set; } = string.Empty;
-        public bool IsActive { get; set; } = true;
+        public RoleMasterDto RoleMaster { get; set; } = default!;
     }
 }

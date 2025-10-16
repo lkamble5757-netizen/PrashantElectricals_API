@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrashantApi.Application.DTOs.CommonDTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PrashantApi.Application.DTOs.JobEntry
 {
-    public class JobEntryDto
+    public class JobEntryDto : BaseDTO
     {
         public int ID { get; set; }
         public string JobNo { get; set; } = string.Empty;
@@ -25,10 +26,5 @@ namespace PrashantApi.Application.DTOs.JobEntry
         public int Status { get; set; }
         public string? Attachments { get; set; }
         public string? Remarks { get; set; }
-        public bool IsActive { get; set; }
-        public int? CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public string? ModifiedBy { get; set; }
-        public DateTime? ModifiedOn { get; set; }
     }
 }
