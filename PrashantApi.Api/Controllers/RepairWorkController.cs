@@ -5,7 +5,6 @@ using PrashantApi.Application.DTOs.RepairWork;
 using PrashantApi.Application.Feature.Estimate.Commands;
 using PrashantApi.Application.Feature.RepairWork.Commands;
 using PrashantApi.Application.Interfaces;
-using PrashantApi.Application.Interfaces.RepairWork;
 using PrashantEle.API.PrashantEle.Application.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,14 +16,12 @@ namespace PrashantApi.Api.Controllers
     public class RepairWorkController : ControllerBase
     {
         private readonly IMediator _mediator;
-        //private readonly IRepairWorkService _service;
-        private readonly IRepairWorkRepository _repository;
+        private readonly IRepairWorkService _service;
 
-        public RepairWorkController(IMediator mediator, IRepairWorkRepository repository) //, IRepairWorkService service
+        public RepairWorkController(IMediator mediator, IRepairWorkService service)
         {
             _mediator = mediator;
-            _repository = repository;
-            //_service = service;
+            _service = service;
         }
 
         [HttpPost("Add")]
@@ -55,14 +52,14 @@ namespace PrashantApi.Api.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<RepairWorkDto>>> GetAll()
         {
-            var data = await _repository.GetAllAsync();
+            var data = await _service.GetAllAsync();
             return Ok(data);
         }
 
         [HttpGet("GetBy/{id}")]
         public async Task<ActionResult<RepairWorkDto>> GetById(int id)
         {
-            var data = await _repository.GetByIdAsync(id);
+            var data = await _service.GetByIdAsync(id);
             if (data == null) return NotFound();
             return Ok(data);
         }
