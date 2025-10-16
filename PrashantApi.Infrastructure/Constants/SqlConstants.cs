@@ -25,6 +25,13 @@
             public const string usp_UserRegister = "dbo.usp_UserRegister";
         }
 
+        public static class RoleMaster
+        {
+            public const string RoleMasterr = "dbo.usp_SaveRoleMaster";
+            public const string GetAllRoles = "dbo.usp_GetAllRoles";
+            public const string GetRoleById = "dbo.usp_GetRoleById";
+        }
+
         public static class RoleWiseMenuMaster
         {
             public const string usp_SaveRoleWiseMenuMaster = "dbo.usp_SaveRoleWiseMenuMaster";
@@ -34,25 +41,25 @@
 
         public static class UserRoleAssignMaster
         {
-            public const string usp_SaveUserRoleAssignMaster = "dbo.usp_SaveUserRoleAssignMaster";
-            public const string usp_GetAllUserRoleAssignMasters = "dbo.usp_GetAllUserRoleAssignMasters";
-            public const string usp_GetUserRoleAssignMasterById = "dbo.usp_GetUserRoleAssignMasterById";
+            public const string UserRoleAssignMasterr = "dbo.usp_SaveUserRoleAssignMaster";
+            public const string GetAllUserRoleAssignMasters = "dbo.usp_GetAllUserRoleAssignMasters";
+            public const string GetUserRoleAssignMasterById = "dbo.usp_GetUserRoleAssignMasterById";
         }
 
         public static class JobEntry
         {
-            public const string usp_JobEntry = "dbo.usp_JobEntry";
-            public const string usp_GetAllJobEntries = "dbo.usp_GetAllJobEntries";
-            public const string usp_GetJobEntryById = "dbo.usp_GetJobEntryById";
+            public const string JobEntryMaster = "dbo.usp_JobEntry";
+            public const string GetAllJobEntries = "dbo.usp_GetAllJobEntries";
+            public const string GetJobEntryById = "dbo.usp_GetJobEntryById";
         }
 
         public static class Estimate
         {
-            public const string usp_Estimate = "dbo.usp_Estimate";
-            public const string usp_EstimatedPartDetails = "dbo.usp_EstimatedPartDetails";
-            public const string usp_GetAllEstimates = "dbo.usp_GetAllEstimates";
-            public const string usp_GetEstimateById = "dbo.usp_GetEstimateById";
-            public const string usp_GetJobNoByCustomerID = "dbo.usp_GetJobNoByCustomerID";
+            public const string EstimateMaster = "dbo.usp_Estimate";
+            public const string EstimatedPartDetails = "dbo.usp_EstimatedPartDetails";
+            public const string GetAllEstimateMaster = "dbo.usp_GetAllEstimates";
+            public const string GetEstimateMasterById = "dbo.usp_GetEstimateById";
+            public const string GetJobNoByCustomerID = "dbo.usp_GetJobNoByCustomerID";
         }
         public static class RepairWork
         {

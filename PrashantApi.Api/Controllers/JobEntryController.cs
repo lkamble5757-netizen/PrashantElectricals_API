@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MediatR;
 using PrashantApi.Application.DTOs.JobEntry;
 using PrashantApi.Application.Feature.JobEntry.Commands;
 using PrashantApi.Application.Interfaces;
+using PrashantApi.Application.Interfaces.JobEntry;
 using PrashantEle.API.PrashantEle.Application.Common;
 using PrashantApi.Domain.Entities.JobEntry;
 
@@ -11,10 +12,10 @@ namespace PrashantApi.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class JobEntryController(IMediator mediator, IJobEntryService service) : ControllerBase
+    public class JobEntryController(IMediator mediator, IJobEntryRepository repository) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
-        private readonly IJobEntryService _service = service;
+        private readonly IJobEntryRepository _repository = repository;
 
         //[HttpPost("Add")]
         //public async Task<ActionResult<CommandResult>> Add(AddJobEntryCommand command)
@@ -24,9 +25,9 @@ namespace PrashantApi.Api.Controllers
         //}
 
         [HttpPost("Add")]
-        public async Task<ActionResult<CommandResult>> Create(JobEntryDto dto)
+        public async Task<ActionResult<CommandResult>> Add(JobEntryDto dto)
         {
-            if (dto is null)
+            if (dto == null)
                 return BadRequest(CommandResult.Fail("Invalid Job Entry data."));
 
             var command = new AddJobEntryCommand { JobEntry = dto };
@@ -48,23 +49,21 @@ namespace PrashantApi.Api.Controllers
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
-
         [HttpGet("GetAll")]
         public async Task<ActionResult<dynamic>> GetAll()
         {
-            var entries = await _service.GetAllAsync();
+            var entries = await _repository.GetAllAsync();
             return Ok(entries);
         }
 
         [HttpGet("GetBy/{id}")]
         public async Task<ActionResult<dynamic>> GetById(int id)
         {
-            var entries = await _service.GetByIdAsync(id);
-            if (entries == null)
+            var entry = await _repository.GetByIdAsync(id);
+            if (entry == null)
                 return NotFound();
 
-            return Ok(entries);
+            return Ok(entry);
         }
-
     }
 }

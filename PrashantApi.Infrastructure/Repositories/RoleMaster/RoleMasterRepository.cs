@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using Dapper;
+﻿using Dapper;
 using PrashantApi.Application.Interfaces.RoleMaster;
 using PrashantApi.Domain.Entities.RoleMaster;
 using PrashantApi.Infrastructure.Connection;
+using PrashantEle.API.PrashantEle.Application.Common;
+using PrashantEle.API.PrashantEle.Infrastructure.Constants;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PrashantApi.Infrastructure.Repositories.RoleMaster
 {
@@ -15,7 +17,7 @@ namespace PrashantApi.Infrastructure.Repositories.RoleMaster
     {
         private readonly IDbConnectionString _dbConnectionString = dbConnectionString;
 
-        public async Task<int> AddAsync(RoleMasterModel entity)
+        public async Task<CommandResult> AddAsync(RoleMasterModel entity)
         {
             using var connection = _dbConnectionString.GetConnection();
 
@@ -27,14 +29,14 @@ namespace PrashantApi.Infrastructure.Repositories.RoleMaster
             parameters.Add("@CreatedBy", entity.CreatedBy);
             parameters.Add("@mode", "INSERT");
 
-            return await connection.QuerySingleAsync<int>(
-                "usp_SaveRoleMaster",
+            return await connection.QuerySingleAsync<CommandResult>(
+                SqlConstants.RoleMaster.RoleMasterr,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
         }
 
-        public async Task<int> UpdateAsync(RoleMasterModel entity)
+        public async Task<CommandResult> UpdateAsync(RoleMasterModel entity)
         {
             using var connection = _dbConnectionString.GetConnection();
 
@@ -46,37 +48,38 @@ namespace PrashantApi.Infrastructure.Repositories.RoleMaster
             parameters.Add("@ModifiedBy", entity.ModifiedBy);
             parameters.Add("@mode", "UPDATE");
 
-            return await connection.QuerySingleAsync<int>(
-                "usp_SaveRoleMaster",
+            return await connection.QuerySingleAsync<CommandResult>(
+                SqlConstants.RoleMaster.RoleMasterr,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
         }
 
-        public async Task<List<RoleMasterModel>> GetAllAsync()
+        public async Task<dynamic> GetAllAsync()
         {
             using var connection = _dbConnectionString.GetConnection();
 
-            var result = await connection.QueryAsync<RoleMasterModel>(
-                "usp_GetAllRoles",
+            var result = await connection.QueryAsync<dynamic>(
+                SqlConstants.RoleMaster.GetAllRoles,
                 commandType: CommandType.StoredProcedure
             );
 
             return result.AsList();
         }
 
-        public async Task<RoleMasterModel> GetByIdAsync(int id)
+        public async Task<dynamic> GetByIdAsync(int id)
         {
             using var connection = _dbConnectionString.GetConnection();
 
             var parameters = new DynamicParameters();
             parameters.Add("@Id", id);
 
-            return await connection.QueryFirstOrDefaultAsync<RoleMasterModel>(
-                "usp_GetRoleById",
+            return await connection.QueryFirstOrDefaultAsync<dynamic>(
+                SqlConstants.RoleMaster.GetRoleById,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
+
         }
     }
 }

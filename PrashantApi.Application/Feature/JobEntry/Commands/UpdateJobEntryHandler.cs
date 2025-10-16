@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PrashantApi.Application.DTOs.CommonDTO;
 
 namespace PrashantApi.Application.Feature.JobEntry.Commands
 {
@@ -28,11 +29,9 @@ namespace PrashantApi.Application.Feature.JobEntry.Commands
         {
             try
             {
-                // Map DTO to entity
                 var entity = _mapper.Map<JobEntryModel>(request.JobEntry);
                 entity.ModifiedOn = DateTime.UtcNow;
 
-                // Call repository update method
                 var result = await _repository.UpdateAsync(entity);
                 return result;
             }
