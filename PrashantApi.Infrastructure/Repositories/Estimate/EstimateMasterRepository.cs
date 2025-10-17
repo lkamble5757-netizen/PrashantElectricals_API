@@ -70,7 +70,7 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     foreach (var item in entity.Items)
                     {
                         tvp.Rows.Add(
-                            item.EstimatedId,
+                            estimateId,
                             item.ItemId,
                             item.PricePerItem,
                             item.ItemQty,
@@ -149,18 +149,18 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     tvp.Columns.Add("ItemQty", typeof(int));
                     tvp.Columns.Add("Total", typeof(decimal));
                     tvp.Columns.Add("IsActive", typeof(bool));
-                    tvp.Columns.Add("CreatedBy", typeof(int));
+                    tvp.Columns.Add("ModifiedBy", typeof(int));
 
                     foreach (var item in entity.Items)
                     {
                         tvp.Rows.Add(
-                            item.EstimatedId,
+                            entity.Id,
                             item.ItemId,
                             item.PricePerItem,
                             item.ItemQty,
                             item.Total,
                             true,
-                            entity.CreatedBy
+                            entity.ModifiedBy
                         );
                     }
 

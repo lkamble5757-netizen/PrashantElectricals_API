@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PrashantApi.Infrastructure.Repositories.RoleMaster
-{
+{   
     public class RoleMasterRepository(IDbConnectionString dbConnectionString) : IRoleMasterRepository
     {
         private readonly IDbConnectionString _dbConnectionString = dbConnectionString;

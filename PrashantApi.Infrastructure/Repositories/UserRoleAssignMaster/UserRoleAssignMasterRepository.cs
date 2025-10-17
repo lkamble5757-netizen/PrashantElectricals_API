@@ -28,13 +28,12 @@ namespace PrashantApi.Infrastructure.Repositories.UserRoleAssignMaster
                 table.Columns.Add("UserId", typeof(int));
                 table.Columns.Add("RoleId", typeof(int));
                 table.Columns.Add("CreatedBy", typeof(int));
-                table.Columns.Add("CreatedOn", typeof(string));
                 table.Columns.Add("IsActive", typeof(bool));
                 table.Columns.Add("IsObsolete", typeof(bool));
 
                 foreach (var roleId in entity.RoleId)
                 {
-                    table.Rows.Add(0, entity.UserId, roleId, entity.CreatedBy, "", entity.IsActive, entity.IsObsolete);
+                    table.Rows.Add(0, entity.UserId, roleId, entity.CreatedBy, entity.IsActive, entity.IsObsolete);
                 }
 
 
@@ -67,14 +66,13 @@ namespace PrashantApi.Infrastructure.Repositories.UserRoleAssignMaster
                 table.Columns.Add("UserId", typeof(int));
                 table.Columns.Add("RoleId", typeof(int));
                 table.Columns.Add("ModifiedBy", typeof(int));
-                table.Columns.Add("ModifiedOn", typeof(string));
                 table.Columns.Add("IsActive", typeof(bool));
                 table.Columns.Add("IsObsolete", typeof(bool));
 
 
                 foreach (var roleId in entity.RoleId)
                 {
-                    table.Rows.Add(entity.Id, entity.UserId, roleId, entity.ModifiedBy, "", entity.IsActive, entity.IsObsolete);
+                    table.Rows.Add(entity.Id, entity.UserId, roleId, entity.ModifiedBy, entity.IsActive, entity.IsObsolete);
                 }
     
 

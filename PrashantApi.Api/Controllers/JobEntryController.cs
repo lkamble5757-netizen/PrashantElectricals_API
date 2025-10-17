@@ -17,13 +17,6 @@ namespace PrashantApi.Api.Controllers
         private readonly IMediator _mediator = mediator;
         private readonly IJobEntryRepository _repository = repository;
 
-        //[HttpPost("Add")]
-        //public async Task<ActionResult<CommandResult>> Add(AddJobEntryCommand command)
-        //{
-        //    var result = await _mediator.Send(command);
-        //    return Ok(result);
-        //}
-
         [HttpPost("Add")]
         public async Task<ActionResult<CommandResult>> Add(JobEntryDto dto)
         {
