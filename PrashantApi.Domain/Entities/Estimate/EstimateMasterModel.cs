@@ -9,7 +9,7 @@ namespace PrashantApi.Domain.Entities.Estimate
     public class EstimateMasterModel  
     {
         public int Id { get; set; }
-        public string JobNo { get; set; } = string.Empty;
+        public int JobNo { get; set; }
         public DateTime EstimateDate { get; set; }
         public int EstimatedCustomer { get; set; } 
         public string? Remarks { get; set; }
@@ -20,8 +20,8 @@ namespace PrashantApi.Domain.Entities.Estimate
         public DateTime? ApprovalDate { get; set; }
         public string? ApprovedBy { get; set; }
         public bool IsActive { get; set; }
-        public int? CreatedBy { get; set; } 
-        public string? ModifiedBy { get; set; } 
+        public int CreatedBy { get; set; } 
+        public int ModifiedBy { get; set; } 
 
         public List<EstimatedPartDetailsModel> Items { get; set; } = new();
     }
