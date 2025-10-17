@@ -42,7 +42,7 @@ namespace PrashantApi.Infrastructure.Repositories.UserRoleAssignMaster
                 parameters.Add("@mode", "INSERT");
 
                var output =  await connection.ExecuteAsync(
-                    SqlConstants.UserRoleAssignMaster.usp_SaveUserRoleAssignMaster,
+                    SqlConstants.UserRoleAssignMaster.UserRoleAssignMasterr,
                     parameters,
                     commandType: CommandType.StoredProcedure
                 );
@@ -81,7 +81,7 @@ namespace PrashantApi.Infrastructure.Repositories.UserRoleAssignMaster
                 parameters.Add("@mode", "UPDATE");
 
                 var output = await connection.ExecuteAsync(
-                    SqlConstants.UserRoleAssignMaster.usp_SaveUserRoleAssignMaster,
+                    SqlConstants.UserRoleAssignMaster.UserRoleAssignMasterr,
                     parameters,
                     commandType: CommandType.StoredProcedure
                 );
@@ -94,31 +94,32 @@ namespace PrashantApi.Infrastructure.Repositories.UserRoleAssignMaster
             }
         }
 
-        public async Task<IEnumerable<dynamic>> GetAllAsync()
+        public async Task<dynamic> GetAllAsync()
         {
             using var connection = _dbConnectionString.GetConnection();
 
             var result = await connection.QueryAsync<dynamic>(
-                SqlConstants.UserRoleAssignMaster.usp_GetAllUserRoleAssignMasters,
+                SqlConstants.UserRoleAssignMaster.GetAllUserRoleAssignMasters,
                 commandType: CommandType.StoredProcedure
             );
 
             return result;
         }
 
-        public async Task<IEnumerable<dynamic>> GetByIdAsync(int id)
+        public async Task<dynamic> GetByIdAsync(int id)
         {
             using var connection = _dbConnectionString.GetConnection();
             var parameters = new DynamicParameters();
             parameters.Add("@Id", id);
 
             var result = await connection.QueryAsync<dynamic>(
-                SqlConstants.UserRoleAssignMaster.usp_GetUserRoleAssignMasterById,
+                SqlConstants.UserRoleAssignMaster.GetUserRoleAssignMasterById,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
 
             return result;
         }
+
     }
 }

@@ -14,7 +14,7 @@ namespace PrashantApi.Domain.Entities.RoleMaster
         public bool IsActive { get; set; }
         public string CreatedBy { get; set; } = string.Empty;
         public DateTime CreatedOn { get; set; }
-        public string? ModifiedBy { get; set; }
-        public DateTime? ModifiedOn { get; set; }
+        public int ModifiedBy { get; set; }
+        public DateTime ModifiedOn { get; set; }
     }
 }

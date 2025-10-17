@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using PrashantApi.Application.DTOs.CommonDTO;
+using System;
 using System.Collections.Generic;
 
 namespace PrashantApi.Application.DTOs.RepairWork
 {
-    public class RepairWorkDto
+    public class RepairWorkDto : BaseDTO
     {
         public int Id { get; set; }
         public int jobNo { get; set; }
@@ -14,26 +16,19 @@ namespace PrashantApi.Application.DTOs.RepairWork
         public decimal LabourCharges { get; set; }
         public int totalrepairwork { get; set; }
         public int Status { get; set; }
-        public bool IsActive { get; set; }
-        public int CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public string? ModifiedBy { get; set; }
-        public DateTime? ModifiedOn { get; set; }
+
     }
 
-    public class RepairWorkItemDto
+    public class RepairWorkItemDto : BaseDTO
     {
 
+        public int Id { get; set; }
         public int RepairWorkId { get; set; }
         public int ItemId { get; set; }
-        public string itemQty { get; set; }
+        public int itemQty { get; set; }
         public decimal pricePerItem { get; set; }
-        public decimal total { get; set; }
-        public bool IsActive { get; set; }
-        public int CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public string? ModifiedBy { get; set; }
-        public DateTime? ModifiedOn { get; set; }
+        public int total { get; set; }
+
 
     }
 }

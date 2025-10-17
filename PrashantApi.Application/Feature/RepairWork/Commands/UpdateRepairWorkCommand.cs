@@ -9,9 +9,9 @@ namespace PrashantApi.Application.Feature.RepairWork.Commands
 {
     public class UpdateRepairWorkCommand : IRequest<CommandResult>
     {
-        
+
         public RepairWorkDto RepairWork { get; set; } = default!;
     }
 }
 
-   
+

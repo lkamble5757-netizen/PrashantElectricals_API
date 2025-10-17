@@ -29,7 +29,6 @@ namespace PrashantApi.Application.Feature.Estimate.Commands
             try
             {
                 var entity = _mapper.Map<EstimateMasterModel>(request.EstimateMaster);
-                //entity.CreatedOn = DateTime.UtcNow;
 
                 var result = await _repository.AddAsync(entity);
                 return result;

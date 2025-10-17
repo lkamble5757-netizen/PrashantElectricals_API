@@ -13,9 +13,9 @@ namespace PrashantApi.Domain.Entities.UserRoleAssignMaster
         public List<int> RoleId { get; set; } = new();
         public bool IsActive { get; set; }
         public bool IsObsolete { get; set; }
-        public int CreatedBy { get; set; } = 0;
+        public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public string? ModifiedBy { get; set; }
-        public DateTime? ModifiedOn { get; set; }
+        public int ModifiedBy { get; set; }
+        public DateTime ModifiedOn { get; set; }
     }
 }

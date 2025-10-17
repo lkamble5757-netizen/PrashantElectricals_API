@@ -1,25 +1,40 @@
-﻿using System;
+﻿using AutoMapper;
+using MediatR;
+using PrashantApi.Application.DTOs.RoleMaster;
+using PrashantApi.Application.Interfaces;
+using PrashantEle.API.PrashantEle.Application.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
-using PrashantApi.Application.DTOs.RoleMaster;
-using PrashantApi.Application.Interfaces;
+using PrashantApi.Domain.Entities.RoleMaster;
+using PrashantApi.Application.Interfaces.RoleMaster;
 
 namespace PrashantApi.Application.Feature.RoleMaster.Commands
 {
-    public class UpdateRoleMasterHandler(IRoleMasterService service, IMapper mapper)
-        : IRequestHandler<UpdateRoleMasterCommand, int>
+    public class UpdateRoleMasterHandler : IRequestHandler<UpdateRoleMasterCommand, CommandResult>
     {
-        private readonly IRoleMasterService _service = service;
-        private readonly IMapper _mapper = mapper;
+        private readonly IRoleMasterRepository _repository;
+        private readonly IMapper _mapper;
 
-        public async Task<int> Handle(UpdateRoleMasterCommand request, CancellationToken cancellationToken)
+        public UpdateRoleMasterHandler(IRoleMasterRepository repository, IMapper mapper)
         {
-            var dto = _mapper.Map<RoleMasterDto>(request);
-            return await _service.UpdateAsync(dto);
+            _repository = repository;
+            _mapper = mapper;
+        }
+
+        public async Task<CommandResult> Handle(UpdateRoleMasterCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var entity = _mapper.Map<RoleMasterModel>(request.RoleMaster);
+                return await _repository.UpdateAsync(entity);
+            }
+            catch (Exception ex)
+            {
+                return CommandResult.Fail($"Error updating Role Master: {ex.Message}");
+            }
         }
     }
 }

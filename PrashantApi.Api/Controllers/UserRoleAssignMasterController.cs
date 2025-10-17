@@ -1,90 +1,67 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MediatR;
 using PrashantApi.Application.DTOs.UserRoleAssignMaster;
 using PrashantApi.Application.Feature.UserRoleAssignMaster.Commands;
 using PrashantApi.Application.Interfaces;
+using PrashantApi.Domain.Entities.UserRoleAssignMaster;
+using PrashantApi.Application.Interfaces.UserRoleAssignMaster;
+using PrashantEle.API.PrashantEle.Application.Common;
 
 namespace PrashantApi.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserRoleAssignMasterController(IMediator mediator, IUserRoleAssignMasterService service) : ControllerBase
+    public class UserRoleAssignMasterController(IMediator mediator, IUserRoleAssignMasterRepository repository) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
-        private readonly IUserRoleAssignMasterService _service = service;
+        private readonly IUserRoleAssignMasterRepository _repository = repository;
+
 
         [HttpPost("Add")]
-        public async Task<ActionResult> Add(AddUserRoleAssignMasterCommand command)
+        public async Task<ActionResult<CommandResult>> Create(UserRoleAssignMasterDto dto)
         {
-            try
-            {
-                if (command == null)
-                    return BadRequest("Invalid request body.");
+            if (dto == null)
+                return BadRequest(CommandResult.Fail("Invalid UserRoleAssignMaster data."));
 
+            var command = new AddUserRoleAssignMasterCommand { UserRoleAssignMaster = dto };
+            var result = await _mediator.Send(command);
 
-                var dto = new UserRoleAssignMasterDto
-                {
-                    UserId = command.UserId,
-                    RoleId = command.RoleId,
-                    IsActive = command.IsActive,
-                    IsObsolete = command.IsObsolete,
-                    CreatedBy = command.CreatedBy
-                };
-
-                var response = await _service.AddAsync(dto);
-
-                if (!response.IsSuccess)
-                    return BadRequest(response.FailureReason);
-
-                return Ok(response);
-            }
-            catch (Exception)
-            {
-                      throw; 
-            }
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
+
 
         [HttpPut("Update")]
-        public async Task<ActionResult> Update([FromBody] UpdateUserRoleAssignMasterCommand command)
+        public async Task<ActionResult<CommandResult>> Update(UserRoleAssignMasterDto dto)
         {
-            if (command == null)
-                return BadRequest("Invalid request body.");
+            if (dto == null || dto.Id <= 0)
+                return BadRequest(CommandResult.Fail("Invalid UserRoleAssignMaster data."));
 
+            var command = new UpdateUserRoleAssignMasterCommand { UserRoleAssignMaster = dto };
+            var result = await _mediator.Send(command);
 
-            var dto = new UserRoleAssignMasterDto
-            {
-                Id = command.Id,
-                UserId = command.UserId,
-                RoleId = command.RoleId,
-                IsActive = command.IsActive,
-                IsObsolete = command.IsObsolete,
-                ModifiedBy = command.ModifiedBy
-            };
-
-            var response = await _service.UpdateAsync(dto);
-
-            if (!response.IsSuccess)
-                return BadRequest(response.FailureReason);
-
-            return Ok(response);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
+
         [HttpGet("GetAllPagging")]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult<dynamic>> GetAll()
         {
-            var roles = await _service.GetAllAsync();
+            var roles = await _repository.GetAllAsync();
             return Ok(roles);
         }
 
+
         [HttpGet("GetBy/{id}")]
-        public async Task<ActionResult> GetById(int id)
+        public async Task<ActionResult<dynamic>> GetById(int id)
         {
-            var role = await _service.GetByIdAsync(id);
-            if (role == null || !role.Any())
+            var role = await _repository.GetByIdAsync(id);
+            if (role == null || ((ICollection<dynamic>)role).Count == 0)
                 return NotFound($"No UserRoleAssign found with Id {id}");
 
             return Ok(role);
         }
+
     }
 }
+                                    

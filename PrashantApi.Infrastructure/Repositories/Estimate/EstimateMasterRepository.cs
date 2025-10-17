@@ -41,7 +41,7 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                 masterParams.Add("@Mode", "INSERT");
 
                 await conn.ExecuteAsync(
-                    SqlConstants.Estimate.usp_Estimate,
+                    SqlConstants.Estimate.EstimateMaster,
                     masterParams, 
                     commandType: CommandType.StoredProcedure
                 );
@@ -60,7 +60,7 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     // Convert List to DataTable for TVP
                     var tvp = new DataTable();
                     tvp.Columns.Add("EstimatedId", typeof(int));
-                    tvp.Columns.Add("ItemId", typeof(int));
+                    tvp.Columns.Add("ItemId", typeof(string));
                     tvp.Columns.Add("PricePerItem", typeof(decimal));
                     tvp.Columns.Add("ItemQty", typeof(int));
                     tvp.Columns.Add("Total", typeof(decimal));
@@ -85,7 +85,7 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     detailParams.Add("@mode", "INSERT");
 
                     await conn.ExecuteAsync(
-                        SqlConstants.Estimate.usp_EstimatedPartDetails,
+                        SqlConstants.Estimate.EstimatedPartDetails,
                         detailParams, 
                         commandType: CommandType.StoredProcedure
                     );
@@ -123,7 +123,7 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                 parameters.Add("@Mode", "UPDATE");
 
                 await conn.ExecuteAsync(
-                    SqlConstants.Estimate.usp_Estimate,
+                    SqlConstants.Estimate.EstimateMaster,
                     parameters,
                     commandType: CommandType.StoredProcedure
                 );
@@ -144,7 +144,7 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     // Convert List to DataTable for TVP
                     var tvp = new DataTable();
                     tvp.Columns.Add("EstimatedId", typeof(int));
-                    tvp.Columns.Add("ItemId", typeof(int));
+                    tvp.Columns.Add("ItemId", typeof(string));
                     tvp.Columns.Add("PricePerItem", typeof(decimal));
                     tvp.Columns.Add("ItemQty", typeof(int));
                     tvp.Columns.Add("Total", typeof(decimal));
@@ -169,7 +169,7 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     detailParams.Add("@mode", "Update");
 
                     await conn.ExecuteAsync(
-                        SqlConstants.Estimate.usp_EstimatedPartDetails,
+                        SqlConstants.Estimate.EstimatedPartDetails,
                         detailParams,
                         commandType: CommandType.StoredProcedure
                     );
@@ -187,21 +187,34 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
         {
             using var conn = _dbConnectionString.GetConnection();
             return await conn.QueryAsync(
-                SqlConstants.Estimate.usp_GetAllEstimates,
+                SqlConstants.Estimate.GetAllEstimateMaster,
                 commandType: CommandType.StoredProcedure
             );
         }
+
 
         public async Task<dynamic> GetByIdAsync(int id)
         {
             using var conn = _dbConnectionString.GetConnection();
             var parameters = new DynamicParameters();
             parameters.Add("@Id", id);
-            return await conn.QueryAsync(
-                SqlConstants.Estimate.usp_GetEstimateById,
+
+            using var multi = await conn.QueryMultipleAsync(
+                SqlConstants.Estimate.GetEstimateMasterById,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
+
+            var master = await multi.ReadFirstOrDefaultAsync<EstimateMasterModel>();
+
+            if (master == null)
+                return null;
+
+            var details = (await multi.ReadAsync<EstimatedPartDetailsModel>()).ToList();
+
+            master.Items = details;
+
+            return master;
         }
 
         public async Task<dynamic> GetJobNoByCustomerID(int id)
@@ -210,7 +223,7 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
             var parameters = new DynamicParameters();
             parameters.Add("@Id", id);
             return await conn.QueryAsync(
-                SqlConstants.Estimate.usp_GetJobNoByCustomerID,
+                SqlConstants.Estimate.GetJobNoByCustomerID,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
