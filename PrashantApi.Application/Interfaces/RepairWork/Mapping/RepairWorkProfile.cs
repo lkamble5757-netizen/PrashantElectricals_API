@@ -21,6 +21,6 @@ namespace PrashantApi.Application.Interfaces.RepairWork.Mapping
             CreateMap<RepairWorkModel, RepairWorkDto>();
             CreateMap<RepairWorkItemModel, RepairWorkItemDto>();
         }
-       
+
     }
 }
