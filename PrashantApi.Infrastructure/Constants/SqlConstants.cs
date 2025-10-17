@@ -70,7 +70,7 @@
 
             // ✅ New stored procedures for child RepairWorkItem table
             public const string usp_SaveRepairWorkItem = "dbo.usp_SaveRepairWorkDetails";
-            public const string usp_DeleteRepairWorkItemsByRepairWorkId = "dbo.usp_GetAllRepairWorkDetails";
+            public const string usp_SaveRepairWorkDetails = "dbo.usp_SaveRepairWorkDetails";
             public const string usp_GetRepairWorkItemsByRepairWorkId = "dbo.usp_GetRepairWorkDetailsById";
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Http.HttpResults;
 using PrashantApi.Application.Interfaces.RepairWork;
 using PrashantApi.Domain.Entities.RepairWork;
 using PrashantApi.Infrastructure.Connection;
@@ -54,17 +55,16 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
                 table.Columns.Add("Id", typeof(int));
                 table.Columns.Add("RepairWorkId", typeof(int));
                 table.Columns.Add("ItemId", typeof(int));
-                table.Columns.Add("itemQty", typeof(string));
+                table.Columns.Add("itemQty", typeof(int));
                 table.Columns.Add("pricePerItem", typeof(decimal));
-                table.Columns.Add("total", typeof(decimal));
+                table.Columns.Add("total", typeof(int));
                 table.Columns.Add("IsActive", typeof(bool));
                 table.Columns.Add("CreatedBy", typeof(int));
-                table.Columns.Add("CreatedOn", typeof(DateTime));
 
 
                 foreach (var item in entity.Items)
                 {
-                    table.Rows.Add(0,repairWorkId, item.ItemId, item.itemQty, item.PricePerItem,  item.Total, 1, item.CreatedBy, item.CreatedOn);
+                    table.Rows.Add(0, item.RepairWorkId, item.ItemId, item.itemQty, item.pricePerItem, item.total, 1, item.CreatedBy);
 
                 }
 
@@ -89,11 +89,14 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
             }
         }
 
+
+
+
         public async Task<CommandResult> UpdateAsync(RepairWorkModel entity)
         {
             using var connection = _dbConnectionString.GetConnection();
             connection.Open();
-            using var transaction = connection.BeginTransaction();
+            //using var transaction = connection.BeginTransaction();
 
             try
             {
@@ -108,62 +111,61 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
                     entity.totalrepairwork,
                     entity.Status,
                     entity.ModifiedBy,
-                    mode = "UPDATE"
+                    @Mode = "UPDATE"
                 });
 
                 await connection.ExecuteAsync(
                     SqlConstants.RepairWork.usp_SaveRepairWork,
                     parameters,
-                    transaction,
+                    //transaction,
                     commandType: CommandType.StoredProcedure
                 );
 
                 // Delete old items
-                await connection.ExecuteAsync(
-                    SqlConstants.RepairWork.usp_DeleteRepairWorkItemsByRepairWorkId,
-                    new { RepairWorkId = entity.Id },
-                    transaction,
-                    commandType: CommandType.StoredProcedure
-                );
+                //await connection.ExecuteAsync(
+                //    SqlConstants.RepairWork.usp_SaveRepairWorkDetails,
+                //    new { RepairWorkId = entity.Id },
+                //    transaction,
+                //    commandType: CommandType.StoredProcedure
+                //);
 
                 // Insert new ones
                 var table = new DataTable();
                 table.Columns.Add("Id", typeof(int));
                 table.Columns.Add("RepairWorkId", typeof(int));
                 table.Columns.Add("ItemId", typeof(int));
-                table.Columns.Add("itemQty", typeof(string));
-                table.Columns.Add("priceperitem", typeof(decimal));
-                table.Columns.Add("total", typeof(decimal));
+                table.Columns.Add("itemQty", typeof(int));
+                table.Columns.Add("pricePerItem", typeof(decimal));
+                table.Columns.Add("total", typeof(int));
                 table.Columns.Add("IsActive", typeof(bool));
-                table.Columns.Add("CreatedBy", typeof(int));
-                table.Columns.Add("CreatedOn", typeof(DateTime));
+                table.Columns.Add("ModifiedBy", typeof(int));
 
                 foreach (var item in entity.Items)
                 {
-                    table.Rows.Add(item.Id, item.ItemId, item.PricePerItem, item.itemQty, item.Total, item.CreatedBy, item.ModifiedBy);
-
+                    table.Rows.Add(item.Id, item.RepairWorkId, item.ItemId, item.itemQty, item.pricePerItem, item.total, 1, item.ModifiedBy);
                 }
 
                 var repairWorks = new DynamicParameters();
                 repairWorks.Add("@RepairWorkDetails", table.AsTableValuedParameter("dbo.Type_RepairWorkDetails"));
-                repairWorks.Add(" @Mode", "UPDATE");
+                repairWorks.Add("@Mode", "UPDATE"); // ✅ Removed space before @Mode
+
                 await connection.ExecuteAsync(
-                        SqlConstants.RepairWork.usp_SaveRepairWorkItem,
-                        repairWorks,
+                    SqlConstants.RepairWork.usp_SaveRepairWorkItem, // ✅ Call correct SP
+                    repairWorks,
+                    commandType: CommandType.StoredProcedure
+                );
 
-                        commandType: CommandType.StoredProcedure
-                    );
 
-
-                transaction.Commit();
+                //transaction.Commit();
                 return CommandResult.Success;
             }
             catch (Exception ex)
             {
-                transaction.Rollback();
+                //transaction.Rollback();
                 return CommandResult.Fail(ex.Message);
             }
         }
+
 
         public async Task<List<RepairWorkModel>> GetAllAsync()
         {
