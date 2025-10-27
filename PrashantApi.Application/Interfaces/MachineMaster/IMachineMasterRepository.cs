@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PrashantApi.Domain.Entities.MachineMaster;
+using PrashantEle.API.PrashantEle.Application.Common;
 
 namespace PrashantApi.Application.Interfaces.MachineMaster
 {
     public interface IMachineMasterRepository
     {
-        Task<int> AddAsync(MachineMasterModel entity);
-        Task<int> UpdateAsync(MachineMasterModel entity);
-        Task<List<MachineMasterModel>> GetAllAsync();
-        Task<MachineMasterModel> GetByIdAsync(int id);
+        Task<CommandResult> AddAsync(MachineMasterModel entity);
+        Task<CommandResult> UpdateAsync(MachineMasterModel entity);
+        Task<dynamic> GetAllAsync();
+        Task<dynamic> GetByIdAsync(int id);
     }
 }
-

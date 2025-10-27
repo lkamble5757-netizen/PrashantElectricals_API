@@ -93,8 +93,6 @@ public static class DependencyInjection
         services.AddScoped<ISqlDbConnection, SqlDbConnection>();
         services.AddScoped<IItemMasterService, ItemMasterService>();
         services.AddScoped<ICustomerMasterService, CustomerMasterService>();
-        services.AddScoped<IMachineMasterService, MachineMasterService>();
-        services.AddAutoMapper(typeof(MachineMasterProfile).Assembly);
         services.AddTransient<IReferenceDataMasterService, ReferenceDataMasterService>();
 
 

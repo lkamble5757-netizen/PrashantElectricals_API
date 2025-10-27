@@ -17,13 +17,10 @@ namespace PrashantApi.Application.Interfaces.MachineMaster.Mapping
     {
         public MachineMasterProfile()
         {
-            // Command → DTO
             CreateMap<AddMachineMasterCommand, MachineMasterDto>();
             CreateMap<UpdateMachineMasterCommand, MachineMasterDto>();
 
-            // DTO → Domain Model
             CreateMap<MachineMasterDto, MachineMasterModel>();
-            // If needed (for queries), reverse map
             CreateMap<MachineMasterModel, MachineMasterDto>();
         }
     }

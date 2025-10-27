@@ -39,6 +39,14 @@
             public const string GetRoleWiseMenuMasterById = "dbo.usp_GetRoleWiseMenuMasterById";
         }
 
+        public static class MachineMaster
+        {
+            public const string MachineMasterr = "dbo.usp_SaveMachineMaster";
+            public const string GetAllMachineMaster = "dbo.usp_GetAllMachines";
+            public const string GetMachineMasterById = "dbo.usp_GetMachineById";
+        }
+
+
         public static class UserRoleAssignMaster
         {
             public const string UserRoleAssignMasterr = "dbo.usp_SaveUserRoleAssignMaster";
