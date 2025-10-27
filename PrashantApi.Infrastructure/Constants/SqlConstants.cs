@@ -34,9 +34,9 @@
 
         public static class RoleWiseMenuMaster
         {
-            public const string usp_SaveRoleWiseMenuMaster = "dbo.usp_SaveRoleWiseMenuMaster";
-            public const string usp_GetAllRoleWiseMenuMasters = "dbo.usp_GetAllRoleWiseMenuMasters";
-            public const string usp_GetRoleWiseMenuMasterById = "dbo.usp_GetRoleWiseMenuMasterById";
+            public const string RoleWiseMenuMasterr = "dbo.usp_SaveRoleWiseMenuMaster";
+            public const string GetAllRoleWiseMenuMasters = "dbo.usp_GetAllRoleWiseMenuMasters";
+            public const string GetRoleWiseMenuMasterById = "dbo.usp_GetRoleWiseMenuMasterById";
         }
 
         public static class UserRoleAssignMaster

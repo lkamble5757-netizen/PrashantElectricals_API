@@ -4,77 +4,62 @@ using MediatR;
 using PrashantApi.Application.DTOs.RoleWiseMenuMaster;
 using PrashantApi.Application.Feature.RoleWiseMenuMaster.Commands;
 using PrashantApi.Application.Interfaces;
+using PrashantApi.Application.Interfaces.RoleWiseMenuMaster;
+using PrashantEle.API.PrashantEle.Application.Common;
+
 
 namespace PrashantApi.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoleWiseMenuMasterController(IMediator mediator, IRoleWiseMenuMasterService service) : ControllerBase
+    public class RoleWiseMenuMasterController(IMediator mediator, IRoleWiseMenuMasterRepository repository) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
-        private readonly IRoleWiseMenuMasterService _service = service;
+        private readonly IRoleWiseMenuMasterRepository _repository = repository;
+
 
         [HttpPost("Add")]
-        public async Task<ActionResult> Add(AddRoleWiseMenuMasterCommand command)
+        public async Task<ActionResult<CommandResult>> Create(RoleWiseMenuMasterDto dto)
         {
-            var dto = new RoleWiseMenuMasterDto
-            {
-                RoleId = command.RoleId,
-                MenuId = command.MenuId,
-                IsActive = command.IsActive,
-                IsObsolete = command.IsObsolete,
-                CreatedBy = command.CreatedBy
-            };
+            if (dto == null)
+                return BadRequest(CommandResult.Fail("Invalid RoleWiseMenuMaster data."));
 
-            var response = await _service.AddAsync(dto);
+            var command = new AddRoleWiseMenuMasterCommand { RoleWiseMenuMaster = dto };
+            var result = await _mediator.Send(command);
 
-            if (!response.IsSuccess)
-                return BadRequest(response.FailureReason);
-
-            return Ok(response);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
+
 
         [HttpPut("Update")]
-        public async Task<ActionResult> Update([FromBody] UpdateRoleWiseMenuMasterCommand command)
+        public async Task<ActionResult<CommandResult>> Update(RoleWiseMenuMasterDto dto)
         {
-            if (command == null)
-                return BadRequest("Invalid request body.");
+            if (dto == null || dto.Id <= 0)
+                return BadRequest(CommandResult.Fail("Invalid RoleWiseMenuMaster data."));
 
-            var dto = new RoleWiseMenuMasterDto
-            {
-                Id = command.Id,
-                RoleId = command.RoleId,
-                MenuId = command.MenuId,
-                IsActive = command.IsActive,
-                IsObsolete = command.IsObsolete,
-                ModifiedBy = command.ModifiedBy
-            };
+            var command = new UpdateRoleWiseMenuMasterCommand { RoleWiseMenuMaster = dto };
+            var result = await _mediator.Send(command);
 
-            var response = await _service.UpdateAsync(dto);
-
-            if (!response.IsSuccess)
-                return BadRequest(response.FailureReason);
-
-            return Ok(response);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
-
 
 
         [HttpGet("GetAllPagging")]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult<dynamic>> GetAll()
         {
-            var roles = await _service.GetAllAsync();
-            return Ok(roles);   
+            var result = await _repository.GetAllAsync();
+            return Ok(result);
         }
 
-        [HttpGet("GetBy/{id}")]
-        public async Task<ActionResult> GetById(int id)
-        {
-            var role = await _service.GetByIdAsync(id);
-            if (role == null || role.Count == 0) // ✅ FIXED: Handle empty list
-                return NotFound($"No role found with Id {id}");
 
-            return Ok(role);
+        [HttpGet("GetBy/{id}")]
+        public async Task<ActionResult<dynamic>> GetById(int id)
+        {
+            var result = await _repository.GetByIdAsync(id);
+            if (result == null || ((ICollection<dynamic>)result).Count == 0)
+                return NotFound($"No RoleWiseMenuMaster found with Id {id}");
+
+            return Ok(result);
         }
     }
 }
