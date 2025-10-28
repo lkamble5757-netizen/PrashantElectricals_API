@@ -8,6 +8,8 @@ using PrashantApi.Application.Interfaces.CustomerMaster;
 using PrashantApi.Domain.Entities.CustomerMaster;
 using PrashantApi.Infrastructure.Connection;
 using System.Data;
+using PrashantEle.API.PrashantEle.Application.Common;
+using PrashantEle.API.PrashantEle.Infrastructure.Constants;
 
 namespace PrashantApi.Infrastructure.Repositories.CustomerMaster
 {
@@ -15,74 +17,93 @@ namespace PrashantApi.Infrastructure.Repositories.CustomerMaster
     {
         private readonly IDbConnectionString _dbConnectionString = dbConnectionString;
 
-        public async Task<int> AddAsync(CustomerMasterModel entity)
+        public async Task<CommandResult> AddAsync(CustomerMasterModel entity)
+        {
+            try
+            {
+                using var connection = _dbConnectionString.GetConnection();
+
+                var parameters = new DynamicParameters();
+                parameters.Add("@Id", 0);
+                parameters.Add("@CustName", entity.CustName);
+                parameters.Add("@CustEmail", entity.CustEmail);
+                parameters.Add("@CustPhoneNo", entity.CustPhoneNo);
+                parameters.Add("@CustAddress", entity.CustAddress);
+                parameters.Add("@GSTNo", entity.GSTNo);
+                parameters.Add("@CreatedBy", entity.CreatedBy);
+                parameters.Add("@IsActive", entity.IsActive);
+                parameters.Add("@mode", "INSERT");
+
+                var output = await connection.ExecuteAsync(
+                    SqlConstants.CustomerMaster.CustomerMasterr,
+                    parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return CommandResult.SuccessWithOutput(output);
+            }
+            catch (Exception ex)
+            {
+                return CommandResult.Fail(ex.Message);
+            }
+        }
+
+        public async Task<CommandResult> UpdateAsync(CustomerMasterModel entity)
+        {
+            try
+            {
+                using var connection = _dbConnectionString.GetConnection();
+
+                var parameters = new DynamicParameters();
+                parameters.Add("@Id", entity.Id);
+                parameters.Add("@CustName", entity.CustName);
+                parameters.Add("@CustEmail", entity.CustEmail);
+                parameters.Add("@CustPhoneNo", entity.CustPhoneNo);
+                parameters.Add("@CustAddress", entity.CustAddress);
+                parameters.Add("@GSTNo", entity.GSTNo);
+                parameters.Add("@ModifiedBy", entity.ModifiedBy);
+                parameters.Add("@IsActive", entity.IsActive);
+                parameters.Add("@mode", "UPDATE");
+
+                var output = await connection.ExecuteAsync(
+                    SqlConstants.CustomerMaster.CustomerMasterr,
+                    parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return CommandResult.SuccessWithOutput(output);
+            }
+            catch (Exception ex)
+            {
+                return CommandResult.Fail(ex.Message);
+            }
+        }
+
+        public async Task<dynamic> GetAllAsync()
         {
             using var connection = _dbConnectionString.GetConnection();
 
-            var parameters = new DynamicParameters();
-            parameters.Add("@Cust_Id", 0);
-            parameters.Add("@Cust_Name", entity.Cust_Name);
-            parameters.Add("@Cust_Email", entity.Cust_Email);
-            parameters.Add("@Cust_PhoneNo", entity.Cust_PhoneNo);
-            parameters.Add("@Cust_Address", entity.Cust_Address);
-            parameters.Add("@GSTNo", entity.GSTNo);
-            parameters.Add("@CreatedBy", entity.CreatedBy);
-            parameters.Add("@IsActive", entity.IsActive);
-            parameters.Add("@mode", "INSERT");
+            var result = await connection.QueryAsync<dynamic>(
+                SqlConstants.CustomerMaster.GetAllCustomerMaster,
+                commandType: CommandType.StoredProcedure
+            );
 
-            return await connection.QuerySingleAsync<int>(
-                "usp_SaveCustomer",
+            return result;
+        }
+
+        public async Task<dynamic> GetByIdAsync(int id)
+        {
+            using var connection = _dbConnectionString.GetConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", id);
+
+            var result = await connection.QueryAsync<dynamic>(
+                SqlConstants.CustomerMaster.GetCustomerMasterById,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
-        }
 
-        public async Task<int> UpdateAsync(CustomerMasterModel entity)
-        {
-            using var connection = _dbConnectionString.GetConnection();
-
-            var parameters = new DynamicParameters();
-            parameters.Add("@Cust_Id", entity.Cust_Id);
-            parameters.Add("@Cust_Name", entity.Cust_Name);
-            parameters.Add("@Cust_Email", entity.Cust_Email);
-            parameters.Add("@Cust_PhoneNo", entity.Cust_PhoneNo);
-            parameters.Add("@Cust_Address", entity.Cust_Address);
-            parameters.Add("@GSTNo", entity.GSTNo);
-            parameters.Add("@ModifiedBy", entity.ModifiedBy);
-            parameters.Add("@IsActive", entity.IsActive);
-            parameters.Add("@mode", "UPDATE");
-
-            return await connection.QuerySingleAsync<int>(
-                "usp_SaveCustomer",
-                parameters,
-                commandType: CommandType.StoredProcedure
-            );
-        }
-
-        public async Task<List<CustomerMasterModel>> GetAllAsync()
-        {
-            using var connection = _dbConnectionString.GetConnection();
-
-            var result = await connection.QueryAsync<CustomerMasterModel>(
-                "usp_GetAllCustomers",
-                commandType: CommandType.StoredProcedure
-            );
-
-            return result.AsList();
-        }
-
-        public async Task<CustomerMasterModel> GetByIdAsync(int id)
-        {
-            using var connection = _dbConnectionString.GetConnection();
-
-            var parameters = new DynamicParameters();
-            parameters.Add("@Cust_Id", id);
-
-            return await connection.QueryFirstOrDefaultAsync<CustomerMasterModel>(
-                "usp_GetCustomerById",
-                parameters,
-                commandType: CommandType.StoredProcedure
-            );
+            return result;
         }
     }
 }

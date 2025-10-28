@@ -11,21 +11,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PrashantApi.Application.Interfaces.BranchMaster.Mapping
+namespace PrashantApi.Application.Interfaces.CustomerMaster.Mapping
 {
     public class CustomerMasterProfile : Profile
     {
         public CustomerMasterProfile()
         {
-            // CustomerMaster mappings
             CreateMap<CustomerMasterDto, CustomerMasterModel>().ReverseMap();
-
-            CreateMap<AddCustomerMasterCommand, CustomerMasterDto>().ReverseMap();
-            CreateMap<UpdateCustomerMasterCommand, CustomerMasterDto>().ReverseMap();
-
-            CreateMap<AddCustomerMasterCommand, CustomerMasterModel>().ReverseMap();
-            CreateMap<UpdateCustomerMasterCommand, CustomerMasterModel>().ReverseMap();
-
+            CreateMap<AddCustomerMasterCommand, CustomerMasterDto>();
+            CreateMap<UpdateCustomerMasterCommand, CustomerMasterDto>();
+            CreateMap<CustomerMasterModel, CustomerMasterDto>().ReverseMap();
         }
     }
 }

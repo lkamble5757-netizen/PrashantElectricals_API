@@ -4,18 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PrashantApi.Application.DTOs.CustomerMaster;
+using PrashantEle.API.PrashantEle.Application.Common;
 
 namespace PrashantApi.Application.Feature.CustomerMaster.Commands
 {
-    public class UpdateCustomerMasterCommand : IRequest<int>
+    public class UpdateCustomerMasterCommand : IRequest<CommandResult>
     {
-        public int Cust_Id { get; set; }
-        public string Cust_Name { get; set; } = string.Empty;
-        public string? Cust_Email { get; set; }
-        public string? Cust_PhoneNo { get; set; }
-        public string? Cust_Address { get; set; }
-        public string? GSTNo { get; set; }
-        public string? ModifiedBy { get; set; }
-        public bool IsActive { get; set; }
+        public CustomerMasterDto Customer { get; set; } = default!;
     }
 }

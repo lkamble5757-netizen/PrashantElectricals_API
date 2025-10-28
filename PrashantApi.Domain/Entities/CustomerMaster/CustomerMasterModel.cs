@@ -9,16 +9,16 @@ namespace PrashantApi.Domain.Entities.CustomerMaster
 {
     public class CustomerMasterModel
     {
-        public int Cust_Id { get; set; }
-        public string Cust_Name { get; set; } = string.Empty;
-        public string? Cust_Email { get; set; }
-        public string? Cust_PhoneNo { get; set; }
-        public string? Cust_Address { get; set; }
+        public int Id { get; set; }
+        public string CustName { get; set; } = string.Empty;
+        public string? CustEmail { get; set; }
+        public string? CustPhoneNo { get; set; }
+        public string? CustAddress { get; set; }
         public string? GSTNo { get; set; }
-        public string CreatedBy { get; set; } = string.Empty;
+        public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public string? ModifiedBy { get; set; }
-        public DateTime? ModifiedOn { get; set; }
+        public int ModifiedBy { get; set; }
+        public DateTime ModifiedOn { get; set; }
         public bool IsActive { get; set; }
     }
 }
