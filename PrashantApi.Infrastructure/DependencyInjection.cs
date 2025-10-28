@@ -92,7 +92,6 @@ public static class DependencyInjection
         services.AddScoped<ISqlServerDataAccess, SqlServerDataAccess>();
         services.AddScoped<ISqlDbConnection, SqlDbConnection>();
         services.AddScoped<IItemMasterService, ItemMasterService>();
-        services.AddScoped<ICustomerMasterService, CustomerMasterService>();
         services.AddTransient<IReferenceDataMasterService, ReferenceDataMasterService>();
 
 

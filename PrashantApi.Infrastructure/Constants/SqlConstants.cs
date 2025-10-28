@@ -25,6 +25,14 @@
             public const string usp_UserRegister = "dbo.usp_UserRegister";
         }
 
+        public static class CustomerMaster
+        {
+            public const string CustomerMasterr = "dbo.usp_SaveCustomerMaster";
+            public const string GetAllCustomerMaster = "dbo.usp_GetAllCustomerMaster";
+            public const string GetCustomerMasterById = "dbo.usp_GetCustomerMasterById";
+        }
+
+
         public static class RoleMaster
         {
             public const string RoleMasterr = "dbo.usp_SaveRoleMaster";
