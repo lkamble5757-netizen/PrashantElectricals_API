@@ -63,8 +63,27 @@
 
             // ✅ New stored procedures for child RepairWorkItem table
             public const string usp_SaveRepairWorkItem = "dbo.usp_SaveRepairWorkDetails";
-            public const string usp_DeleteRepairWorkItemsByRepairWorkId = "dbo.usp_GetAllRepairWorkDetails";
+            public const string usp_SaveRepairWorkDetails = "dbo.usp_SaveRepairWorkDetails";
             public const string usp_GetRepairWorkItemsByRepairWorkId = "dbo.usp_GetRepairWorkDetailsById";
+        }
+
+
+public static class InvoiceMaster
+        {
+            // ✅ Stored procedure for main InvoiceMaster table
+            public const string SaveInvoiceMaster = "dbo.usp_SaveInvoiceMaster";
+            public const string GetAllInvoiceMaster = "dbo.usp_GetAllInvoiceMaster";
+            public const string GetInvoiceMasterById = "dbo.usp_GetInvoiceMasterById";
+
+            // ✅ Stored procedures for child InvoiceJobDetails
+            public const string SaveInvoiceJobDetails = "dbo.usp_SaveInvoiceJobDetails";
+          
+            // ✅ Stored procedures for child InvoiceItemDetails
+            public const string SaveInvoiceItemDetails = "dbo.usp_SaveInvoiceItemDetails";
+
+            public const string GetCustomerWiseRepairData = "usp_GetCustomerWiseRepairData";
+
+
         }
     }
 }
