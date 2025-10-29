@@ -64,22 +64,23 @@ namespace PrashantApi.Infrastructure.Repositories.RoleMaster
                 commandType: CommandType.StoredProcedure
             );
 
-            return result.AsList();
+            return result;
         }
 
         public async Task<dynamic> GetByIdAsync(int id)
         {
             using var connection = _dbConnectionString.GetConnection();
-
             var parameters = new DynamicParameters();
             parameters.Add("@Id", id);
 
-            return await connection.QueryFirstOrDefaultAsync<dynamic>(
+            var result = await connection.QueryAsync<dynamic>(
                 SqlConstants.RoleMaster.GetRoleById,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
 
+            return result;
         }
+
     }
 }
