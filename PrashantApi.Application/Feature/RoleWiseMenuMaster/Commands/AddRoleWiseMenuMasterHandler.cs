@@ -2,26 +2,38 @@
 using MediatR;
 using PrashantApi.Application.DTOs.RoleWiseMenuMaster;
 using PrashantApi.Application.Interfaces;
+using PrashantApi.Application.Interfaces.RoleWiseMenuMaster;
+using PrashantApi.Domain.Entities.RoleWiseMenuMaster;
+using PrashantEle.API.PrashantEle.Application.Common;
+
 
 namespace PrashantApi.Application.Feature.RoleWiseMenuMaster.Commands
 {
-
-    public class AddRoleWiseMenuMasterHandler
-    : IRequestHandler<AddRoleWiseMenuMasterCommand>
+    public class AddRoleWiseMenuMasterHandler : IRequestHandler<AddRoleWiseMenuMasterCommand, CommandResult>
     {
-        private readonly IRoleWiseMenuMasterService _service;
+        private readonly IRoleWiseMenuMasterRepository _repository;
         private readonly IMapper _mapper;
 
-        public AddRoleWiseMenuMasterHandler(IRoleWiseMenuMasterService service, IMapper mapper)
+        public AddRoleWiseMenuMasterHandler(IRoleWiseMenuMasterRepository repository, IMapper mapper)
         {
-            _service = service;
+            _repository = repository;
             _mapper = mapper;
         }
 
-        public async Task Handle(AddRoleWiseMenuMasterCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResult> Handle(AddRoleWiseMenuMasterCommand request, CancellationToken cancellationToken)
         {
-            var dto = _mapper.Map<RoleWiseMenuMasterDto>(request);
-            await _service.AddAsync(dto);
+            try
+            {
+                var entity = _mapper.Map<RoleWiseMenuMasterModel>(request.RoleWiseMenuMaster);
+                entity.CreatedOn = DateTime.Now;
+
+                var result = await _repository.AddAsync(entity);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return CommandResult.Fail($"Error adding RoleWiseMenuMaster: {ex.Message}");
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Data;
 using PrashantEle.API.PrashantEle.Application.Common;
 using PrashantEle.API.PrashantEle.Infrastructure.Constants;
 
+
 namespace PrashantApi.Infrastructure.Repositories.RoleWiseMenuMaster
 {
     public class RoleWiseMenuMasterRepository(IDbConnectionString dbConnectionString) : IRoleWiseMenuMasterRepository
@@ -27,31 +28,28 @@ namespace PrashantApi.Infrastructure.Repositories.RoleWiseMenuMaster
                 table.Columns.Add("Id", typeof(int));
                 table.Columns.Add("MenuId", typeof(int));
                 table.Columns.Add("RoleId", typeof(int));
-                table.Columns.Add("CreatedBy", typeof(string));
-                table.Columns.Add("CreatedOn", typeof(string));
+                table.Columns.Add("CreatedBy", typeof(int));
                 table.Columns.Add("IsActive", typeof(bool));
                 table.Columns.Add("IsObsolete", typeof(bool));
 
                 foreach (var menuId in entity.MenuId)
-                {
-                    table.Rows.Add(0, menuId, entity.RoleId, entity.CreatedBy, "", entity.IsActive, entity.IsObsolete);
-                }
+                    table.Rows.Add(0, menuId, entity.RoleId, entity.CreatedBy, entity.IsActive, entity.IsObsolete);
 
                 var parameters = new DynamicParameters();
                 parameters.Add("@RoleWiseMenuMasterTVP", table.AsTableValuedParameter("dbo.Type_RoleWiseMenuMasterNew"));
                 parameters.Add("@mode", "INSERT");
 
-                await connection.ExecuteAsync(
-                    SqlConstants.RoleWiseMenuMaster.usp_SaveRoleWiseMenuMaster,
+                var output = await connection.ExecuteAsync(
+                    SqlConstants.RoleWiseMenuMaster.RoleWiseMenuMasterr,
                     parameters,
                     commandType: CommandType.StoredProcedure
                 );
 
-                return CommandResult.SuccessWithOutput("");
+                return CommandResult.SuccessWithOutput(output);
             }
             catch (Exception ex)
             {
-                return CommandResult.Fail("");
+                return CommandResult.Fail(ex.Message);
             }
         }
 
@@ -65,59 +63,56 @@ namespace PrashantApi.Infrastructure.Repositories.RoleWiseMenuMaster
                 table.Columns.Add("Id", typeof(int));
                 table.Columns.Add("MenuId", typeof(int));
                 table.Columns.Add("RoleId", typeof(int));
-                table.Columns.Add("CreatedBy", typeof(string));
-                table.Columns.Add("CreatedOn", typeof(string));
+                table.Columns.Add("ModifiedBy", typeof(int));
                 table.Columns.Add("IsActive", typeof(bool));
                 table.Columns.Add("IsObsolete", typeof(bool));
 
                 foreach (var menuId in entity.MenuId)
-                {
-                    table.Rows.Add(entity.Id, menuId, entity.RoleId, entity.CreatedBy ?? "", "", entity.IsActive, entity.IsObsolete);
-                }
+                    table.Rows.Add(entity.Id, menuId, entity.RoleId, entity.ModifiedBy, entity.IsActive, entity.IsObsolete);
 
                 var parameters = new DynamicParameters();
                 parameters.Add("@RoleWiseMenuMasterTVP", table.AsTableValuedParameter("dbo.Type_RoleWiseMenuMasterNew"));
                 parameters.Add("@mode", "UPDATE");
 
-                await connection.ExecuteAsync(
-                    SqlConstants.RoleWiseMenuMaster.usp_SaveRoleWiseMenuMaster,
+                var output = await connection.ExecuteAsync(
+                    SqlConstants.RoleWiseMenuMaster.RoleWiseMenuMasterr,
                     parameters,
                     commandType: CommandType.StoredProcedure
                 );
 
-                return CommandResult.SuccessWithOutput("");
+                return CommandResult.SuccessWithOutput(output);
             }
             catch (Exception ex)
             {
-                return CommandResult.Fail("");
+                return CommandResult.Fail(ex.Message);
             }
         }
 
-        public async Task<List<dynamic>> GetAllAsync()
+        public async Task<dynamic> GetAllAsync()
         {
             using var connection = _dbConnectionString.GetConnection();
 
             var result = await connection.QueryAsync<dynamic>(
-                SqlConstants.RoleWiseMenuMaster.usp_GetAllRoleWiseMenuMasters,
+                SqlConstants.RoleWiseMenuMaster.GetAllRoleWiseMenuMasters,
                 commandType: CommandType.StoredProcedure
             );
 
-            return result.AsList();
+            return result;
         }
 
-        public async Task<List<dynamic>> GetByIdAsync(int id)
+        public async Task<dynamic> GetByIdAsync(int id)
         {
             using var connection = _dbConnectionString.GetConnection();
             var parameters = new DynamicParameters();
             parameters.Add("@Id", id);
 
             var result = await connection.QueryAsync<dynamic>(
-                SqlConstants.RoleWiseMenuMaster.usp_GetRoleWiseMenuMasterById,
+                SqlConstants.RoleWiseMenuMaster.GetRoleWiseMenuMasterById,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
 
-            return result.AsList();
+            return result;
         }
     }
 }

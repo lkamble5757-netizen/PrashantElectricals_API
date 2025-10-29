@@ -10,7 +10,7 @@ namespace PrashantApi.Application.DTOs.Estimate
     public class EstimateMasterDto : BaseDTO
     {
         public int Id { get; set; }
-        public string JobNo { get; set; } = string.Empty;
+        public int JobNo { get; set; }
         public DateTime EstimateDate { get; set; }
         public int EstimatedCustomer { get; set; }
         public string? Remarks { get; set; }
@@ -28,11 +28,10 @@ namespace PrashantApi.Application.DTOs.Estimate
     public class EstimatedPartDetailsDto : BaseDTO
     { 
         public int EstimatedId { get; set; }
-        public int ItemId { get; set; }
+        public string? ItemId { get; set; } 
         public decimal PricePerItem { get; set; }
         public int ItemQty { get; set; }
         public int Total { get; set; }
-        //public bool IsActive { get; set; } 
 
     }
 }

@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
+using PrashantApi.Application.DTOs.CommonDTO;
 using PrashantApi.Application.DTOs.JobEntry;
 using PrashantApi.Application.Interfaces;
 using PrashantApi.Application.Interfaces.JobEntry;
 using PrashantApi.Domain.Entities.JobEntry;
 using PrashantEle.API.PrashantEle.Application.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PrashantApi.Application.Feature.JobEntry.Commands
 {
@@ -26,18 +27,9 @@ namespace PrashantApi.Application.Feature.JobEntry.Commands
 
         public async Task<CommandResult> Handle(AddJobEntryCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
-                var entity = _mapper.Map<JobEntryModel>(request.JobEntry);
-                entity.CreatedOn = DateTime.UtcNow;
-
-                var result = await _repository.AddAsync(entity);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                return CommandResult.Fail($"Error adding Job Entry: {ex.Message}");
-            }
+            var entity = _mapper.Map<JobEntryModel>(request.JobEntry);
+            entity.CreatedOn = DateTime.UtcNow;
+            return await _repository.AddAsync(entity);
         }
     }
 }

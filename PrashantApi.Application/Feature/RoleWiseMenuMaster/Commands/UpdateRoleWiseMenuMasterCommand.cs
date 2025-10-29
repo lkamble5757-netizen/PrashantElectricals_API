@@ -4,17 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using PrashantApi.Application.DTOs.RoleWiseMenuMaster;
+using PrashantEle.API.PrashantEle.Application.Common;
+
 
 namespace PrashantApi.Application.Feature.RoleWiseMenuMaster.Commands
 {
-    public class UpdateRoleWiseMenuMasterCommand : IRequest
+    public class UpdateRoleWiseMenuMasterCommand : IRequest<CommandResult>
     {
-        public int Id { get; set; }
-        //public List<int> MenuId { get; set; } = new List<int>(); // Multiple roles
-        public List<int> MenuId { get; set; } = new(); // Multiple roles
-        public int RoleId { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsObsolete { get; set; }
-        public string? ModifiedBy { get; set; }
+        public RoleWiseMenuMasterDto RoleWiseMenuMaster { get; set; } = default!;
     }
 }

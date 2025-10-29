@@ -3,43 +3,55 @@ using Microsoft.AspNetCore.Mvc;
 using PrashantApi.Application.DTOs.MachineMaster;
 using PrashantApi.Application.Feature.MachineMaster.Commands;
 using PrashantApi.Application.Interfaces;
+using PrashantApi.Application.Interfaces.MachineMaster;
+using PrashantEle.API.PrashantEle.Application.Common;
 
 namespace PrashantApi.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MachineMasterController(IMediator mediator, IMachineMasterService service) : ControllerBase
+    public class MachineMasterController(IMediator mediator, IMachineMasterRepository repository) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
-        private readonly IMachineMasterService _service = service;
+        private readonly IMachineMasterRepository _repository = repository;
 
         [HttpPost("Add")]
-        public async Task<ActionResult<int>> Add(AddMachineMasterCommand command)
+        public async Task<ActionResult<CommandResult>> Add(MachineMasterDto dto)
         {
-            var newId = await _mediator.Send(command);
-            return Ok(newId);
+            if (dto == null)
+                return BadRequest(CommandResult.Fail("Invalid MachineMaster data."));
+
+            var command = new AddMachineMasterCommand { MachineMaster = dto };
+            var result = await _mediator.Send(command);
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
         [HttpPut("Update")]
-        public async Task<ActionResult<int>> Update(UpdateMachineMasterCommand command)
+        public async Task<ActionResult<CommandResult>> Update(MachineMasterDto dto)
         {
-            var updatedId = await _mediator.Send(command);
-            return Ok(updatedId);
+            if (dto == null || dto.Id <= 0)
+                return BadRequest(CommandResult.Fail("Invalid MachineMaster data."));
+
+            var command = new UpdateMachineMasterCommand { MachineMaster = dto };
+            var result = await _mediator.Send(command);
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<List<MachineMasterDto>>> GetAll()
+        public async Task<ActionResult<dynamic>> GetAll()
         {
-            var machines = await _service.GetAllAsync();
+            var machines = await _repository.GetAllAsync();
             return Ok(machines);
         }
 
         [HttpGet("GetBy/{id}")]
-        public async Task<ActionResult<MachineMasterDto>> GetById(int id)
+        public async Task<ActionResult<dynamic>> GetById(int id)
         {
-            var machine = await _service.GetByIdAsync(id);
-            if (machine == null)
-                return NotFound();
+            var machine = await _repository.GetByIdAsync(id);
+            if (machine == null || ((ICollection<dynamic>)machine).Count == 0)
+                return NotFound($"No Machine found with Id {id}");
 
             return Ok(machine);
         }

@@ -28,13 +28,12 @@ namespace PrashantApi.Infrastructure.Repositories.UserRoleAssignMaster
                 table.Columns.Add("UserId", typeof(int));
                 table.Columns.Add("RoleId", typeof(int));
                 table.Columns.Add("CreatedBy", typeof(int));
-                table.Columns.Add("CreatedOn", typeof(string));
                 table.Columns.Add("IsActive", typeof(bool));
                 table.Columns.Add("IsObsolete", typeof(bool));
 
                 foreach (var roleId in entity.RoleId)
                 {
-                    table.Rows.Add(0, entity.UserId, roleId, entity.CreatedBy, "", entity.IsActive, entity.IsObsolete);
+                    table.Rows.Add(0, entity.UserId, roleId, entity.CreatedBy, entity.IsActive, entity.IsObsolete);
                 }
 
 
@@ -43,7 +42,7 @@ namespace PrashantApi.Infrastructure.Repositories.UserRoleAssignMaster
                 parameters.Add("@mode", "INSERT");
 
                var output =  await connection.ExecuteAsync(
-                    SqlConstants.UserRoleAssignMaster.usp_SaveUserRoleAssignMaster,
+                    SqlConstants.UserRoleAssignMaster.UserRoleAssignMasterr,
                     parameters,
                     commandType: CommandType.StoredProcedure
                 );
@@ -66,15 +65,14 @@ namespace PrashantApi.Infrastructure.Repositories.UserRoleAssignMaster
                 table.Columns.Add("Id", typeof(int));
                 table.Columns.Add("UserId", typeof(int));
                 table.Columns.Add("RoleId", typeof(int));
-                table.Columns.Add("CreatedBy", typeof(int));
-                table.Columns.Add("CreatedOn", typeof(string));
+                table.Columns.Add("ModifiedBy", typeof(int));
                 table.Columns.Add("IsActive", typeof(bool));
                 table.Columns.Add("IsObsolete", typeof(bool));
 
 
                 foreach (var roleId in entity.RoleId)
                 {
-                    table.Rows.Add(entity.Id, entity.UserId, roleId, entity.ModifiedBy ?? "", "", entity.IsActive, entity.IsObsolete);
+                    table.Rows.Add(entity.Id, entity.UserId, roleId, entity.ModifiedBy, entity.IsActive, entity.IsObsolete);
                 }
     
 
@@ -83,7 +81,7 @@ namespace PrashantApi.Infrastructure.Repositories.UserRoleAssignMaster
                 parameters.Add("@mode", "UPDATE");
 
                 var output = await connection.ExecuteAsync(
-                    SqlConstants.UserRoleAssignMaster.usp_SaveUserRoleAssignMaster,
+                    SqlConstants.UserRoleAssignMaster.UserRoleAssignMasterr,
                     parameters,
                     commandType: CommandType.StoredProcedure
                 );
@@ -96,31 +94,32 @@ namespace PrashantApi.Infrastructure.Repositories.UserRoleAssignMaster
             }
         }
 
-        public async Task<IEnumerable<dynamic>> GetAllAsync()
+        public async Task<dynamic> GetAllAsync()
         {
             using var connection = _dbConnectionString.GetConnection();
 
             var result = await connection.QueryAsync<dynamic>(
-                SqlConstants.UserRoleAssignMaster.usp_GetAllUserRoleAssignMasters,
+                SqlConstants.UserRoleAssignMaster.GetAllUserRoleAssignMasters,
                 commandType: CommandType.StoredProcedure
             );
 
             return result;
         }
 
-        public async Task<IEnumerable<dynamic>> GetByIdAsync(int id)
+        public async Task<dynamic> GetByIdAsync(int id)
         {
             using var connection = _dbConnectionString.GetConnection();
             var parameters = new DynamicParameters();
             parameters.Add("@Id", id);
 
             var result = await connection.QueryAsync<dynamic>(
-                SqlConstants.UserRoleAssignMaster.usp_GetUserRoleAssignMasterById,
+                SqlConstants.UserRoleAssignMaster.GetUserRoleAssignMasterById,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
 
             return result;
         }
+
     }
 }

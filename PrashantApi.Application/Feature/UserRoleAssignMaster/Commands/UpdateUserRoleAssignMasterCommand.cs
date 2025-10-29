@@ -5,16 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using PrashantEle.API.PrashantEle.Application.Common;
+using PrashantApi.Application.DTOs.UserRoleAssignMaster;
 
 namespace PrashantApi.Application.Feature.UserRoleAssignMaster.Commands
 {
-    public class UpdateUserRoleAssignMasterCommand : IRequest
+    public class UpdateUserRoleAssignMasterCommand : IRequest<CommandResult>
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
-        public List<int> RoleId { get; set; } = new();
-        public bool IsActive { get; set; }
-        public bool IsObsolete { get; set; }
-        public string? ModifiedBy { get; set; }
-    }
+        public UserRoleAssignMasterDto UserRoleAssignMaster { get; set; } = default!;
+    }   
 }

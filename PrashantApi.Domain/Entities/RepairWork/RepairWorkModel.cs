@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PrashantApi.Domain.Entities.RepairWork
 {
-    public class RepairWorkModel 
+    public class RepairWorkModel
     {
         public int Id { get; set; }
         public int jobNo { get; set; }

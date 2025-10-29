@@ -98,11 +98,6 @@ public static class DependencyInjection
         services.AddScoped<ISqlServerDataAccess, SqlServerDataAccess>();
         services.AddScoped<ISqlDbConnection, SqlDbConnection>();
         services.AddScoped<IItemMasterService, ItemMasterService>();
-        services.AddScoped<ICustomerMasterService, CustomerMasterService>();
-        services.AddScoped<IMachineMasterService, MachineMasterService>();
-        services.AddAutoMapper(typeof(MachineMasterProfile).Assembly);
-        services.AddTransient<IRoleMasterService, RoleMasterService>();
-        services.AddTransient<IRoleWiseMenuMasterService, RoleWiseMenuMasterService>();
         services.AddTransient<IReferenceDataMasterService, ReferenceDataMasterService>();
         services.AddTransient<IUserRoleAssignMasterService, UserRoleAssignMasterService>();
         services.AddTransient<IJobEntryService, JobEntryService>();

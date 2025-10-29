@@ -8,6 +8,8 @@ using PrashantApi.Application.Interfaces.MachineMaster;
 using PrashantApi.Domain.Entities.MachineMaster;
 using PrashantApi.Infrastructure.Connection;
 using System.Data;
+using PrashantEle.API.PrashantEle.Application.Common;
+using PrashantEle.API.PrashantEle.Infrastructure.Constants;
 
 namespace PrashantApi.Infrastructure.Repositories.MachineMaster
 {
@@ -15,101 +17,119 @@ namespace PrashantApi.Infrastructure.Repositories.MachineMaster
     {
         private readonly IDbConnectionString _dbConnectionString = dbConnectionString;
 
-        public async Task<int> AddAsync(MachineMasterModel entity)
+        public async Task<CommandResult> AddAsync(MachineMasterModel entity)
         {
-            using var connection = _dbConnectionString.GetConnection();
+            try
+            {
+                using var connection = _dbConnectionString.GetConnection();
 
-            var parameters = new DynamicParameters();
-            parameters.Add("@Id", 0);
-            parameters.Add("@BrandName", entity.BrandName);
-            parameters.Add("@HpKw", entity.HpKw);
-            parameters.Add("@Slot", entity.Slot);
-            parameters.Add("@RPM", entity.RPM);
-            parameters.Add("@Pitch", entity.Pitch);
-            parameters.Add("@Gauge", entity.Gauge);
-            parameters.Add("@AlterGauge", entity.AlterGauge);
-            parameters.Add("@Turn", entity.Turn);
-            parameters.Add("@CoilMeasurement", entity.CoilMeasurement);
-            parameters.Add("@WindingType", entity.WindingType);
-            parameters.Add("@ConnectionType", entity.ConnectionType);
-            parameters.Add("@StatorLobby", entity.StatorLobby);
-            parameters.Add("@CoilGroupWeight", entity.CoilGroupWeight);
-            parameters.Add("@TotalWireWeight", entity.TotalWireWeight);
-            parameters.Add("@PhaseSize", entity.PhaseSize);
-            parameters.Add("@Amperes", entity.Amperes);
-            parameters.Add("@WindingDate", entity.WindingDate);
-            parameters.Add("@GpDc", entity.GpDc);
-            parameters.Add("@CreatedBy", entity.CreatedBy);
-            parameters.Add("@IsActive", entity.IsActive);
-            parameters.Add("@mode", "INSERT");
+                var parameters = new DynamicParameters();
+                parameters.Add("@Id", 0);
+                parameters.Add("@BrandName", entity.BrandName);
+                parameters.Add("@HpKw", entity.HpKw);
+                parameters.Add("@Slot", entity.Slot);
+                parameters.Add("@RPM", entity.RPM);
+                parameters.Add("@Pitch", entity.Pitch);
+                parameters.Add("@Gauge", entity.Gauge);
+                parameters.Add("@AlterGauge", entity.AlterGauge);
+                parameters.Add("@Turn", entity.Turn);
+                parameters.Add("@CoilMeasurement", entity.CoilMeasurement);
+                parameters.Add("@WindingType", entity.WindingType);
+                parameters.Add("@ConnectionType", entity.ConnectionType);
+                parameters.Add("@StatorLobby", entity.StatorLobby);
+                parameters.Add("@CoilGroupWeight", entity.CoilGroupWeight);
+                parameters.Add("@TotalWireWeight", entity.TotalWireWeight);
+                parameters.Add("@PhaseSize", entity.PhaseSize);
+                parameters.Add("@Amperes", entity.Amperes);
+                parameters.Add("@WindingDate", entity.WindingDate);
+                parameters.Add("@GpDc", entity.GpDc);
+                parameters.Add("@CreatedBy", entity.CreatedBy);
+                parameters.Add("@IsActive", entity.IsActive);
+                parameters.Add("@mode", "INSERT");
 
-            return await connection.QuerySingleAsync<int>(
-                "usp_SaveMachineMaster",
-                parameters,
-                commandType: CommandType.StoredProcedure
-            );
+                var output = await connection.ExecuteAsync(
+                    SqlConstants.MachineMaster.MachineMasterr,
+                    parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return CommandResult.SuccessWithOutput(output);
+            }
+            catch (Exception ex)
+            {
+                return CommandResult.Fail(ex.Message);
+            }
         }
 
-        public async Task<int> UpdateAsync(MachineMasterModel entity)
+        public async Task<CommandResult> UpdateAsync(MachineMasterModel entity)
         {
-            using var connection = _dbConnectionString.GetConnection();
+            try
+            {
+                using var connection = _dbConnectionString.GetConnection();
 
-            var parameters = new DynamicParameters();
-            parameters.Add("@Id", entity.Id);
-            parameters.Add("@BrandName", entity.BrandName);
-            parameters.Add("@HpKw", entity.HpKw);
-            parameters.Add("@Slot", entity.Slot);
-            parameters.Add("@RPM", entity.RPM);
-            parameters.Add("@Pitch", entity.Pitch);
-            parameters.Add("@Gauge", entity.Gauge);
-            parameters.Add("@AlterGauge", entity.AlterGauge);
-            parameters.Add("@Turn", entity.Turn);
-            parameters.Add("@CoilMeasurement", entity.CoilMeasurement);
-            parameters.Add("@WindingType", entity.WindingType);
-            parameters.Add("@ConnectionType", entity.ConnectionType);
-            parameters.Add("@StatorLobby", entity.StatorLobby);
-            parameters.Add("@CoilGroupWeight", entity.CoilGroupWeight);
-            parameters.Add("@TotalWireWeight", entity.TotalWireWeight);
-            parameters.Add("@PhaseSize", entity.PhaseSize);
-            parameters.Add("@Amperes", entity.Amperes);
-            parameters.Add("@WindingDate", entity.WindingDate);
-            parameters.Add("@GpDc", entity.GpDc);
-            parameters.Add("@ModifiedBy", entity.ModifiedBy);
-            parameters.Add("@IsActive", entity.IsActive);
-            parameters.Add("@mode", "UPDATE");
+                var parameters = new DynamicParameters();
+                parameters.Add("@Id", entity.Id);
+                parameters.Add("@BrandName", entity.BrandName);
+                parameters.Add("@HpKw", entity.HpKw);
+                parameters.Add("@Slot", entity.Slot);
+                parameters.Add("@RPM", entity.RPM);
+                parameters.Add("@Pitch", entity.Pitch);
+                parameters.Add("@Gauge", entity.Gauge);
+                parameters.Add("@AlterGauge", entity.AlterGauge);
+                parameters.Add("@Turn", entity.Turn);
+                parameters.Add("@CoilMeasurement", entity.CoilMeasurement);
+                parameters.Add("@WindingType", entity.WindingType);
+                parameters.Add("@ConnectionType", entity.ConnectionType);
+                parameters.Add("@StatorLobby", entity.StatorLobby);
+                parameters.Add("@CoilGroupWeight", entity.CoilGroupWeight);
+                parameters.Add("@TotalWireWeight", entity.TotalWireWeight);
+                parameters.Add("@PhaseSize", entity.PhaseSize);
+                parameters.Add("@Amperes", entity.Amperes);
+                parameters.Add("@WindingDate", entity.WindingDate);
+                parameters.Add("@GpDc", entity.GpDc);
+                parameters.Add("@ModifiedBy", entity.ModifiedBy);
+                parameters.Add("@IsActive", entity.IsActive);
+                parameters.Add("@mode", "UPDATE");
 
-            return await connection.QuerySingleAsync<int>(
-                "usp_SaveMachineMaster",
-                parameters,
-                commandType: CommandType.StoredProcedure
-            );
+                var output = await connection.ExecuteAsync(
+                    SqlConstants.MachineMaster.MachineMasterr,
+                    parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return CommandResult.SuccessWithOutput(output);
+            }
+            catch (Exception ex)
+            {
+                return CommandResult.Fail(ex.Message);
+            }
         }
 
-        public async Task<List<MachineMasterModel>> GetAllAsync()
+        public async Task<dynamic> GetAllAsync()
         {
             using var connection = _dbConnectionString.GetConnection();
-
-            var result = await connection.QueryAsync<MachineMasterModel>(
-                "usp_GetAllMachines",
+            var result = await connection.QueryAsync<dynamic>(
+                SqlConstants.MachineMaster.GetAllMachineMaster,
                 commandType: CommandType.StoredProcedure
             );
-
-            return result.AsList();
+            return result;
         }
 
-        public async Task<MachineMasterModel> GetByIdAsync(int id)
+        public async Task<dynamic> GetByIdAsync(int id)
         {
             using var connection = _dbConnectionString.GetConnection();
-
             var parameters = new DynamicParameters();
             parameters.Add("@Id", id);
 
-            return await connection.QueryFirstOrDefaultAsync<MachineMasterModel>(
-                "usp_GetMachineById",
+            var result = await connection.QueryAsync<dynamic>(
+                SqlConstants.MachineMaster.GetMachineMasterById,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
+
+            return result;
         }
     }
 }
+
 
