@@ -64,7 +64,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
 
                 foreach (var item in entity.Items)
                 {
-                    table.Rows.Add(0, item.RepairWorkId, item.ItemId, item.itemQty, item.pricePerItem, item.total, 1, item.CreatedBy);
+                    table.Rows.Add(0, item.RepairWorkId, item.ItemId, item.itemQty, item.pricePerItem,  item.total, 1, item.CreatedBy);
 
                 }
 
@@ -89,7 +89,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
             }
         }
 
-
+        
 
 
         public async Task<CommandResult> UpdateAsync(RepairWorkModel entity)

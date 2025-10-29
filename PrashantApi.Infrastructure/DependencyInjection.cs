@@ -1,13 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PrashantApi.Application.Configurations;
+using PrashantApi.Application.Feature.InvoiceMaster.Commands;
 using PrashantApi.Application.Interfaces;
 using PrashantApi.Application.Interfaces.BranchMaster;
 using PrashantApi.Application.Interfaces.CustomerMaster;
 using PrashantApi.Application.Interfaces.Estimate;
+using PrashantApi.Application.Interfaces.InvoiceMaster;
 using PrashantApi.Application.Interfaces.ItemMaster;
 using PrashantApi.Application.Interfaces.JobEntry;
 using PrashantApi.Application.Interfaces.Logging;
@@ -15,6 +19,7 @@ using PrashantApi.Application.Interfaces.MachineMaster;
 using PrashantApi.Application.Interfaces.MachineMaster.Mapping;
 using PrashantApi.Application.Interfaces.Menu;
 using PrashantApi.Application.Interfaces.ReferenceDataMaster;
+using PrashantApi.Application.Interfaces.RepairWork;
 using PrashantApi.Application.Interfaces.RoleMaster;
 using PrashantApi.Application.Interfaces.RoleWiseMenuMaster;
 using PrashantApi.Application.Interfaces.UserRegistration;
@@ -27,21 +32,20 @@ using PrashantApi.Infrastructure.Repositories;
 using PrashantApi.Infrastructure.Repositories.BranchMaster;
 using PrashantApi.Infrastructure.Repositories.CustomerMaster;
 using PrashantApi.Infrastructure.Repositories.Estimate;
+using PrashantApi.Infrastructure.Repositories.InvoiceMaster; 
 using PrashantApi.Infrastructure.Repositories.JobEntry;
 using PrashantApi.Infrastructure.Repositories.MachineMaster;
 using PrashantApi.Infrastructure.Repositories.ReferenceDataMaster;
+using PrashantApi.Infrastructure.Repositories.RepairWork;
 using PrashantApi.Infrastructure.Repositories.RoleMaster;
 using PrashantApi.Infrastructure.Repositories.RoleWiseMenuMaster;
 using PrashantApi.Infrastructure.Repositories.UserRoleAssignMaster;
 using PrashantApi.Infrastructure.Services;
 using PrashantEle.API.PrashantEle.Domain.Logging;
 using PrashantEle.API.PrashantEle.Infrastructure.Connection;
-using PrashantApi.Infrastructure.Repositories.RepairWork;
-
-
 using System.Reflection;
 using System.Security.Claims;
-using PrashantApi.Application.Interfaces.RepairWork;
+
 
 namespace PrashantApi.Infrastructure;
 
@@ -82,6 +86,8 @@ public static class DependencyInjection
         services.AddScoped<IJobEntryRepository, JobEntryRepository>();
         services.AddScoped<IEstimateMasterRepository, EstimateMasterRepository>();
         services.AddScoped<IRepairWorkRepository, RepairWorkRepository>();
+        services.AddScoped<IInvoiceMasterRepository, InvoiceMasterRepository>();
+
 
         //  Services
         services.AddScoped<IAuthService, AuthService>();
@@ -93,6 +99,17 @@ public static class DependencyInjection
         services.AddScoped<ISqlDbConnection, SqlDbConnection>();
         services.AddScoped<IItemMasterService, ItemMasterService>();
         services.AddTransient<IReferenceDataMasterService, ReferenceDataMasterService>();
+        services.AddTransient<IUserRoleAssignMasterService, UserRoleAssignMasterService>();
+        services.AddTransient<IJobEntryService, JobEntryService>();
+        services.AddTransient<IEstimateMasterService, EstimateMasterService>();
+        //services.AddTransient<IRepairWorkService, RepairWorkService>();
+        //services.AddMediatR(typeof(AddInvoiceMasterCommand).Assembly);
+        
+
+
+
+
+
 
 
         return services;
