@@ -12,24 +12,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PrashantEle.API.PrashantEle.Application.Common;
 
-namespace PrashantApi.Application.Feature.ItemMaster.Handlers
+namespace PrashantApi.Application.Feature.ItemMaster.Commands
 {
-    public class AddItemMasterHandler(IItemMasterService service, IMapper mapper) : IRequestHandler<AddItemMasterCommand, int>
+    public class AddItemMasterHandler : IRequestHandler<AddItemMasterCommand, CommandResult>
     {
-        private readonly IItemMasterService _service = service;
-        private readonly IMapper _mapper = mapper;
+        private readonly IItemMasterRepository _repository;
+        private readonly IMapper _mapper;
 
-        public async Task<int> Handle(AddItemMasterCommand request, CancellationToken cancellationToken)
+        public AddItemMasterHandler(IItemMasterRepository repository, IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }
+
+        public async Task<CommandResult> Handle(AddItemMasterCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var dto = _mapper.Map<ItemMasterDto>(request);
-                return await _service.AddAsync(dto);
+                var entity = _mapper.Map<ItemMasterModel>(request.ItemMaster);
+                var result = await _repository.AddAsync(entity);
+                return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw;
+                return CommandResult.Fail($"Error adding ItemMaster: {ex.Message}");
             }
         }
     }

@@ -8,24 +8,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using PrashantApi.Application.Interfaces.ItemMaster;
+using PrashantApi.Domain.Entities.ItemMaster;
+using PrashantEle.API.PrashantEle.Application.Common;
 
 namespace PrashantApi.Application.Feature.ItemMaster.Commands
 {
-    public class UpdateItemMasterHandler(IItemMasterService service, IMapper mapper) : IRequestHandler<UpdateItemMasterCommand, int>
+    public class UpdateItemMasterHandler : IRequestHandler<UpdateItemMasterCommand, CommandResult>
     {
-        private readonly IItemMasterService _service = service;
-        private readonly IMapper _mapper = mapper;
+        private readonly IItemMasterRepository _repository;
+        private readonly IMapper _mapper;
 
-        public async Task<int> Handle(UpdateItemMasterCommand request, CancellationToken cancellationToken)
+        public UpdateItemMasterHandler(IItemMasterRepository repository, IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }
+
+        public async Task<CommandResult> Handle(UpdateItemMasterCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var dto = _mapper.Map<ItemMasterDto>(request);
-                return await _service.UpdateAsync(dto);
+                var entity = _mapper.Map<ItemMasterModel>(request.ItemMaster);
+                var result = await _repository.UpdateAsync(entity);
+                return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return CommandResult.Fail($"Error updating ItemMaster: {ex.Message}");
             }
         }
     }

@@ -14,25 +14,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PrashantApi.Domain.Entities.ItemMaster;
+using PrashantEle.API.PrashantEle.Application.Common;
 
-namespace PrashantApi.Application.Interfaces.BranchMaster.Mapping
+namespace PrashantApi.Application.Interfaces.ItemMaster.Mapping
 {
     public class ItemMasterProfile : Profile
     {
         public ItemMasterProfile()
         {
-            // ItemMaster mappings
-            CreateMap<MenuDetailDTO, MenuDetailDTO>();
-            CreateMap<MenuList, MenuList>();
-            CreateMap<ItemMasterDto, ItemMasterDto>();
-
             CreateMap<AddItemMasterCommand, ItemMasterDto>();
-            CreateMap<ItemMasterDto, AddItemMasterCommand>();
-
             CreateMap<UpdateItemMasterCommand, ItemMasterDto>();
-            CreateMap<ItemMasterDto, UpdateItemMasterCommand>();
-
+            CreateMap<ItemMasterDto, ItemMasterModel>();
+            CreateMap<ItemMasterModel, ItemMasterDto>();
         }
     }
 }
-
