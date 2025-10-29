@@ -12,106 +12,109 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using PrashantEle.API.PrashantEle.Application.Common;
+using PrashantEle.API.PrashantEle.Infrastructure.Constants;
 
-namespace PrashantApi.Infrastructure.Repositories
+namespace PrashantApi.Infrastructure.Repositories.ItemMaster
 {
-    public class ItemMasterRepository(IDbConnectionString dbConnectionString, ILog log, IExecutionContext context, ISqlServerDataAccess _sqlServerDataAccess) : IItemMasterRepository
+    public class ItemMasterRepository(IDbConnectionString dbConnectionString) : IItemMasterRepository
     {
-        //private readonly List<ItemMasterModel> _items = new();
-
         private readonly IDbConnectionString _dbConnectionString = dbConnectionString;
-        private readonly ILog _log = log;
-        private readonly IExecutionContext _context = context;
-        private readonly ISqlServerDataAccess sqlServerDataAccess = _sqlServerDataAccess;
 
-        public async Task<int> AddAsync(ItemMasterModel entity)
+        public async Task<CommandResult> AddAsync(ItemMasterModel entity)
         {
-            using var connection = _dbConnectionString.GetConnection();
+            try
+            {
+                using var connection = _dbConnectionString.GetConnection();
+                var parameters = new DynamicParameters();
 
-            var parameters = new DynamicParameters();
-            parameters.Add("@Id", 0);
-            parameters.Add("@ItemCode", entity.ItemCode);
-            parameters.Add("@ItemName", entity.ItemName);
-            parameters.Add("@CategoryId", entity.CategoryId);
-            parameters.Add("@SubCategoryId", entity.SubCategoryId);
-            parameters.Add("@OpeningStock", entity.OpeningStock);
-            parameters.Add("@OpeningStockAsOn", entity.OpeningStockAsOn);
-            parameters.Add("@ItemStock", entity.ItemStock);
-            parameters.Add("@PerUnitPrice", entity.PerUnitPrice);
-            parameters.Add("@CreatedBy", entity.CreatedBy);
-            parameters.Add("@ModifiedBy", entity.ModifiedBy);
-            parameters.Add("@IsActive", entity.IsActive);
-            parameters.Add("@LedgerId", entity.LedgerId);
-            parameters.Add("@HsnNo", entity.HsnNo);
-            parameters.Add("@mode", "INSERT");
+                parameters.Add("@Id", 0);
+                parameters.Add("@ItemCode", entity.ItemCode);
+                parameters.Add("@ItemName", entity.ItemName);
+                parameters.Add("@CategoryId", entity.CategoryId);
+                parameters.Add("@SubCategoryId", entity.SubCategoryId);
+                parameters.Add("@OpeningStock", entity.OpeningStock);
+                parameters.Add("@OpeningStockAsOn", entity.OpeningStockAsOn);
+                parameters.Add("@ItemStock", entity.ItemStock);
+                parameters.Add("@PerUnitPrice", entity.PerUnitPrice);
+                parameters.Add("@CreatedBy", entity.CreatedBy);
+                parameters.Add("@IsActive", entity.IsActive);
+                parameters.Add("@LedgerId", entity.LedgerId);
+                parameters.Add("@HsnNo", entity.HsnNo);
+                parameters.Add("@mode", "INSERT");
 
-            return await connection.QuerySingleAsync<int>(
-                "usp_SaveItem",
-                parameters,
-                commandType: CommandType.StoredProcedure
-            );
+                var output = await connection.ExecuteAsync(
+                    SqlConstants.ItemMaster.ItemMasterr,
+                    parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return CommandResult.SuccessWithOutput(output);
+            }
+            catch (Exception ex)
+            {
+                return CommandResult.Fail(ex.Message);
+            }
         }
 
-
-
-        public async Task<int> UpdateAsync(ItemMasterModel entity)
+        public async Task<CommandResult> UpdateAsync(ItemMasterModel entity)
         {
-            using var connection = _dbConnectionString.GetConnection();
+            try
+            {
+                using var connection = _dbConnectionString.GetConnection();
+                var parameters = new DynamicParameters();
 
-            var parameters = new DynamicParameters();
-            parameters.Add("@Id", entity.Id);
-            parameters.Add("@ItemCode", entity.ItemCode);
-            parameters.Add("@ItemName", entity.ItemName);
-            parameters.Add("@CategoryId", entity.CategoryId);
-            parameters.Add("@SubCategoryId", entity.SubCategoryId);
-            parameters.Add("@OpeningStock", entity.OpeningStock);
-            parameters.Add("@OpeningStockAsOn", entity.OpeningStockAsOn);
-            parameters.Add("@ItemStock", entity.ItemStock);
-            parameters.Add("@PerUnitPrice", entity.PerUnitPrice);
-            parameters.Add("@CreatedBy", entity.CreatedBy);
-            parameters.Add("@ModifiedBy", entity.ModifiedBy);
-            parameters.Add("@IsActive", entity.IsActive);
-            parameters.Add("@LedgerId", entity.LedgerId);
-             parameters.Add("@HsnNo", entity.HsnNo);
-            parameters.Add("@mode", "UPDATE");
+                parameters.Add("@Id", entity.Id);
+                parameters.Add("@ItemCode", entity.ItemCode);
+                parameters.Add("@ItemName", entity.ItemName);
+                parameters.Add("@CategoryId", entity.CategoryId);
+                parameters.Add("@SubCategoryId", entity.SubCategoryId);
+                parameters.Add("@OpeningStock", entity.OpeningStock);
+                parameters.Add("@OpeningStockAsOn", entity.OpeningStockAsOn);
+                parameters.Add("@ItemStock", entity.ItemStock);
+                parameters.Add("@PerUnitPrice", entity.PerUnitPrice);
+                parameters.Add("@ModifiedBy", entity.ModifiedBy);
+                parameters.Add("@IsActive", entity.IsActive);
+                parameters.Add("@LedgerId", entity.LedgerId);
+                parameters.Add("@HsnNo", entity.HsnNo);
+                parameters.Add("@mode", "UPDATE");
 
-            return await connection.QuerySingleAsync<int>(
-                "usp_SaveItem",
-                parameters,
-                commandType: CommandType.StoredProcedure
-            );
+                var output = await connection.ExecuteAsync(
+                    SqlConstants.ItemMaster.ItemMasterr,
+                    parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return CommandResult.SuccessWithOutput(output);
+            }
+            catch (Exception ex)
+            {
+                return CommandResult.Fail(ex.Message);
+            }
         }
 
-
-
-        public async Task<List<ItemMasterModel>> GetAllAsync()
+        public async Task<dynamic> GetAllAsync()
         {
             using var connection = _dbConnectionString.GetConnection();
-
-            var items = await connection.QueryAsync<ItemMasterModel>(
-                "usp_GetAllItems",
+            var result = await connection.QueryAsync<dynamic>(
+                SqlConstants.ItemMaster.GetAllItemMaster,
                 commandType: CommandType.StoredProcedure
             );
-
-            return items.AsList();
+            return result;
         }
 
-
-        public async Task<ItemMasterModel> GetByIdAsync(int id)
+        public async Task<dynamic> GetByIdAsync(int id)
         {
             using var connection = _dbConnectionString.GetConnection();
-
             var parameters = new DynamicParameters();
             parameters.Add("@Id", id);
 
-            return await connection.QueryFirstOrDefaultAsync<ItemMasterModel>(
-                "usp_GetItemById",
+            var result = await connection.QueryAsync<dynamic>(
+                SqlConstants.ItemMaster.GetItemMasterById,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
+            return result;
         }
-
-
     }
 }

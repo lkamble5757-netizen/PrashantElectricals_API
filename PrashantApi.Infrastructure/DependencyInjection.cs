@@ -32,7 +32,8 @@ using PrashantApi.Infrastructure.Repositories;
 using PrashantApi.Infrastructure.Repositories.BranchMaster;
 using PrashantApi.Infrastructure.Repositories.CustomerMaster;
 using PrashantApi.Infrastructure.Repositories.Estimate;
-using PrashantApi.Infrastructure.Repositories.InvoiceMaster; 
+using PrashantApi.Infrastructure.Repositories.InvoiceMaster;
+using PrashantApi.Infrastructure.Repositories.ItemMaster;
 using PrashantApi.Infrastructure.Repositories.JobEntry;
 using PrashantApi.Infrastructure.Repositories.MachineMaster;
 using PrashantApi.Infrastructure.Repositories.ReferenceDataMaster;
@@ -97,20 +98,8 @@ public static class DependencyInjection
         services.AddScoped<ILoggerWrapper, LoggerWrapper>();
         services.AddScoped<ISqlServerDataAccess, SqlServerDataAccess>();
         services.AddScoped<ISqlDbConnection, SqlDbConnection>();
-        services.AddScoped<IItemMasterService, ItemMasterService>();
         services.AddTransient<IReferenceDataMasterService, ReferenceDataMasterService>();
-        services.AddTransient<IUserRoleAssignMasterService, UserRoleAssignMasterService>();
-        services.AddTransient<IJobEntryService, JobEntryService>();
-        services.AddTransient<IEstimateMasterService, EstimateMasterService>();
-        //services.AddTransient<IRepairWorkService, RepairWorkService>();
-        //services.AddMediatR(typeof(AddInvoiceMasterCommand).Assembly);
         
-
-
-
-
-
-
 
         return services;
     }

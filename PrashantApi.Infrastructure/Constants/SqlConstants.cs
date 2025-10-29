@@ -4,10 +4,11 @@
     {
         public static class ItemMaster
         {
-            //public const string usp_ItemMaster = "dbo.usp_ItemMaster";
-            public const string usp_ItemMaster = "dbo.usp_AreaMaster";
-            public const string usp_SaveItem = "dbo.usp_SaveItem";
-        }    
+            public const string ItemMasterr = "dbo.usp_SaveItem";
+            public const string GetAllItemMaster = "dbo.usp_GetAllItemMaster";
+            public const string GetItemMasterById = "dbo.usp_GetItemMasterById";
+        }
+
         public static class UserMaster
         {
             //public const string usp_ItemMaster = "dbo.usp_ItemMaster";

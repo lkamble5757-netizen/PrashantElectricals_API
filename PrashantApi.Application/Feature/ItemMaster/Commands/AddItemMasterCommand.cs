@@ -4,23 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using PrashantApi.Application.DTOs.ItemMaster;
+using PrashantEle.API.PrashantEle.Application.Common;
 
 namespace PrashantApi.Application.Feature.ItemMaster.Commands
 {
-    public class AddItemMasterCommand : IRequest<int>
+    public class AddItemMasterCommand : IRequest<CommandResult>
     {
-        public string? ItemCode { get; set; }
-        public string? ItemName { get; set; }
-        public int CategoryId { get; set; }
-        public int? SubCategoryId { get; set; }
-        public decimal OpeningStock { get; set; }
-        public DateTime OpeningStockAsOn { get; set; }
-        public decimal ItemStock { get; set; }
-        public decimal PerUnitPrice { get; set; }
-        public string? CreatedBy { get; set; }
-        public bool IsActive { get; set; }
-        public int LedgerId { get; set; }
-        public string? HsnNo { get; set; }
+        public ItemMasterDto ItemMaster { get; set; } = default!;
     }
 }
-
