@@ -22,9 +22,11 @@ namespace PrashantApi.Application.DTOs.JobEntry
         public string? SerialNo { get; set; }
         public string? IssueReported { get; set; }
         public string? TechnicianAssigned { get; set; }
-        public DateTime? ExpectedDeliveryDate { get; set; }
+        public DateTime ExpectedDeliveryDate { get; set; }
         public int Status { get; set; }
         public string? Attachments { get; set; }
         public string? Remarks { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime ModifiedOn { get; set; }
     }
 }

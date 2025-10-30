@@ -18,9 +18,10 @@ namespace PrashantApi.Application.DTOs.Estimate
         public decimal TransportCharges { get; set; }
         public decimal TotalEstimate { get; set; }
         public bool IsApproved { get; set; }
-        public DateTime? ApprovalDate { get; set; }
+        public DateTime ApprovalDate { get; set; }
         public string? ApprovedBy { get; set; }
-       
+        public DateTime CreatedOn { get; set; }
+        public DateTime ModifiedOn { get; set; }
 
         public List<EstimatedPartDetailsDto> Items { get; set; } = new();
     }
@@ -32,6 +33,8 @@ namespace PrashantApi.Application.DTOs.Estimate
         public decimal PricePerItem { get; set; }
         public int ItemQty { get; set; }
         public int Total { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime ModifiedOn { get; set; }
 
     }
 }
