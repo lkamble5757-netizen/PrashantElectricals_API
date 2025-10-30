@@ -9,6 +9,7 @@ namespace PrashantApi.Domain.Entities.InvoiceMaster
         public int InvoiceNo { get; set; }
         public DateTime InvoiceDate { get; set; }
         public int CustomerId { get; set; }
+        public string CustomerName { get; set; }
         public decimal GstPercent { get; set; }
         public decimal GstAmount { get; set; }
         public decimal TotalAmount { get; set; }

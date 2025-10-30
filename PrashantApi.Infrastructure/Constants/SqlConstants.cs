@@ -57,14 +57,14 @@
         public static class RepairWork
         {
             // ✅ Existing stored procedures for main RepairWork table
-            public const string usp_SaveRepairWork = "dbo.usp_RepairWork";
-            public const string usp_GetAllRepairWork = "dbo.usp_GetAllRepairWork";
-            public const string usp_GetRepairWorkById = "dbo.usp_GetRepairWorkById";
+            public const string SaveRepairWork = "dbo.usp_RepairWork";
+            public const string GetAllRepairWork = "dbo.usp_GetAllRepairWork";
+            public const string GetRepairWorkById = "dbo.usp_GetRepairWorkById";
 
             // ✅ New stored procedures for child RepairWorkItem table
-            public const string usp_SaveRepairWorkItem = "dbo.usp_SaveRepairWorkDetails";
-            public const string usp_SaveRepairWorkDetails = "dbo.usp_SaveRepairWorkDetails";
-            public const string usp_GetRepairWorkItemsByRepairWorkId = "dbo.usp_GetRepairWorkDetailsById";
+            public const string SaveRepairWorkItem = "dbo.usp_SaveRepairWorkDetails";
+           // public const string SaveRepairWorkDetails = "dbo.usp_SaveRepairWorkDetails";
+           // public const string usp_GetRepairWorkItemsByRepairWorkId = "dbo.usp_GetRepairWorkDetailsById";
         }
 
 
