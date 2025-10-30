@@ -328,45 +328,66 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
             }
         }
 
-        public async Task<dynamic> GetCustomerWiseRepairDataAsync(int customerId)
+
+        public async Task<dynamic> GetCustomerWiseRepairDataAsync(int customerId, int invoiceId)
         {
             using var connection = _dbConnectionString.GetConnection();
             if (connection.State == ConnectionState.Closed)
                 connection.Open();
 
             var parameters = new DynamicParameters();
-            parameters.Add("@CustomerId", customerId, DbType.Int32);
+            SqlMapper.GridReader? multi = null;
 
-            using var multi = await connection.QueryMultipleAsync(
-                "usp_GetCustomerWiseRepairData",
-                parameters,
-                commandType: CommandType.StoredProcedure
-            );
+            // for on customer change
+            if (invoiceId == 0)
+            {
+                parameters.Add("@CustomerId", customerId, DbType.Int32);
 
-            // 1️⃣ Read all three result sets dynamically
+                multi = await connection.QueryMultipleAsync(
+                    SqlConstants.InvoiceMaster.GetCustomerWiseRepairData,
+                    parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+            }
+            else // for edit method
+            {
+                parameters.Add("@CustomerId", customerId, DbType.Int32);
+                parameters.Add("@InvoiceId", invoiceId, DbType.Int32);
+
+                multi = await connection.QueryMultipleAsync(
+                    SqlConstants.InvoiceMaster.editInvoiceDetails,
+                    parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+            }
+
+            if (multi == null)
+                return null;
+
+            // ✅ Read 3 result sets dynamically
             var jobs = (await multi.ReadAsync<dynamic>()).ToList();
             var repairWorks = (await multi.ReadAsync<dynamic>()).ToList();
             var repairWorkItems = (await multi.ReadAsync<dynamic>()).ToList();
 
-            // 2️⃣ Map ItemDetails → RepairWork
+            // ✅ Map Items → RepairWork
             foreach (var rw in repairWorks)
             {
-                var rwId = (int)rw.RepairWorkId;
+                int rwId = (int)rw.RepairWorkId;
                 rw.Items = repairWorkItems
                     .Where(i => (int)i.RepairWorkId == rwId)
                     .ToList();
             }
 
-            // 3️⃣ Map RepairWork → Job
+            // ✅ Map RepairWork → Job
             foreach (var job in jobs)
             {
-                var jobId = (int)job.JobId;
+                int jobId = (int)job.JobId;
                 job.RepairWorks = repairWorks
                     .Where(rw => (int)rw.JobId == jobId)
                     .ToList();
             }
 
-            // 4️⃣ Build final dynamic structure
+            // ✅ Build final object
             var result = new
             {
                 CustomerId = customerId,
@@ -399,5 +420,6 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
 
             return result;
         }
+
     }
 }

@@ -68,13 +68,20 @@ namespace PrashantApi.Api.Controllers
         }
 
 
-
-        [HttpGet("GetCustomerWiseRepairData/{customerId}")]
-        public async Task<IActionResult> GetCustomerWiseRepairData(int customerId)
+        [HttpGet("GetCustomerWiseRepairData/{customerId}/{invoiceId}")]
+        public async Task<IActionResult> GetCustomerWiseRepairData(int customerId, int? invoiceId = 0)
         {
-            var result = await _repository.GetCustomerWiseRepairDataAsync(customerId);
+            if (customerId <= 0)
+                return BadRequest("Invalid customer ID.");
+
+            var result = await _repository.GetCustomerWiseRepairDataAsync(customerId, invoiceId ?? 0);
+
+            if (result == null)
+                return NotFound("No data found for the given customer/invoice.");
+
             return Ok(result);
         }
+
 
 
     }

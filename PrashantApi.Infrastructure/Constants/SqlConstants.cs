@@ -106,7 +106,7 @@ public static class InvoiceMaster
             public const string SaveInvoiceItemDetails = "dbo.usp_SaveInvoiceItemDetails";
 
             public const string GetCustomerWiseRepairData = "usp_GetCustomerWiseRepairData";
-
+            public const string editInvoiceDetails = "usp_editInvoiceDetails";
 
         }
     }
