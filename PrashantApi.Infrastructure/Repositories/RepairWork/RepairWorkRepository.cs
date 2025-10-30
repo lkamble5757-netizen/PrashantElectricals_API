@@ -45,7 +45,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
                 });
 
                 var repairWorkId = await connection.ExecuteScalarAsync<int>(
-                    SqlConstants.RepairWork.usp_SaveRepairWork,
+                    SqlConstants.RepairWork.SaveRepairWork,
                     parameters,
 
                     commandType: CommandType.StoredProcedure
@@ -64,7 +64,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
 
                 foreach (var item in entity.Items)
                 {
-                    table.Rows.Add(0, item.RepairWorkId, item.ItemId, item.itemQty, item.pricePerItem,  item.total, 1, item.CreatedBy);
+                    table.Rows.Add(0, repairWorkId, item.ItemId, item.itemQty, item.pricePerItem,  item.total, 1, entity.CreatedBy);
 
                 }
 
@@ -72,7 +72,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
                 repairWorks.Add("@RepairWorkDetails", table.AsTableValuedParameter("dbo.Type_RepairWorkDetails"));
                 repairWorks.Add("@Mode", "INSERT");
                 await connection.ExecuteAsync(
-                        SqlConstants.RepairWork.usp_SaveRepairWorkItem,
+                        SqlConstants.RepairWork.SaveRepairWorkItem,
                         repairWorks,
 
                         commandType: CommandType.StoredProcedure
@@ -115,7 +115,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
                 });
 
                 await connection.ExecuteAsync(
-                    SqlConstants.RepairWork.usp_SaveRepairWork,
+                    SqlConstants.RepairWork.SaveRepairWork,
                     parameters,
                     //transaction,
                     commandType: CommandType.StoredProcedure
@@ -142,7 +142,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
 
                 foreach (var item in entity.Items)
                 {
-                    table.Rows.Add(item.Id, item.RepairWorkId, item.ItemId, item.itemQty, item.pricePerItem, item.total, 1, item.ModifiedBy);
+                    table.Rows.Add(item.Id, entity.Id, item.ItemId, item.itemQty, item.pricePerItem, item.total, 1, entity.ModifiedBy);
                 }
 
                 var repairWorks = new DynamicParameters();
@@ -150,7 +150,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
                 repairWorks.Add("@Mode", "UPDATE"); // ✅ Removed space before @Mode
 
                 await connection.ExecuteAsync(
-                    SqlConstants.RepairWork.usp_SaveRepairWorkItem, // ✅ Call correct SP
+                    SqlConstants.RepairWork.SaveRepairWorkItem, // ✅ Call correct SP
                     repairWorks,
                     commandType: CommandType.StoredProcedure
                 );
@@ -171,7 +171,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
         {
             using var connection = _dbConnectionString.GetConnection();
             var result = await connection.QueryAsync<RepairWorkModel>(
-                SqlConstants.RepairWork.usp_GetAllRepairWork,
+                SqlConstants.RepairWork.GetAllRepairWork,
                 commandType: CommandType.StoredProcedure
             );
             return result.AsList();
@@ -183,7 +183,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
             using var connection = _dbConnectionString.GetConnection();
 
             using var multi = await connection.QueryMultipleAsync(
-                SqlConstants.RepairWork.usp_GetRepairWorkById,
+                SqlConstants.RepairWork.GetRepairWorkById,
                 new { Id = id },
                 commandType: CommandType.StoredProcedure
             );
