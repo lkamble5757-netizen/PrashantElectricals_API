@@ -21,7 +21,7 @@ namespace PrashantApi.Domain.Entities.JobEntry
         public string? SerialNo { get; set; }
         public string? IssueReported { get; set; }
         public string? TechnicianAssigned { get; set; }
-        public DateTime? ExpectedDeliveryDate { get; set; }
+        public DateTime ExpectedDeliveryDate { get; set; }
         public int Status { get; set; }
         public string? Attachments { get; set; }
         public string? Remarks { get; set; }
