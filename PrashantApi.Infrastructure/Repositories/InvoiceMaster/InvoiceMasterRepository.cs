@@ -410,6 +410,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                             i.Id,
                             i.RepairWorkId,
                             i.ItemId,
+                            i.ItemName,
                             i.ItemQty,
                             i.PricePerItem,
                             i.Total

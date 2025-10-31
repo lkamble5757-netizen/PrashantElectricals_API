@@ -39,6 +39,7 @@ namespace PrashantApi.Application.DTOs.InvoiceMaster
         public int InvoiceDetailId { get; set; }
         public int InvoiceId { get; set; }
         public int ItemId { get; set; }
+        public string ItemName { get; set; } = string.Empty;
         public string ItemQty { get; set; } = string.Empty;
         public decimal Total { get; set; }
         public DateTime CreatedOn { get; set; }
