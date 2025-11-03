@@ -269,15 +269,16 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
             {
                 return CommandResult.Fail(ex.Message);
             }
-        } 
+        }
 
 
 
         #region 📋 Get All
-        public async Task<List<InvoiceMasterModel>> GetAllAsync()
+      
+        public async Task<dynamic> GetAllAsync()
         {
             using var connection = _dbConnectionString.GetConnection();
-            var result = await connection.QueryAsync<InvoiceMasterModel>(
+            var result = await connection.QueryAsync<dynamic>(
                 SqlConstants.InvoiceMaster.GetAllInvoiceMaster,
                 commandType: CommandType.StoredProcedure
             );

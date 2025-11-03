@@ -53,14 +53,16 @@ namespace PrashantApi.Api.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<List<InvoiceMasterDto>>> GetAll()
+        
+        public async Task<ActionResult<dynamic>> GetAll()
         {
             var result = await _repository.GetAllAsync();
             return Ok(result);
         }
 
         [HttpGet("GetBy/{id}")]
-        public async Task<ActionResult<InvoiceMasterDto>> GetById(int id)
+       
+        public async Task<ActionResult<dynamic>> GetById(int id)
         {
             var result = await _repository.GetByIdAsync(id);
             if (result == null) return NotFound();
