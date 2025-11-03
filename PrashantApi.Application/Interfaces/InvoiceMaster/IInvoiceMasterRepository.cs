@@ -9,8 +9,9 @@ namespace PrashantApi.Application.Interfaces.InvoiceMaster
     {
         Task<CommandResult> AddAsync(InvoiceMasterModel entity);
         Task<CommandResult> UpdateAsync(InvoiceMasterModel entity);
-        Task<List<InvoiceMasterModel>> GetAllAsync();
-        Task<dynamic?> GetByIdAsync(int id);
+        
+        Task<dynamic> GetAllAsync();
+        Task<dynamic> GetByIdAsync(int id);
         Task<dynamic> GetCustomerWiseRepairDataAsync(int customerId, int invoiceId);
     }
 }
