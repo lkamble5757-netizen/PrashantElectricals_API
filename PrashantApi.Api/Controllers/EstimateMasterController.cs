@@ -47,6 +47,13 @@ namespace PrashantApi.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetEstimatedCustomer")]
+        public async Task<ActionResult<dynamic>> GetEstimatedCustomer()
+        {
+            var result = await _repository.GetEstimatedCustomer();
+            return Ok(result);
+        }
+
         [HttpGet("GetBy/{id}")]
         public async Task<ActionResult<dynamic>> GetById(int id)
         {
