@@ -12,7 +12,8 @@ namespace PrashantApi.Application.Interfaces.Estimate
     {
         Task<CommandResult> AddAsync(EstimateMasterModel entity);      
         Task<CommandResult> UpdateAsync(EstimateMasterModel entity); 
-        Task<dynamic> GetAllAsync();                            
+        Task<dynamic> GetAllAsync();
+        Task<dynamic> GetEstimatedCustomer();
         Task<dynamic> GetByIdAsync(int id);    
         Task<dynamic> GetJobNoByCustomerID(int id); 
     }

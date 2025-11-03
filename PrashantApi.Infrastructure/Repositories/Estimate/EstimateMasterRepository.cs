@@ -192,6 +192,15 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
             );
         }
 
+        public async Task<dynamic> GetEstimatedCustomer()
+        {
+            using var conn = _dbConnectionString.GetConnection();
+            return await conn.QueryAsync(
+                SqlConstants.Estimate.GetEstimatedCustomer,
+                commandType: CommandType.StoredProcedure
+            );
+        }
+
 
         public async Task<dynamic> GetByIdAsync(int id)
         {

@@ -75,6 +75,7 @@
             public const string EstimateMaster = "dbo.usp_Estimate";
             public const string EstimatedPartDetails = "dbo.usp_EstimatedPartDetails";
             public const string GetAllEstimateMaster = "dbo.usp_GetAllEstimates";
+            public const string GetEstimatedCustomer = "dbo.usp_GetEstimatedCustomer";
             public const string GetEstimateMasterById = "dbo.usp_GetEstimateById";
             public const string GetJobNoByCustomerID = "dbo.usp_GetJobNoByCustomerID";
         }
