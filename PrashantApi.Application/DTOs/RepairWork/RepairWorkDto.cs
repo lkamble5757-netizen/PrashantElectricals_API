@@ -8,6 +8,7 @@ namespace PrashantApi.Application.DTOs.RepairWork
     public class RepairWorkDto : BaseDTO
     {
         public int Id { get; set; }
+        public int RepairWorkNo { get; set; }
         public int jobNo { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? CompletionDate { get; set; }

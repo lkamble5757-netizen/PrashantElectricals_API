@@ -8,6 +8,7 @@ namespace PrashantApi.Domain.Entities.RepairWork
     {
         public int Id { get; set; }
         public int jobNo { get; set; }
+        public int RepairWorkNo { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? CompletionDate { get; set; }
         public string WorkDone { get; set; } = string.Empty;
