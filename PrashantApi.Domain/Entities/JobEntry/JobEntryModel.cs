@@ -9,7 +9,7 @@ namespace PrashantApi.Domain.Entities.JobEntry
     public class JobEntryModel
     {
         public int ID { get; set; }
-        public string JobNo { get; set; } = string.Empty;
+        public int JobNo { get; set; } 
         public DateTime DateReceived { get; set; }
         public int CustomerID { get; set; }
         public string? CustomerName { get; set; }
