@@ -10,7 +10,7 @@ namespace PrashantApi.Application.Interfaces.RepairWork
     {
         Task<CommandResult> AddAsync(RepairWorkModel entity);
         Task<CommandResult> UpdateAsync(RepairWorkModel entity);
-        Task<List<RepairWorkModel>> GetAllAsync();
-        Task<RepairWorkModel?> GetByIdAsync(int id);
+        Task<dynamic> GetAllAsync();
+        Task<dynamic> GetByIdAsync(int id);
     }
 }

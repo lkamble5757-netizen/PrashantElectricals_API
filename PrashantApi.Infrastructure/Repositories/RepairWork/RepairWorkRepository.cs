@@ -34,6 +34,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
                 var parameters = new DynamicParameters(new
                 {
                     entity.jobNo,
+                    entity.RepairWorkNo,
                     entity.StartDate,
                     entity.CompletionDate,
                     entity.WorkDone,
@@ -96,7 +97,6 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
         {
             using var connection = _dbConnectionString.GetConnection();
             connection.Open();
-            //using var transaction = connection.BeginTransaction();
 
             try
             {
@@ -104,6 +104,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
                 {
                     entity.Id,
                     entity.jobNo,
+                    entity.RepairWorkNo,
                     entity.StartDate,
                     entity.CompletionDate,
                     entity.WorkDone,
@@ -117,19 +118,9 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
                 await connection.ExecuteAsync(
                     SqlConstants.RepairWork.SaveRepairWork,
                     parameters,
-                    //transaction,
                     commandType: CommandType.StoredProcedure
                 );
 
-                // Delete old items
-                //await connection.ExecuteAsync(
-                //    SqlConstants.RepairWork.usp_SaveRepairWorkDetails,
-                //    new { RepairWorkId = entity.Id },
-                //    transaction,
-                //    commandType: CommandType.StoredProcedure
-                //);
-
-                // Insert new ones
                 var table = new DataTable();
                 table.Columns.Add("Id", typeof(int));
                 table.Columns.Add("RepairWorkId", typeof(int));
@@ -147,30 +138,27 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
 
                 var repairWorks = new DynamicParameters();
                 repairWorks.Add("@RepairWorkDetails", table.AsTableValuedParameter("dbo.Type_RepairWorkDetails"));
-                repairWorks.Add("@Mode", "UPDATE"); // ✅ Removed space before @Mode
+                repairWorks.Add("@Mode", "UPDATE"); 
 
                 await connection.ExecuteAsync(
-                    SqlConstants.RepairWork.SaveRepairWorkItem, // ✅ Call correct SP
+                    SqlConstants.RepairWork.SaveRepairWorkItem, 
                     repairWorks,
                     commandType: CommandType.StoredProcedure
                 );
 
-
-                //transaction.Commit();
                 return CommandResult.Success;
             }
             catch (Exception ex)
             {
-                //transaction.Rollback();
                 return CommandResult.Fail(ex.Message);
             }
         }
 
 
-        public async Task<List<RepairWorkModel>> GetAllAsync()
+        public async Task<dynamic> GetAllAsync()
         {
             using var connection = _dbConnectionString.GetConnection();
-            var result = await connection.QueryAsync<RepairWorkModel>(
+            var result = await connection.QueryAsync<dynamic>(
                 SqlConstants.RepairWork.GetAllRepairWork,
                 commandType: CommandType.StoredProcedure
             );
@@ -178,7 +166,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
         }
 
 
-        public async Task<RepairWorkModel?> GetByIdAsync(int id)
+        public async Task<dynamic> GetByIdAsync(int id)
         {
             using var connection = _dbConnectionString.GetConnection();
 
@@ -189,10 +177,10 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
             );
 
             // First result set: main RepairWork record(s)
-            var repairWorks = (await multi.ReadAsync<RepairWorkModel>()).ToList();
+            var repairWorks = (await multi.ReadAsync<dynamic>()).ToList();
 
             // Second result set: all related item records
-            var items = (await multi.ReadAsync<RepairWorkItemModel>()).ToList();
+            var items = (await multi.ReadAsync<dynamic>()).ToList();
 
             // Map items to their respective RepairWork by RepairWorkId
             foreach (var rw in repairWorks)
