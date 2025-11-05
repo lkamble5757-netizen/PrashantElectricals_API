@@ -37,7 +37,7 @@ namespace PrashantApi.Application.Feature.ItemMaster.Commands
             }
             catch (Exception ex)
             {
-                return CommandResult.Fail($"Error adding ItemMaster: {ex.Message}");
+                return CommandResult.Fail(ex.Message);
             }
         }
     }

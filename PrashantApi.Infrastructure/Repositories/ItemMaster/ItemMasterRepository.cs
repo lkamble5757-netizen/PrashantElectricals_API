@@ -27,9 +27,7 @@ namespace PrashantApi.Infrastructure.Repositories.ItemMaster
             {
                 using var connection = _dbConnectionString.GetConnection();
                 var parameters = new DynamicParameters();
-
-                parameters.Add("@Id", 0);
-                parameters.Add("@ItemCode", entity.ItemCode);
+                  
                 parameters.Add("@ItemName", entity.ItemName);
                 parameters.Add("@CategoryId", entity.CategoryId);
                 parameters.Add("@SubCategoryId", entity.SubCategoryId);

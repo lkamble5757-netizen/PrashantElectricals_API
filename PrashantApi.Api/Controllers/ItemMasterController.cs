@@ -26,8 +26,14 @@ namespace PrashantApi.Api.Controllers
             if (dto == null)
                 return BadRequest(CommandResult.Fail("Invalid ItemMaster data."));
 
-            var command = new AddItemMasterCommand { ItemMaster = dto };
+            var command = new AddItemMasterCommand { ItemMaster = dto };    
             var result = await _mediator.Send(command);
+
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.FailureReason);
+            }
+
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
