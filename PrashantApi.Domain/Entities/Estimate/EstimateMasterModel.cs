@@ -9,6 +9,7 @@ namespace PrashantApi.Domain.Entities.Estimate
     public class EstimateMasterModel  
     {
         public int Id { get; set; }
+        public int EstimateNo { get; set; }
         public int JobNo { get; set; }
         public DateTime EstimateDate { get; set; }
         public int EstimatedCustomer { get; set; } 
@@ -33,8 +34,6 @@ namespace PrashantApi.Domain.Entities.Estimate
         public int EstimatedId { get; set; }
         public string? ItemId { get; set; }
         public decimal PricePerItem { get; set; }
-        public int ItemQty { get; set; } 
-        public int Total { get; set; }
         public bool IsActive { get; set; }
         public int CreatedBy { get; set; }
         public int ModifiedBy { get; set; }
