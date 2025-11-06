@@ -4,39 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-using PrashantApi.Application.Interfaces.CustomerMaster;
-using PrashantApi.Domain.Entities.CustomerMaster;
+using PrashantApi.Application.Interfaces.LedgerMaster;
+using PrashantApi.Domain.Entities.LedgerMaster;
 using PrashantApi.Infrastructure.Connection;
 using System.Data;
 using PrashantEle.API.PrashantEle.Application.Common;
 using PrashantEle.API.PrashantEle.Infrastructure.Constants;
 
-namespace PrashantApi.Infrastructure.Repositories.CustomerMaster
+namespace PrashantApi.Infrastructure.Repositories.LedgerMaster
 {
-    public class CustomerMasterRepository(IDbConnectionString dbConnectionString) : ICustomerMasterRepository
+    public class LedgerMasterRepository(IDbConnectionString dbConnectionString) : ILedgerMasterRepository
     {
         private readonly IDbConnectionString _dbConnectionString = dbConnectionString;
 
-        public async Task<CommandResult> AddAsync(CustomerMasterModel entity)
+        public async Task<CommandResult> AddAsync(LedgerMasterModel entity)
         {
             try
             {
                 using var connection = _dbConnectionString.GetConnection();
-
                 var parameters = new DynamicParameters();
+
                 parameters.Add("@Id", 0);
-                parameters.Add("@CustName", entity.CustName);
-                parameters.Add("@CustEmail", entity.CustEmail);
-                parameters.Add("@CustPhoneNo", entity.CustPhoneNo);
-                parameters.Add("@CustAddress", entity.CustAddress);
-                parameters.Add("@GSTNo", entity.GSTNo);
                 parameters.Add("@LedgerCode", entity.LedgerCode);
-                parameters.Add("@CreatedBy", entity.CreatedBy);
+                parameters.Add("@LedgerName", entity.LedgerName);
+                parameters.Add("@MainGroupId", entity.MainGroupId);
+                parameters.Add("@SubGroupId1Id", entity.SubGroupId1Id);
+                parameters.Add("@SubGroupId2Id", entity.SubGroupId2Id);
+                parameters.Add("@SubGroupId3Id", entity.SubGroupId3Id);
                 parameters.Add("@IsActive", entity.IsActive);
-                parameters.Add("@mode", "INSERT");
+                parameters.Add("@CreatedBy", entity.CreatedBy);
+                parameters.Add("@Mode", "INSERT");
 
                 var output = await connection.ExecuteAsync(
-                    SqlConstants.CustomerMaster.CustomerMasterr,
+                    SqlConstants.LedgerMaster.LedgerMasterr,
                     parameters,
                     commandType: CommandType.StoredProcedure
                 );
@@ -49,26 +49,26 @@ namespace PrashantApi.Infrastructure.Repositories.CustomerMaster
             }
         }
 
-        public async Task<CommandResult> UpdateAsync(CustomerMasterModel entity)
+        public async Task<CommandResult> UpdateAsync(LedgerMasterModel entity)
         {
             try
             {
                 using var connection = _dbConnectionString.GetConnection();
-
                 var parameters = new DynamicParameters();
+
                 parameters.Add("@Id", entity.Id);
-                parameters.Add("@CustName", entity.CustName);
-                parameters.Add("@CustEmail", entity.CustEmail);
-                parameters.Add("@CustPhoneNo", entity.CustPhoneNo);
-                parameters.Add("@CustAddress", entity.CustAddress);
-                parameters.Add("@GSTNo", entity.GSTNo);
                 parameters.Add("@LedgerCode", entity.LedgerCode);
-                parameters.Add("@ModifiedBy", entity.ModifiedBy);
+                parameters.Add("@LedgerName", entity.LedgerName);
+                parameters.Add("@MainGroupId", entity.MainGroupId);
+                parameters.Add("@SubGroupId1Id", entity.SubGroupId1Id);
+                parameters.Add("@SubGroupId2Id", entity.SubGroupId2Id);
+                parameters.Add("@SubGroupId3Id", entity.SubGroupId3Id);
                 parameters.Add("@IsActive", entity.IsActive);
-                parameters.Add("@mode", "UPDATE");
+                parameters.Add("@ModifiedBy", entity.ModifiedBy);
+                parameters.Add("@Mode", "UPDATE");
 
                 var output = await connection.ExecuteAsync(
-                    SqlConstants.CustomerMaster.CustomerMasterr,
+                    SqlConstants.LedgerMaster.LedgerMasterr,
                     parameters,
                     commandType: CommandType.StoredProcedure
                 );
@@ -84,12 +84,10 @@ namespace PrashantApi.Infrastructure.Repositories.CustomerMaster
         public async Task<dynamic> GetAllAsync()
         {
             using var connection = _dbConnectionString.GetConnection();
-
             var result = await connection.QueryAsync<dynamic>(
-                SqlConstants.CustomerMaster.GetAllCustomerMaster,
+                SqlConstants.LedgerMaster.GetAllLedgerMaster,
                 commandType: CommandType.StoredProcedure
             );
-
             return result;
         }
 
@@ -100,7 +98,7 @@ namespace PrashantApi.Infrastructure.Repositories.CustomerMaster
             parameters.Add("@Id", id);
 
             var result = await connection.QueryAsync<dynamic>(
-                SqlConstants.CustomerMaster.GetCustomerMasterById,
+                SqlConstants.LedgerMaster.GetLedgerMasterById,
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
@@ -109,3 +107,4 @@ namespace PrashantApi.Infrastructure.Repositories.CustomerMaster
         }
     }
 }
+
