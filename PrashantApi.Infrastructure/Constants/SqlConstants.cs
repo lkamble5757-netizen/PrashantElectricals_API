@@ -97,21 +97,36 @@
 
 public static class InvoiceMaster
         {
-            // ✅ Stored procedure for main InvoiceMaster table
+            //  Stored procedure for main InvoiceMaster table
             public const string SaveInvoiceMaster = "dbo.usp_SaveInvoiceMaster";
             public const string GetAllInvoiceMaster = "dbo.usp_GetAllInvoiceMaster";
             public const string GetInvoiceMasterById = "dbo.usp_GetInvoiceMasterById";
 
-            // ✅ Stored procedures for child InvoiceJobDetails
+            //  Stored procedures for child InvoiceJobDetails
             public const string SaveInvoiceJobDetails = "dbo.usp_SaveInvoiceJobDetails";
           
-            // ✅ Stored procedures for child InvoiceItemDetails
+            //  Stored procedures for child InvoiceItemDetails
             public const string SaveInvoiceItemDetails = "dbo.usp_SaveInvoiceItemDetails";
 
             public const string GetCustomerWiseRepairData = "usp_GetCustomerWiseRepairData";
             public const string editInvoiceDetails = "usp_editInvoiceDetails";
 
         }
+
+        public static class ChallanMaster
+        {
+            //  Existing stored procedures for main Challan table
+            public const string SaveChallan = "dbo.usp_ChallanMaster";
+            public const string GetAllChallan = "usp_GetAllChallanMaster";
+            public const string GetChallanById = "usp_GetChallanMasterById";
+
+            // New stored procedures for child ChallanDetails table
+            public const string SaveChallanDetails = "dbo.usp_SaveChallanDetails";
+
+            public const string GetInvoicesByCustomerId = "usp_GetInvoicesByCustomerId";
+            public const string GetRepairWorkDetailsByJobId = "usp_GetRepairWorkDetailsByJobId";
+        }
+
 
         public static class LedgerMaster
         {
