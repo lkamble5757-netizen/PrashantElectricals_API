@@ -28,6 +28,7 @@ namespace PrashantApi.Application.DTOs.RepairWork
         public int ItemId { get; set; }
         public int itemQty { get; set; }
         public decimal pricePerItem { get; set; }
+        public int AvailableStock { get; set; }
         public int total { get; set; }
 
 

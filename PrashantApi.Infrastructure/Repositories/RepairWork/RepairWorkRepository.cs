@@ -58,6 +58,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
                 table.Columns.Add("ItemId", typeof(int));
                 table.Columns.Add("itemQty", typeof(int));
                 table.Columns.Add("pricePerItem", typeof(decimal));
+                table.Columns.Add("AvailableStock", typeof(int));
                 table.Columns.Add("total", typeof(int));
                 table.Columns.Add("IsActive", typeof(bool));
                 table.Columns.Add("CreatedBy", typeof(int));
@@ -127,6 +128,7 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
                 table.Columns.Add("ItemId", typeof(int));
                 table.Columns.Add("itemQty", typeof(int));
                 table.Columns.Add("pricePerItem", typeof(decimal));
+                table.Columns.Add("AvailableStock", typeof(int));
                 table.Columns.Add("total", typeof(int));
                 table.Columns.Add("IsActive", typeof(bool));
                 table.Columns.Add("ModifiedBy", typeof(int));
@@ -192,6 +194,17 @@ namespace PrashantApi.Infrastructure.Repositories.RepairWork
 
             // Return single RepairWork (since GetByIdAsync expects one)
             return repairWorks.FirstOrDefault();
+        }
+
+        public async Task<dynamic> GetEstimateMasterFeildsByIdAsync(int estimatedId)
+        {
+            using var connection = _dbConnectionString.GetConnection();
+            var result = await connection.QueryAsync<dynamic>(
+                SqlConstants.RepairWork.GetEstimateMasterFeildsById,
+                new { EstimatedId = estimatedId },
+                commandType: CommandType.StoredProcedure
+            );
+            return result.AsList();
         }
 
 

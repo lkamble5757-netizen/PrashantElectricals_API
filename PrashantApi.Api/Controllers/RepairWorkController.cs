@@ -64,5 +64,16 @@ namespace PrashantApi.Api.Controllers
             if (data == null) return NotFound();
             return Ok(data);
         }
+
+        [HttpGet("GetEstimateMasterFeildsById/{estimatedId}")]
+        public async Task<ActionResult<dynamic>> GetEstimateMasterFeildsById(int estimatedId)
+        {
+            var data = await _repository.GetEstimateMasterFeildsByIdAsync(estimatedId);
+            if (data == null || ((ICollection<dynamic>)data).Count == 0)
+                return NotFound();
+
+            return Ok(data);
+        }
+
     }
 }
