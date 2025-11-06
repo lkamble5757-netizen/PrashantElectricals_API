@@ -26,6 +26,7 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                 // 1️⃣ Insert Master and capture OUTPUT param
                 var masterParams = new DynamicParameters();
                 masterParams.Add("@EstimateId", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                masterParams.Add("@EstimateNo", entity.EstimateNo);
                 masterParams.Add("@JobNo", entity.JobNo);
                 masterParams.Add("@EstimateDate", entity.EstimateDate);
                 masterParams.Add("@EstimatedCustomer", entity.EstimatedCustomer);
@@ -40,14 +41,14 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                 masterParams.Add("@CreatedBy", entity.CreatedBy);
                 masterParams.Add("@Mode", "INSERT");
 
-                await conn.ExecuteAsync(
+              var estimateId =  await conn.ExecuteAsync(
                     SqlConstants.Estimate.EstimateMaster,
                     masterParams, 
                     commandType: CommandType.StoredProcedure
                 );
 
                 // Get OUTPUT param value
-                var estimateId = masterParams.Get<int>("@EstimateId");
+                //var estimateId = masterParams.Get<int>("@EstimateId");
 
                 // 2️⃣ Prepare Details List with masterId
                 if (entity.Items != null && entity.Items.Any())
@@ -62,8 +63,6 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     tvp.Columns.Add("EstimatedId", typeof(int));
                     tvp.Columns.Add("ItemId", typeof(string));
                     tvp.Columns.Add("PricePerItem", typeof(decimal));
-                    tvp.Columns.Add("ItemQty", typeof(int));
-                    tvp.Columns.Add("Total", typeof(decimal));
                     tvp.Columns.Add("IsActive", typeof(bool));
                     tvp.Columns.Add("CreatedBy", typeof(int));
 
@@ -73,8 +72,6 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                             estimateId,
                             item.ItemId,
                             item.PricePerItem,
-                            item.ItemQty,
-                            item.Total,
                             true,
                             entity.CreatedBy
                         );
@@ -108,6 +105,7 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                 var parameters = new DynamicParameters();
                 parameters.Add("@EstimateId", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 parameters.Add("@ID", entity.Id);
+                parameters.Add("@EstimateNo", entity.EstimateNo);
                 parameters.Add("@JobNo", entity.JobNo);
                 parameters.Add("@EstimateDate", entity.EstimateDate);
                 parameters.Add("@EstimatedCustomer", entity.EstimatedCustomer);
@@ -146,8 +144,6 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     tvp.Columns.Add("EstimatedId", typeof(int));
                     tvp.Columns.Add("ItemId", typeof(string));
                     tvp.Columns.Add("PricePerItem", typeof(decimal));
-                    tvp.Columns.Add("ItemQty", typeof(int));
-                    tvp.Columns.Add("Total", typeof(decimal));
                     tvp.Columns.Add("IsActive", typeof(bool));
                     tvp.Columns.Add("ModifiedBy", typeof(int));
 
@@ -157,8 +153,6 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                             entity.Id,
                             item.ItemId,
                             item.PricePerItem,
-                            item.ItemQty,
-                            item.Total,
                             true,
                             entity.ModifiedBy
                         );
