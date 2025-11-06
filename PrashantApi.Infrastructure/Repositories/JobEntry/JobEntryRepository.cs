@@ -30,8 +30,7 @@ namespace PrashantApi.Infrastructure.Repositories.JobEntry
                 parameters.Add("@CustomerID", entity.CustomerID);
                 parameters.Add("@MachineMake", entity.MachineMake);
                 parameters.Add("@Model", entity.Model);
-                parameters.Add("@HP", entity.HP);
-                parameters.Add("@KW", entity.KW);
+                parameters.Add("@HpKw", entity.HpKw);
                 parameters.Add("@RPM", entity.RPM);
                 parameters.Add("@SerialNo", entity.SerialNo);
                 parameters.Add("@IssueReported", entity.IssueReported);
@@ -70,8 +69,7 @@ namespace PrashantApi.Infrastructure.Repositories.JobEntry
                 parameters.Add("@CustomerID", entity.CustomerID);
                 parameters.Add("@MachineMake", entity.MachineMake);
                 parameters.Add("@Model", entity.Model);
-                parameters.Add("@HP", entity.HP);
-                parameters.Add("@KW", entity.KW);
+                parameters.Add("@HpKw", entity.HpKw);
                 parameters.Add("@RPM", entity.RPM);
                 parameters.Add("@SerialNo", entity.SerialNo);
                 parameters.Add("@IssueReported", entity.IssueReported);
@@ -117,6 +115,19 @@ namespace PrashantApi.Infrastructure.Repositories.JobEntry
                 parameters,
                 commandType: CommandType.StoredProcedure);
         }
+
+        public async Task<dynamic> GetMachineMasterFeildsByIdAsync(int id)
+        {
+            using var connection = _dbConnectionString.GetConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", id);
+
+            return await connection.QueryFirstOrDefaultAsync<dynamic>(
+                SqlConstants.JobEntry.GetMachineMasterFeildsById,
+                parameters,
+                commandType: CommandType.StoredProcedure);
+        }
+
 
     }
 }

@@ -58,5 +58,17 @@ namespace PrashantApi.Api.Controllers
 
             return Ok(entry);
         }
+
+
+        [HttpGet("GetMachineMasterFeildsById/{id}")]
+        public async Task<ActionResult<dynamic>> GetMachineMasterFeildsById(int id)
+        {
+            var result = await _repository.GetMachineMasterFeildsByIdAsync(id);
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        }
+
     }
 }

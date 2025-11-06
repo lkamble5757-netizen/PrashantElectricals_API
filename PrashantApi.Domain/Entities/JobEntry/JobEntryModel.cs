@@ -14,10 +14,9 @@ namespace PrashantApi.Domain.Entities.JobEntry
         public int CustomerID { get; set; }
         public string? CustomerName { get; set; }
         public string? MachineMake { get; set; }
-        public string? Model { get; set; }
-        public string? HP { get; set; }
-        public string? KW { get; set; }
-        public string? RPM { get; set; }
+        public int Model { get; set; }
+        public int HpKw { get; set; }
+        public int RPM { get; set; }
         public string? SerialNo { get; set; }
         public string? IssueReported { get; set; }
         public string? TechnicianAssigned { get; set; }
