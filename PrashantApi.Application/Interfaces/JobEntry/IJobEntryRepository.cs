@@ -14,6 +14,7 @@ namespace PrashantApi.Application.Interfaces.JobEntry
         Task<CommandResult> UpdateAsync(JobEntryModel entity);
         Task<dynamic> GetAllAsync();
         Task<dynamic> GetByIdAsync(int id);
+        Task<dynamic> GetMachineMasterFeildsByIdAsync(int id);
 
     }
 

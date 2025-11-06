@@ -68,6 +68,8 @@
             public const string JobEntryMaster = "dbo.usp_JobEntry";
             public const string GetAllJobEntries = "dbo.usp_GetAllJobEntries";
             public const string GetJobEntryById = "dbo.usp_GetJobEntryById";
+            public const string GetMachineMasterFeildsById = "dbo.usp_GetMachineMasterFeildsById";
+
         }
 
         public static class Estimate
