@@ -14,6 +14,7 @@ using PrashantApi.Application.Interfaces.Estimate;
 using PrashantApi.Application.Interfaces.InvoiceMaster;
 using PrashantApi.Application.Interfaces.ItemMaster;
 using PrashantApi.Application.Interfaces.JobEntry;
+using PrashantApi.Application.Interfaces.LedgerMaster;
 using PrashantApi.Application.Interfaces.Logging;
 using PrashantApi.Application.Interfaces.MachineMaster;
 using PrashantApi.Application.Interfaces.MachineMaster.Mapping;
@@ -35,6 +36,7 @@ using PrashantApi.Infrastructure.Repositories.Estimate;
 using PrashantApi.Infrastructure.Repositories.InvoiceMaster;
 using PrashantApi.Infrastructure.Repositories.ItemMaster;
 using PrashantApi.Infrastructure.Repositories.JobEntry;
+using PrashantApi.Infrastructure.Repositories.LedgerMaster;
 using PrashantApi.Infrastructure.Repositories.MachineMaster;
 using PrashantApi.Infrastructure.Repositories.ReferenceDataMaster;
 using PrashantApi.Infrastructure.Repositories.RepairWork;
@@ -88,6 +90,7 @@ public static class DependencyInjection
         services.AddScoped<IEstimateMasterRepository, EstimateMasterRepository>();
         services.AddScoped<IRepairWorkRepository, RepairWorkRepository>();
         services.AddScoped<IInvoiceMasterRepository, InvoiceMasterRepository>();
+        services.AddScoped<ILedgerMasterRepository, LedgerMasterRepository>();
 
 
         //  Services

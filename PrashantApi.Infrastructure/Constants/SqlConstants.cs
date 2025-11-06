@@ -110,5 +110,13 @@ public static class InvoiceMaster
             public const string editInvoiceDetails = "usp_editInvoiceDetails";
 
         }
+
+        public static class LedgerMaster
+        {
+            public const string LedgerMasterr = "dbo.usp_LedgerMaster";
+            public const string GetAllLedgerMaster = "dbo.usp_GetAllLedgerMaster";
+            public const string GetLedgerMasterById = "dbo.usp_GetLedgerMasterById";
+        }
+
     }
 }
