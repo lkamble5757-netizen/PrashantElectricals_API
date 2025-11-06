@@ -87,6 +87,8 @@
             public const string SaveRepairWork = "dbo.usp_RepairWork";
             public const string GetAllRepairWork = "dbo.usp_GetAllRepairWork";
             public const string GetRepairWorkById = "dbo.usp_GetRepairWorkById";
+            public const string GetEstimateMasterFeildsById = "dbo.usp_GetEstimateMasterFeildsById";
+
 
             // ✅ New stored procedures for child RepairWorkItem table
             public const string SaveRepairWorkItem = "dbo.usp_SaveRepairWorkDetails";

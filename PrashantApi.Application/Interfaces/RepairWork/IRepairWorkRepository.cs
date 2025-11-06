@@ -12,5 +12,6 @@ namespace PrashantApi.Application.Interfaces.RepairWork
         Task<CommandResult> UpdateAsync(RepairWorkModel entity);
         Task<dynamic> GetAllAsync();
         Task<dynamic> GetByIdAsync(int id);
+        Task<dynamic> GetEstimateMasterFeildsByIdAsync(int estimatedId);
     }
 }
