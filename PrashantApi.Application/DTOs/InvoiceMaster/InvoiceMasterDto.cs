@@ -11,12 +11,12 @@ namespace PrashantApi.Application.DTOs.InvoiceMaster
         public int InvoiceNo { get; set; }
         public DateTime InvoiceDate { get; set; }
         public int? CustomerId { get; set; }
-    
         public decimal GstPercent { get; set; }
         public decimal GstAmount { get; set; }
         public decimal TotalAmount { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime ModifiedOn { get; set; }
+        public decimal TransportCharges { get; set; }
         public List<InvoiceJobDetailsDto> JobDetails { get; set; } = new();
        
     }
