@@ -172,17 +172,53 @@ namespace PrashantApi.Infrastructure.Repositories.ChallanMaster
             }
         }
 
-        public async Task<dynamic> GetRepairWorkDetailsByJobIdAsync(int jobId)
+        //public async Task<dynamic> GetRepairWorkDetailsByJobIdAsync(int jobId)
+        //{
+        //    using var connection = _dbConnectionString.GetConnection();
+        //    var result = await connection.QueryAsync<dynamic>(
+        //         SqlConstants.ChallanMaster.GetRepairWorkDetailsByJobId,      
+        //        new { JobId = jobId },                
+        //        commandType: CommandType.StoredProcedure
+        //    );
+
+        //    return result.AsList();
+        //}
+
+        public async Task<dynamic> GetRepairWorkDetailsByInvoiceIdAsync(int invoiceId)
         {
             using var connection = _dbConnectionString.GetConnection();
-            var result = await connection.QueryAsync<dynamic>(
-                 SqlConstants.ChallanMaster.GetRepairWorkDetailsByJobId,      
-                new { JobId = jobId },                
-                commandType: CommandType.StoredProcedure
-            );
+            await connection.OpenAsync();
 
-            return result.AsList();
+            try
+            {
+                using var multi = await connection.QueryMultipleAsync(
+                    SqlConstants.ChallanMaster.GetRepairWorkDetailsByJobId,
+                    new { InvoiceId = invoiceId },
+                    commandType: CommandType.StoredProcedure
+                );
+
+                // First result: Invoice + Job details
+                var invoiceJobs = (await multi.ReadAsync<dynamic>()).ToList();
+
+                // Second result: Item details
+                var itemDetails = (await multi.ReadAsync<dynamic>()).ToList();
+
+                // Map items to their respective jobs
+                foreach (var job in invoiceJobs)
+                {
+                    job.ItemDetails = itemDetails
+                        .Where(i => i.RepairWorkId == job.RepairWorkId)
+                        .ToList();
+                }
+
+                return invoiceJobs;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error fetching repair work details: {ex.Message}", ex);
+            }
         }
+
 
 
     }
