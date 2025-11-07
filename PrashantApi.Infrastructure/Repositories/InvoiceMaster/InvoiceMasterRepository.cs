@@ -49,6 +49,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     entity.IsActive,
                     entity.CreatedBy,
                     entity.CreatedOn,
+                    entity.TransportCharges,
                     Mode = "INSERT"
                 });
 
@@ -175,6 +176,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                 parameters.Add("@IsActive", entity.IsActive);
                 parameters.Add("@ModifiedBy", entity.ModifiedBy);
                 parameters.Add("@ModifiedOn", entity.ModifiedOn);
+                parameters.Add("@TransportCharges", entity.TransportCharges);
                 parameters.Add("@Mode", "UPDATE");
 
                 await connection.ExecuteAsync(
@@ -400,6 +402,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     RepairWorks = ((IEnumerable<dynamic>)j.RepairWorks).Select(rw => new
                     {
                         rw.RepairWorkId,
+                        rw.RepairWorkNo,
                         rw.JobId,
                         rw.StartDate,
                         rw.CompletionDate,
