@@ -61,7 +61,7 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     // Convert List to DataTable for TVP
                     var tvp = new DataTable();
                     tvp.Columns.Add("EstimatedId", typeof(int));
-                    tvp.Columns.Add("ItemId", typeof(string));
+                    tvp.Columns.Add("ItemId", typeof(int));
                     tvp.Columns.Add("PricePerItem", typeof(decimal));
                     tvp.Columns.Add("IsActive", typeof(bool));
                     tvp.Columns.Add("CreatedBy", typeof(int));
@@ -142,7 +142,7 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     // Convert List to DataTable for TVP
                     var tvp = new DataTable();
                     tvp.Columns.Add("EstimatedId", typeof(int));
-                    tvp.Columns.Add("ItemId", typeof(string));
+                    tvp.Columns.Add("ItemId", typeof(int));
                     tvp.Columns.Add("PricePerItem", typeof(decimal));
                     tvp.Columns.Add("IsActive", typeof(bool));
                     tvp.Columns.Add("ModifiedBy", typeof(int));

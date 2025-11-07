@@ -32,7 +32,7 @@ namespace PrashantApi.Domain.Entities.Estimate
     public class EstimatedPartDetailsModel
     { 
         public int EstimatedId { get; set; }
-        public string? ItemId { get; set; }
+        public int ItemId { get; set; }
         public decimal PricePerItem { get; set; }
         public bool IsActive { get; set; }
         public int CreatedBy { get; set; }

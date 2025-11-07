@@ -30,7 +30,7 @@ namespace PrashantApi.Application.DTOs.Estimate
     public class EstimatedPartDetailsDto : BaseDTO
     { 
         public int EstimatedId { get; set; }
-        public string? ItemId { get; set; } 
+        public int ItemId { get; set; } 
         public decimal PricePerItem { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime ModifiedOn { get; set; }
