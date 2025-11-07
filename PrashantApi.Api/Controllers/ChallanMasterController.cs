@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PrashantApi.Application.DTOs.ChallanMaster;
 using PrashantApi.Application.Feature.ChallanMaster.Commands;
 using PrashantApi.Application.Interfaces.ChallanMaster;
+using PrashantApi.Infrastructure.Repositories.ChallanMaster;
 using PrashantEle.API.PrashantEle.Application.Common;
 using System.Threading.Tasks;
 
@@ -85,23 +86,42 @@ namespace PrashantApi.Api.Controllers
             }
         }
 
-        [HttpGet("GetRepairWorkDetailsByJobId/{jobId}")]
-        public async Task<IActionResult> GetRepairWorkDetailsByJobId(int jobId)
+        //[HttpGet("GetRepairWorkDetailsByJobId/{jobId}")]
+        //public async Task<IActionResult> GetRepairWorkDetailsByJobId(int jobId)
+        //{
+        //    try
+        //    {
+        //        var result = await _repository.GetRepairWorkDetailsByJobIdAsync(jobId);
+
+        //        if (result == null || !((IEnumerable<object>)result).Any())
+        //            return NotFound($"No repair work details found for JobId {jobId}.");
+
+        //        return Ok(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Internal server error: {ex.Message}");
+        //    }
+        //}
+
+        [HttpGet("GetRepairWorkDetailsByInvoiceId/{invoiceId}")]
+        public async Task<IActionResult> GetRepairWorkDetailsByInvoiceId(int invoiceId)
         {
             try
             {
-                var result = await _repository.GetRepairWorkDetailsByJobIdAsync(jobId);
+                var result = await _repository.GetRepairWorkDetailsByInvoiceIdAsync(invoiceId);
 
-                if (result == null || !((IEnumerable<object>)result).Any())
-                    return NotFound($"No repair work details found for JobId {jobId}.");
+                if (result == null || !((IEnumerable<dynamic>)result).Any())
+                    return NotFound($"No repair work details found for InvoiceId: {invoiceId}");
 
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, new { error = ex.Message });
             }
         }
+
 
 
 

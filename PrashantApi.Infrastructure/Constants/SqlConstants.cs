@@ -126,7 +126,10 @@ public static class InvoiceMaster
             public const string SaveChallanDetails = "dbo.usp_SaveChallanDetails";
 
             public const string GetInvoicesByCustomerId = "usp_GetInvoicesByCustomerId";
+           // public const string GetRepairWorkDetailsByJobId = "usp_GetRepairWorkDetailsByJobId";
+
             public const string GetRepairWorkDetailsByJobId = "usp_GetRepairWorkDetailsByJobId";
+
         }
 
 

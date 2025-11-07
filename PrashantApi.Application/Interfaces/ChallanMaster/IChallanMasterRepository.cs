@@ -1,4 +1,5 @@
-﻿using PrashantApi.Domain.Entities.ChallanMaster;
+﻿using Microsoft.AspNetCore.Mvc;
+using PrashantApi.Domain.Entities.ChallanMaster;
 using PrashantEle.API.PrashantEle.Application.Common;
 using System.Threading.Tasks;
 
@@ -11,7 +12,9 @@ namespace PrashantApi.Application.Interfaces.ChallanMaster
         Task<dynamic> GetAllAsync();
         Task<dynamic> GetByIdAsync(int id);
         Task<dynamic> GetInvoicesByCustomerIdAsync(int customerId);
-        Task<dynamic> GetRepairWorkDetailsByJobIdAsync(int jobId);
+        //  Task<dynamic> GetRepairWorkDetailsByJobIdAsync(int jobId);
+
+        Task<dynamic> GetRepairWorkDetailsByInvoiceIdAsync(int invoiceId);
 
     }
 }
