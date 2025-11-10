@@ -19,7 +19,9 @@ namespace PrashantApi.Infrastructure.Repositories.RoleMaster
 
         public async Task<CommandResult> AddAsync(RoleMasterModel entity)
         {
-            using var connection = _dbConnectionString.GetConnection();
+            try
+            {
+                using var connection = _dbConnectionString.GetConnection();
 
             var parameters = new DynamicParameters();
             parameters.Add("@Id", 0);
@@ -34,6 +36,11 @@ namespace PrashantApi.Infrastructure.Repositories.RoleMaster
                 parameters,
                 commandType: CommandType.StoredProcedure
             );
+            }
+            catch (Exception ex)
+            {
+                return CommandResult.Fail(ex.Message);
+            }
         }
 
         public async Task<CommandResult> UpdateAsync(RoleMasterModel entity)

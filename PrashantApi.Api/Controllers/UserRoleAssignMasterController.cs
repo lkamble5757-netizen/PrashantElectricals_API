@@ -27,6 +27,11 @@ namespace PrashantApi.Api.Controllers
             var command = new AddUserRoleAssignMasterCommand { UserRoleAssignMaster = dto };
             var result = await _mediator.Send(command);
 
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.FailureReason);
+            }
+
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
