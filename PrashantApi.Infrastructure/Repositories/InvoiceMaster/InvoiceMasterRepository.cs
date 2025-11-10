@@ -36,7 +36,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
 
             try
             {
-                // ✅ Save main invoice master
+            
                 var parameters = new DynamicParameters(new
                 {
                     entity.Id,
@@ -61,10 +61,10 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                 );
 
                 var tableJob = new DataTable();
-                // ✅ Save job details
+
                 if (entity.JobDetails != null && entity.JobDetails.Any())
                 {
-                    //var tableJob = new DataTable();
+                   
                     tableJob.Columns.Add("Id", typeof(int));
                     tableJob.Columns.Add("InvoiceId", typeof(int));
                     tableJob.Columns.Add("JobId", typeof(int));
@@ -164,7 +164,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
 
             try
             {
-                // ✅ Update Invoice Master
+                
                 var parameters = new DynamicParameters();
                 parameters.Add("@Id", entity.Id);
                 parameters.Add("@InvoiceNo", entity.InvoiceNo);
@@ -185,7 +185,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     commandType: CommandType.StoredProcedure
                 );
 
-                // ✅ Update Job Details
+                
                 if (entity.JobDetails != null && entity.JobDetails.Any())
                 {
                     var tableJob = new DataTable();
@@ -367,12 +367,12 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
             if (multi == null)
                 return null;
 
-            // ✅ Read 3 result sets dynamically
+         
             var jobs = (await multi.ReadAsync<dynamic>()).ToList();
             var repairWorks = (await multi.ReadAsync<dynamic>()).ToList();
             var repairWorkItems = (await multi.ReadAsync<dynamic>()).ToList();
 
-            // ✅ Map Items → RepairWork
+            //  Map Items → RepairWork
             foreach (var rw in repairWorks)
             {
                 int rwId = (int)rw.RepairWorkId;
@@ -381,7 +381,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     .ToList();
             }
 
-            // ✅ Map RepairWork → Job
+            //  Map RepairWork → Job
             foreach (var job in jobs)
             {
                 int jobId = (int)job.JobId;
@@ -390,7 +390,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     .ToList();
             }
 
-            // ✅ Build final object
+            //  Build final object
             var result = new
             {
                 CustomerId = customerId,
