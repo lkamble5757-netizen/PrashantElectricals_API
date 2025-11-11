@@ -41,14 +41,12 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                 masterParams.Add("@CreatedBy", entity.CreatedBy);
                 masterParams.Add("@Mode", "INSERT");
 
-              var estimateId =  await conn.ExecuteAsync(
+              var estimateId =  await conn.ExecuteScalarAsync<int>(
                     SqlConstants.Estimate.EstimateMaster,
                     masterParams, 
                     commandType: CommandType.StoredProcedure
                 );
 
-                // Get OUTPUT param value
-                //var estimateId = masterParams.Get<int>("@EstimateId");
 
                 // 2️⃣ Prepare Details List with masterId
                 if (entity.Items != null && entity.Items.Any())
@@ -63,6 +61,8 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     tvp.Columns.Add("EstimatedId", typeof(int));
                     tvp.Columns.Add("ItemId", typeof(int));
                     tvp.Columns.Add("PricePerItem", typeof(decimal));
+                    tvp.Columns.Add("Unit", typeof(int));
+                    tvp.Columns.Add("Total", typeof(int));
                     tvp.Columns.Add("IsActive", typeof(bool));
                     tvp.Columns.Add("CreatedBy", typeof(int));
 
@@ -72,6 +72,8 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                             estimateId,
                             item.ItemId,
                             item.PricePerItem,
+                            item.Unit,
+                            item.Total,
                             true,
                             entity.CreatedBy
                         );
@@ -126,17 +128,12 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     commandType: CommandType.StoredProcedure
                 );
 
-
-
-                var estimateId = parameters.Get<int>("@EstimateId");
-
-
                 // 2️⃣ Prepare Details List with masterId
                 if (entity.Items != null && entity.Items.Any())
                 {
                     foreach (var item in entity.Items)
                     {
-                        item.EstimatedId = estimateId;
+                        item.EstimatedId = entity.Id;
                     }
 
                     // Convert List to DataTable for TVP
@@ -144,6 +141,8 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     tvp.Columns.Add("EstimatedId", typeof(int));
                     tvp.Columns.Add("ItemId", typeof(int));
                     tvp.Columns.Add("PricePerItem", typeof(decimal));
+                    tvp.Columns.Add("Unit", typeof(int));
+                    tvp.Columns.Add("Total", typeof(int));
                     tvp.Columns.Add("IsActive", typeof(bool));
                     tvp.Columns.Add("ModifiedBy", typeof(int));
 
@@ -153,6 +152,8 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                             entity.Id,
                             item.ItemId,
                             item.PricePerItem,
+                            item.Unit,
+                            item.Total,
                             true,
                             entity.ModifiedBy
                         );
@@ -169,7 +170,8 @@ namespace PrashantApi.Infrastructure.Repositories.Estimate
                     );
                 }
 
-                return CommandResult.SuccessWithOutput(estimateId);
+                return CommandResult.SuccessWithOutput("");
+
             }
             catch (Exception ex)
             {

@@ -34,6 +34,8 @@ namespace PrashantApi.Domain.Entities.Estimate
         public int EstimatedId { get; set; }
         public int ItemId { get; set; }
         public decimal PricePerItem { get; set; }
+        public int Unit { get; set; }
+        public int Total { get; set; }
         public bool IsActive { get; set; }
         public int CreatedBy { get; set; }
         public int ModifiedBy { get; set; }
