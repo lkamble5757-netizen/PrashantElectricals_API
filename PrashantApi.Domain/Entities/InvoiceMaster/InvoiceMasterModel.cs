@@ -14,9 +14,9 @@ namespace PrashantApi.Domain.Entities.InvoiceMaster
         public decimal TotalAmount { get; set; }
         public bool IsActive { get; set; }
         public int CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
+        //public DateTime CreatedOn { get; set; }
         public int ModifiedBy { get; set; }
-        public DateTime ModifiedOn { get; set; }
+       // public DateTime ModifiedOn { get; set; }
         public decimal TransportCharges { get; set; }
 
         public List<InvoiceJobDetailsModel> JobDetails { get; set; } = new();

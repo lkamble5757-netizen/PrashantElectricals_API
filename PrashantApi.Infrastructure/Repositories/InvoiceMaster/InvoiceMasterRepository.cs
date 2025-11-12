@@ -48,7 +48,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     entity.TotalAmount,
                     entity.IsActive,
                     entity.CreatedBy,
-                    entity.CreatedOn,
+                   // entity.CreatedOn,
                     entity.TransportCharges,
                     Mode = "INSERT"
                 });
@@ -72,7 +72,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     tableJob.Columns.Add("Total", typeof(decimal));
                     tableJob.Columns.Add("IsActive", typeof(bool));
                     tableJob.Columns.Add("CreatedBy", typeof(int));
-                    tableJob.Columns.Add("CreatedOn", typeof(DateTime));
+                   // tableJob.Columns.Add("CreatedOn", typeof(DateTime));
 
                     foreach (var job in entity.JobDetails)
                     {
@@ -83,8 +83,8 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                             job.WorkDone,
                             job.Total,
                             job.IsActive,
-                            entity.CreatedBy,
-                            entity.CreatedOn
+                            entity.CreatedBy
+                            //entity.CreatedOn
                         );
                     }
 
@@ -175,7 +175,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                 parameters.Add("@TotalAmount", entity.TotalAmount);
                 parameters.Add("@IsActive", entity.IsActive);
                 parameters.Add("@ModifiedBy", entity.ModifiedBy);
-                parameters.Add("@ModifiedOn", entity.ModifiedOn);
+                //parameters.Add("@ModifiedOn", entity.ModifiedOn);
                 parameters.Add("@TransportCharges", entity.TransportCharges);
                 parameters.Add("@Mode", "UPDATE");
 
@@ -207,8 +207,8 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                             job.WorkDone,
                             job.Total,
                             job.IsActive,
-                            entity.ModifiedBy, 
-                            entity.ModifiedOn
+                            entity.ModifiedBy
+                           // entity.ModifiedOn
                         );
 
                     var dpJob = new DynamicParameters();
