@@ -14,8 +14,8 @@ namespace PrashantApi.Application.DTOs.InvoiceMaster
         public decimal GstPercent { get; set; }
         public decimal GstAmount { get; set; }
         public decimal TotalAmount { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime ModifiedOn { get; set; }
+        //public DateTime CreatedOn { get; set; }
+        //public DateTime ModifiedOn { get; set; }
         public decimal TransportCharges { get; set; }
         public List<InvoiceJobDetailsDto> JobDetails { get; set; } = new();
        
