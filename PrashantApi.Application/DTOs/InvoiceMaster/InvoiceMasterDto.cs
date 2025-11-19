@@ -17,6 +17,7 @@ namespace PrashantApi.Application.DTOs.InvoiceMaster
         //public DateTime CreatedOn { get; set; }
         //public DateTime ModifiedOn { get; set; }
         public decimal TransportCharges { get; set; }
+        public int Discount { get; set; }
         public List<InvoiceJobDetailsDto> JobDetails { get; set; } = new();
        
     }

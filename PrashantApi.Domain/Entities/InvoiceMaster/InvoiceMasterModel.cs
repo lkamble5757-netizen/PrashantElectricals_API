@@ -18,6 +18,8 @@ namespace PrashantApi.Domain.Entities.InvoiceMaster
         public int ModifiedBy { get; set; }
        // public DateTime ModifiedOn { get; set; }
         public decimal TransportCharges { get; set; }
+        public int Discount { get; set; }
+
 
         public List<InvoiceJobDetailsModel> JobDetails { get; set; } = new();
        
