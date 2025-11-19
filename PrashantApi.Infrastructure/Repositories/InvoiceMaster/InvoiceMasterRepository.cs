@@ -50,6 +50,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     entity.CreatedBy,
                    // entity.CreatedOn,
                     entity.TransportCharges,
+                    entity.Discount,
                     Mode = "INSERT"
                 });
 
@@ -177,6 +178,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                 parameters.Add("@ModifiedBy", entity.ModifiedBy);
                 //parameters.Add("@ModifiedOn", entity.ModifiedOn);
                 parameters.Add("@TransportCharges", entity.TransportCharges);
+                parameters.Add("@Discount", entity.Discount);
                 parameters.Add("@Mode", "UPDATE");
 
                 await connection.ExecuteAsync(
@@ -196,7 +198,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     tableJob.Columns.Add("Total", typeof(decimal));
                     tableJob.Columns.Add("IsActive", typeof(bool));
                     tableJob.Columns.Add("ModifiedBy", typeof(int));
-                    tableJob.Columns.Add("ModifiedOn", typeof(DateTime));
+                   // tableJob.Columns.Add("ModifiedOn", typeof(DateTime));
 
                     foreach (var job in entity.JobDetails)
 
@@ -221,7 +223,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                         commandType: CommandType.StoredProcedure
                     );
 
-                    // ✅ Update Item Details (inside the same job loop)
+                    //  Update Item Details (inside the same job loop)
                     //foreach (var job in entity.JobDetails)
                     //{
                     //    if (job.ItemDetails != null && job.ItemDetails.Any())
