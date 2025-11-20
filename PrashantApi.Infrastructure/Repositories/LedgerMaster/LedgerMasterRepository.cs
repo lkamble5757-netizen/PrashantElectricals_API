@@ -28,9 +28,7 @@ namespace PrashantApi.Infrastructure.Repositories.LedgerMaster
                 parameters.Add("@LedgerCode", entity.LedgerCode);
                 parameters.Add("@LedgerName", entity.LedgerName);
                 parameters.Add("@MainGroupId", entity.MainGroupId);
-                parameters.Add("@SubGroup1Id", entity.SubGroup1Id);
-                parameters.Add("@SubGroup2Id", entity.SubGroup2Id);
-                parameters.Add("@SubGroup3Id", entity.SubGroup3Id);
+                parameters.Add("@SubGroupId", entity.SubGroupId);
                 parameters.Add("@IsActive", entity.IsActive);
                 parameters.Add("@CreatedBy", entity.CreatedBy);
                 parameters.Add("@Mode", "INSERT");
@@ -59,10 +57,8 @@ namespace PrashantApi.Infrastructure.Repositories.LedgerMaster
                 parameters.Add("@Id", entity.Id);
                 parameters.Add("@LedgerCode", entity.LedgerCode);
                 parameters.Add("@LedgerName", entity.LedgerName);
-                parameters.Add("@MainGroupId", entity.MainGroupId);
-                parameters.Add("@SubGroup1Id", entity.SubGroup1Id);
-                parameters.Add("@SubGroup2Id", entity.SubGroup2Id);
-                parameters.Add("@SubGroup3Id", entity.SubGroup3Id);
+                parameters.Add("@MainGroupId", entity.MainGroupId); 
+                parameters.Add("@SubGroupId", entity.SubGroupId);
                 parameters.Add("@IsActive", entity.IsActive);
                 parameters.Add("@ModifiedBy", entity.ModifiedBy);
                 parameters.Add("@Mode", "UPDATE");
