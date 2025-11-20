@@ -12,9 +12,7 @@ namespace PrashantApi.Domain.Entities.LedgerMaster
         public int LedgerCode { get; set; }
         public string LedgerName { get; set; } = string.Empty;
         public int MainGroupId { get; set; }
-        public int SubGroup1Id { get; set; }
-        public int SubGroup2Id { get; set; }
-        public int SubGroup3Id { get; set; }
+        public int SubGroupId { get; set; }
         public bool IsActive { get; set; } = true;
         public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
