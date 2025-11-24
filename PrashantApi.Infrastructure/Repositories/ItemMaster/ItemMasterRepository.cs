@@ -30,14 +30,14 @@ namespace PrashantApi.Infrastructure.Repositories.ItemMaster
                   
                 parameters.Add("@ItemName", entity.ItemName);
                 parameters.Add("@CategoryId", entity.CategoryId);
-                parameters.Add("@SubCategoryId", entity.SubCategoryId);
-                parameters.Add("@OpeningStock", entity.OpeningStock);
-                parameters.Add("@OpeningStockAsOn", entity.OpeningStockAsOn);
-                parameters.Add("@ItemStock", entity.ItemStock);
+                //parameters.Add("@SubCategoryId", entity.SubCategoryId);
+                //parameters.Add("@OpeningStock", entity.OpeningStock);
+                //parameters.Add("@OpeningStockAsOn", entity.OpeningStockAsOn);
+                //parameters.Add("@ItemStock", entity.ItemStock);
                 parameters.Add("@PerUnitPrice", entity.PerUnitPrice);
                 parameters.Add("@CreatedBy", entity.CreatedBy);
                 parameters.Add("@IsActive", entity.IsActive);
-                parameters.Add("@LedgerId", entity.LedgerId);
+                //parameters.Add("@LedgerId", entity.LedgerId);
                 parameters.Add("@HsnNo", entity.HsnNo);
                 parameters.Add("@mode", "INSERT");
 
@@ -66,14 +66,14 @@ namespace PrashantApi.Infrastructure.Repositories.ItemMaster
                 parameters.Add("@ItemCode", entity.ItemCode);
                 parameters.Add("@ItemName", entity.ItemName);
                 parameters.Add("@CategoryId", entity.CategoryId);
-                parameters.Add("@SubCategoryId", entity.SubCategoryId);
-                parameters.Add("@OpeningStock", entity.OpeningStock);
-                parameters.Add("@OpeningStockAsOn", entity.OpeningStockAsOn);
-                parameters.Add("@ItemStock", entity.ItemStock);
+                //parameters.Add("@SubCategoryId", entity.SubCategoryId);
+                //parameters.Add("@OpeningStock", entity.OpeningStock);
+                //parameters.Add("@OpeningStockAsOn", entity.OpeningStockAsOn);
+                //parameters.Add("@ItemStock", entity.ItemStock);
                 parameters.Add("@PerUnitPrice", entity.PerUnitPrice);
                 parameters.Add("@ModifiedBy", entity.ModifiedBy);
                 parameters.Add("@IsActive", entity.IsActive);
-                parameters.Add("@LedgerId", entity.LedgerId);
+                //parameters.Add("@LedgerId", entity.LedgerId);
                 parameters.Add("@HsnNo", entity.HsnNo);
                 parameters.Add("@mode", "UPDATE");
 

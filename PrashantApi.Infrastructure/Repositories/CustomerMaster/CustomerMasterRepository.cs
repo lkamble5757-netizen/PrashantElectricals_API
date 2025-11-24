@@ -30,7 +30,7 @@ namespace PrashantApi.Infrastructure.Repositories.CustomerMaster
                 parameters.Add("@CustPhoneNo", entity.CustPhoneNo);
                 parameters.Add("@CustAddress", entity.CustAddress);
                 parameters.Add("@GSTNo", entity.GSTNo);
-                parameters.Add("@LedgerCode", entity.LedgerCode);
+                //parameters.Add("@LedgerCode", entity.LedgerCode);
                 parameters.Add("@CreatedBy", entity.CreatedBy);
                 parameters.Add("@IsActive", entity.IsActive);
                 parameters.Add("@mode", "INSERT");
@@ -62,7 +62,7 @@ namespace PrashantApi.Infrastructure.Repositories.CustomerMaster
                 parameters.Add("@CustPhoneNo", entity.CustPhoneNo);
                 parameters.Add("@CustAddress", entity.CustAddress);
                 parameters.Add("@GSTNo", entity.GSTNo);
-                parameters.Add("@LedgerCode", entity.LedgerCode);
+                //parameters.Add("@LedgerCode", entity.LedgerCode);
                 parameters.Add("@ModifiedBy", entity.ModifiedBy);
                 parameters.Add("@IsActive", entity.IsActive);
                 parameters.Add("@mode", "UPDATE");

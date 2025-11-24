@@ -15,7 +15,7 @@ namespace PrashantApi.Domain.Entities.CustomerMaster
         public string? CustPhoneNo { get; set; }
         public string? CustAddress { get; set; }
         public string? GSTNo { get; set; }
-        public int LedgerCode { get; set; }
+        //public int LedgerCode { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
         public int ModifiedBy { get; set; }

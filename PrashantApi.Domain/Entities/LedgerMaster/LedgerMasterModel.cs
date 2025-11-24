@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-namespace PrashantApi.Domain.Entities.LedgerMaster
-{
-    public class LedgerMasterModel
-    {
-        public int Id { get; set; }
-        public int LedgerCode { get; set; }
-        public string LedgerName { get; set; } = string.Empty;
-        public int MainGroupId { get; set; }
-        public int SubGroupId { get; set; }
-        public bool IsActive { get; set; } = true;
-        public int CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public int ModifiedBy { get; set; }
-        public DateTime ModifiedOn { get; set; }
-    }
-}
+//namespace PrashantApi.Domain.Entities.LedgerMaster
+//{
+//    public class LedgerMasterModel
+//    {
+//        public int Id { get; set; }
+//        public int LedgerCode { get; set; }
+//        public string LedgerName { get; set; } = string.Empty;
+//        public int MainGroupId { get; set; }
+//        public int SubGroupId { get; set; }
+//        public bool IsActive { get; set; } = true;
+//        public int CreatedBy { get; set; }
+//        public DateTime CreatedOn { get; set; }
+//        public int ModifiedBy { get; set; }
+//        public DateTime ModifiedOn { get; set; }
+//    }
+//}
 
