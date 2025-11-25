@@ -9,11 +9,11 @@ namespace PrashantApi.Application.Interfaces.InvoiceMaster.Mapping
         public InvoiceMasterProfile()
         {
             CreateMap<InvoiceMasterDto, InvoiceMasterModel>();
-            CreateMap<InvoiceJobDetailsDto, InvoiceJobDetailsModel>();
+            //CreateMap<InvoiceJobDetailsDto, InvoiceJobDetailsModel>();
             CreateMap<InvoiceItemDetailsDto, InvoiceItemDetailsModel>();
 
             CreateMap<InvoiceMasterModel, InvoiceMasterDto>();
-            CreateMap<InvoiceJobDetailsModel, InvoiceJobDetailsDto>();
+            //CreateMap<InvoiceJobDetailsModel, InvoiceJobDetailsDto>();
             CreateMap<InvoiceItemDetailsModel, InvoiceItemDetailsDto>();
         }
     }

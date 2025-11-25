@@ -61,90 +61,88 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     commandType: CommandType.StoredProcedure
                 );
 
-                var tableJob = new DataTable();
+                //var tableJob = new DataTable();
 
-                if (entity.JobDetails != null && entity.JobDetails.Any())
-                {
-                   
-                    tableJob.Columns.Add("Id", typeof(int));
-                    tableJob.Columns.Add("InvoiceId", typeof(int));
-                    tableJob.Columns.Add("JobId", typeof(int));
-                    tableJob.Columns.Add("WorkDone", typeof(string));
-                    tableJob.Columns.Add("Total", typeof(decimal));
-                    tableJob.Columns.Add("IsActive", typeof(bool));
-                    tableJob.Columns.Add("CreatedBy", typeof(int));
-                   // tableJob.Columns.Add("CreatedOn", typeof(DateTime));
+                //if (entity.JobDetails != null && entity.JobDetails.Any())
+                //{
 
-                    foreach (var job in entity.JobDetails)
-                    {
-                        tableJob.Rows.Add(
-                            job.Id,
-                            invoiceId,
-                            job.JobId,
-                            job.WorkDone,
-                            job.Total,
-                            job.IsActive,
-                            entity.CreatedBy
-                            //entity.CreatedOn
-                        );
-                    }
+                //    tableJob.Columns.Add("Id", typeof(int));
+                //    tableJob.Columns.Add("InvoiceId", typeof(int));
+                //    tableJob.Columns.Add("JobId", typeof(int));
+                //    tableJob.Columns.Add("WorkDone", typeof(string));
+                //    tableJob.Columns.Add("Total", typeof(decimal));
+                //    tableJob.Columns.Add("IsActive", typeof(bool));
+                //    tableJob.Columns.Add("CreatedBy", typeof(int));
+                //   // tableJob.Columns.Add("CreatedOn", typeof(DateTime));
 
-                    var dpJob = new DynamicParameters();
-                    dpJob.Add("@InvoiceJobDetails", tableJob.AsTableValuedParameter("dbo.Type_InvoiceJobDetails"));
-                    dpJob.Add("@Mode", "INSERT");
+                //    foreach (var job in entity.JobDetails)
+                //    {
+                //        tableJob.Rows.Add(
+                //            job.Id,
+                //            invoiceId,
+                //            job.JobId,
+                //            job.WorkDone,
+                //            job.Total,
+                //            job.IsActive,
+                //            entity.CreatedBy
+                //            //entity.CreatedOn
+                //        );
+                //    }
 
-                    await connection.ExecuteAsync(
-                        SqlConstants.InvoiceMaster.SaveInvoiceJobDetails,
-                        dpJob,
-                        transaction,
-                        commandType: CommandType.StoredProcedure
-                    );
+                //    var dpJob = new DynamicParameters();
+                //    dpJob.Add("@InvoiceJobDetails", tableJob.AsTableValuedParameter("dbo.Type_InvoiceJobDetails"));
+                //    dpJob.Add("@Mode", "INSERT");
 
-                    // ✅ Save item details for each job
-                    //foreach (var job in entity.JobDetails)
-                    //{
-                    //    if (job.ItemDetails != null && job.ItemDetails.Any())
-                    //    {
-                    //        var tableItem = new DataTable();
-                    //        tableItem.Columns.Add("Id", typeof(int));
-                    //        tableItem.Columns.Add("InvoiceDetailId", typeof(int)); // FK to Job
-                    //        tableItem.Columns.Add("InvoiceId", typeof(int));
-                    //        tableItem.Columns.Add("ItemId", typeof(int));
-                    //        tableItem.Columns.Add("ItemQty", typeof(string));
-                    //        tableItem.Columns.Add("Total", typeof(decimal));
-                    //        tableItem.Columns.Add("IsActive", typeof(bool));
-                    //        tableItem.Columns.Add("CreatedBy", typeof(int));
-                    //        tableItem.Columns.Add("CreatedOn", typeof(DateTime));
+                //    await connection.ExecuteAsync(
+                //        SqlConstants.InvoiceMaster.SaveInvoiceJobDetails,
+                //        dpJob,
+                //        transaction,
+                //        commandType: CommandType.StoredProcedure
+                //    );
 
-                    //        foreach (var item in job.ItemDetails)
-                    //        {
-                    //            // ✅ ensure InvoiceId and InvoiceDetailId (Job) are linked
-                    //            tableItem.Rows.Add(
-                    //                0,
-                    //                job.Id,             // <-- LINK each item to its JobDetail
-                    //                invoiceId,
-                    //                item.ItemId,
-                    //                item.ItemQty,
-                    //                item.Total,
-                    //                true,
-                    //                entity.CreatedBy,
-                    //                entity.CreatedOn
-                    //            );
-                    //        }
 
-                    //        var dpItem = new DynamicParameters();
-                    //        dpItem.Add("@InvoiceItemDetails", tableItem.AsTableValuedParameter("dbo.Type_InvoiceItemDetails"));
-                    //        dpItem.Add("@Mode", "INSERT");
+                var tableItem = new DataTable();
+                
+                        if (entity.ItemDetails != null && entity.ItemDetails.Any())
+                        {
+                           
+                            tableItem.Columns.Add("Id", typeof(int));
+                            tableItem.Columns.Add("InvoiceId", typeof(int));
+                            tableItem.Columns.Add("ItemId", typeof(int));
+                            tableItem.Columns.Add("PricePerItem", typeof(decimal));
+                            tableItem.Columns.Add("ItemQty", typeof(string));
+                            tableItem.Columns.Add("Total", typeof(decimal));
+                            tableItem.Columns.Add("IsActive", typeof(bool));
+                            tableItem.Columns.Add("CreatedBy", typeof(int));
+                            tableItem.Columns.Add("CreatedOn", typeof(DateTime));
 
-                    //        await connection.ExecuteAsync(
-                    //            SqlConstants.InvoiceMaster.SaveInvoiceItemDetails,
-                    //            dpItem,
-                    //            transaction,
-                    //            commandType: CommandType.StoredProcedure
-                    //        );
-                    //    }
-                    //}
-                }
+                            foreach (var item in entity.ItemDetails)
+                            {
+                                
+                                tableItem.Rows.Add(
+                                    item.Id,
+                                    invoiceId,
+                                    item.ItemId,
+                                    item.PricePerItem,
+                                    item.ItemQty,
+                                    item.Total,
+                                    true,
+                                    entity.CreatedBy
+                                    //entity.CreatedOn
+                                );
+                            }
+
+                            var dpItem = new DynamicParameters();
+                            dpItem.Add("@InvoiceItemDetails", tableItem.AsTableValuedParameter("dbo.Type_InvoiceItemDetails"));
+                            dpItem.Add("@Mode", "INSERT");
+
+                            await connection.ExecuteAsync(
+                                SqlConstants.InvoiceMaster.SaveInvoiceItemDetails,
+                                dpItem,
+                                transaction,
+                                commandType: CommandType.StoredProcedure
+                            );
+                        }
 
                 transaction.Commit();
                 return CommandResult.SuccessWithOutput(invoiceId);
@@ -187,85 +185,84 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     commandType: CommandType.StoredProcedure
                 );
 
-                
-                if (entity.JobDetails != null && entity.JobDetails.Any())
-                {
-                    var tableJob = new DataTable();
-                    tableJob.Columns.Add("Id", typeof(int));
-                    tableJob.Columns.Add("InvoiceId", typeof(int));
-                    tableJob.Columns.Add("JobId", typeof(int));
-                    tableJob.Columns.Add("WorkDone", typeof(string));
-                    tableJob.Columns.Add("Total", typeof(decimal));
-                    tableJob.Columns.Add("IsActive", typeof(bool));
-                    tableJob.Columns.Add("ModifiedBy", typeof(int));
-                   // tableJob.Columns.Add("ModifiedOn", typeof(DateTime));
 
-                    foreach (var job in entity.JobDetails)
+                //if (entity.JobDetails != null && entity.JobDetails.Any())
+                //{
+                //    var tableJob = new DataTable();
+                //    tableJob.Columns.Add("Id", typeof(int));
+                //    tableJob.Columns.Add("InvoiceId", typeof(int));
+                //    tableJob.Columns.Add("JobId", typeof(int));
+                //    tableJob.Columns.Add("WorkDone", typeof(string));
+                //    tableJob.Columns.Add("Total", typeof(decimal));
+                //    tableJob.Columns.Add("IsActive", typeof(bool));
+                //    tableJob.Columns.Add("ModifiedBy", typeof(int));
+                //   // tableJob.Columns.Add("ModifiedOn", typeof(DateTime));
 
-                        tableJob.Rows.Add(
-                            job.Id,
-                            entity.Id,
-                            job.JobId,
-                            job.WorkDone,
-                            job.Total,
-                            job.IsActive,
-                            entity.ModifiedBy
-                           // entity.ModifiedOn
+                //    foreach (var job in entity.JobDetails)
+
+                //        tableJob.Rows.Add(
+                //            job.Id,
+                //            entity.Id,
+                //            job.JobId,
+                //            job.WorkDone,
+                //            job.Total,
+                //            job.IsActive,
+                //            entity.ModifiedBy
+                //           // entity.ModifiedOn
+                //        );
+
+                //    var dpJob = new DynamicParameters();
+                //    dpJob.Add("@InvoiceJobDetails", tableJob.AsTableValuedParameter("dbo.Type_InvoiceJobDetails"));
+                //    dpJob.Add("@Mode", "UPDATE");
+
+                //    await connection.ExecuteAsync(
+                //        SqlConstants.InvoiceMaster.SaveInvoiceJobDetails,
+                //        dpJob,
+                //        commandType: CommandType.StoredProcedure
+                //    );
+
+       
+                  
+                    if (entity.ItemDetails != null && entity.ItemDetails.Any())
+                    {
+                        var tableItem = new DataTable();
+                        tableItem.Columns.Add("Id", typeof(int));
+                        tableItem.Columns.Add("InvoiceId", typeof(int));
+                        tableItem.Columns.Add("ItemId", typeof(int));
+                        tableItem.Columns.Add("PricePerItem", typeof(decimal));
+                        tableItem.Columns.Add("ItemQty", typeof(string));
+                        tableItem.Columns.Add("Total", typeof(decimal));
+                        tableItem.Columns.Add("IsActive", typeof(bool));
+                        tableItem.Columns.Add("ModifiedBy", typeof(int));
+                        tableItem.Columns.Add("ModifiedOn", typeof(DateTime));
+
+                        foreach (var item in entity.ItemDetails)
+                        {
+                            tableItem.Rows.Add(
+                                item.Id,
+                                entity.Id,
+                                item.ItemId,
+                                item.PricePerItem,
+                                item.ItemQty,
+                                item.Total,
+                                item.IsActive,
+                                entity.ModifiedBy
+                                
+                            );
+                        }
+
+                        var dpItem = new DynamicParameters();
+                        dpItem.Add("@InvoiceItemDetails", tableItem.AsTableValuedParameter("dbo.Type_InvoiceItemDetails"));
+                        dpItem.Add("@Mode", "UPDATE");
+
+                        await connection.ExecuteAsync(
+                            SqlConstants.InvoiceMaster.SaveInvoiceItemDetails,
+                            dpItem,
+                            commandType: CommandType.StoredProcedure
                         );
-
-                    var dpJob = new DynamicParameters();
-                    dpJob.Add("@InvoiceJobDetails", tableJob.AsTableValuedParameter("dbo.Type_InvoiceJobDetails"));
-                    dpJob.Add("@Mode", "UPDATE");
-
-                    await connection.ExecuteAsync(
-                        SqlConstants.InvoiceMaster.SaveInvoiceJobDetails,
-                        dpJob,
-                        commandType: CommandType.StoredProcedure
-                    );
-
-                    //  Update Item Details (inside the same job loop)
-                    //foreach (var job in entity.JobDetails)
-                    //{
-                    //    if (job.ItemDetails != null && job.ItemDetails.Any())
-                    //    {
-                    //        var tableItem = new DataTable();
-                    //        tableItem.Columns.Add("Id", typeof(int));
-                    //        tableItem.Columns.Add("InvoiceDetailId", typeof(int));
-                    //        tableItem.Columns.Add("InvoiceId", typeof(int));
-                    //        tableItem.Columns.Add("ItemId", typeof(int));
-                    //        tableItem.Columns.Add("ItemQty", typeof(string));
-                    //        tableItem.Columns.Add("Total", typeof(decimal));
-                    //        tableItem.Columns.Add("IsActive", typeof(bool));
-                    //        tableItem.Columns.Add("ModifiedBy", typeof(int));
-                    //        tableItem.Columns.Add("ModifiedOn", typeof(DateTime));
-
-                    //        foreach (var item in job.ItemDetails)
-                    //        {
-                    //            tableItem.Rows.Add(
-                    //                item.Id,
-                    //                job.Id, // link item to its job
-                    //                entity.Id,
-                    //                item.ItemId,
-                    //                item.ItemQty,
-                    //                item.Total,
-                    //                item.IsActive,
-                    //                entity.ModifiedBy ?? 0,
-                    //                DateTime.Now
-                    //            );
-                    //        }
-
-                    //        var dpItem = new DynamicParameters();
-                    //        dpItem.Add("@InvoiceItemDetails", tableItem.AsTableValuedParameter("dbo.Type_InvoiceItemDetails"));
-                    //        dpItem.Add("@Mode", "UPDATE");
-
-                    //        await connection.ExecuteAsync(
-                    //            SqlConstants.InvoiceMaster.SaveInvoiceItemDetails,
-                    //            dpItem,
-                    //            commandType: CommandType.StoredProcedure
-                    //        );
-                    //    }
-                    //}
-                }
+                    }
+                
+            
 
                 return CommandResult.Success;
             }
@@ -292,7 +289,6 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
 
 
 
-       
 
         public async Task<dynamic> GetByIdAsync(int id)
         {
@@ -306,27 +302,15 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     new { Id = id },
                     commandType: CommandType.StoredProcedure))
                 {
-                    // 1️⃣ Read master record
+                    
                     var master = await multi.ReadFirstOrDefaultAsync<dynamic>();
                     if (master == null)
                         return null;
 
-                    // 2️⃣ Read job details linked by invoiceId
-                    var jobs = (await multi.ReadAsync<dynamic>()).ToList();
-
-                    // 3️⃣ Read item details linked by invoiceId
+            
                     var items = (await multi.ReadAsync<dynamic>()).ToList();
 
-                    // 4️⃣ Attach all item details for the same invoiceId
-                    foreach (var job in jobs)
-                    {
-                        job.ItemDetails = items
-                            .Where(i => i.InvoiceId == job.InvoiceId)
-                            .ToList();
-                    }
-
-                    // 5️⃣ Attach all jobs to the master
-                    master.JobDetails = jobs;
+                    master.ItemDetails = items;
 
                     return master;
                 }
@@ -374,7 +358,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
             var repairWorks = (await multi.ReadAsync<dynamic>()).ToList();
             var repairWorkItems = (await multi.ReadAsync<dynamic>()).ToList();
 
-            //  Map Items → RepairWork
+            
             foreach (var rw in repairWorks)
             {
                 int rwId = (int)rw.RepairWorkId;
@@ -383,7 +367,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     .ToList();
             }
 
-            //  Map RepairWork → Job
+           
             foreach (var job in jobs)
             {
                 int jobId = (int)job.JobId;
@@ -392,7 +376,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                     .ToList();
             }
 
-            //  Build final object
+            
             var result = new
             {
                 CustomerId = customerId,
