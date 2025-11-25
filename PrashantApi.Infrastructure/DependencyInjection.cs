@@ -13,6 +13,7 @@ using PrashantApi.Application.Interfaces;
 using PrashantApi.Application.Interfaces.BranchMaster;
 using PrashantApi.Application.Interfaces.ChallanMaster;
 using PrashantApi.Application.Interfaces.CustomerMaster;
+using PrashantApi.Application.Interfaces.Dashboard;
 using PrashantApi.Application.Interfaces.Estimate;
 using PrashantApi.Application.Interfaces.InvoiceMaster;
 using PrashantApi.Application.Interfaces.ItemMaster;
@@ -28,6 +29,7 @@ using PrashantApi.Application.Interfaces.RoleMaster;
 using PrashantApi.Application.Interfaces.RoleWiseMenuMaster;
 using PrashantApi.Application.Interfaces.UserRegistration;
 using PrashantApi.Application.Interfaces.UserRoleAssignMaster;
+using PrashantApi.Application.Services;
 //using PrashantApi.Application.Services;
 using PrashantApi.Infrastructure.Common;
 using PrashantApi.Infrastructure.Connection;
@@ -37,6 +39,7 @@ using PrashantApi.Infrastructure.Repositories;
 using PrashantApi.Infrastructure.Repositories.BranchMaster;
 using PrashantApi.Infrastructure.Repositories.ChallanMaster;
 using PrashantApi.Infrastructure.Repositories.CustomerMaster;
+using PrashantApi.Infrastructure.Repositories.Dashboard;
 using PrashantApi.Infrastructure.Repositories.Estimate;
 using PrashantApi.Infrastructure.Repositories.InvoiceMaster;
 using PrashantApi.Infrastructure.Repositories.ItemMaster;
@@ -54,7 +57,6 @@ using PrashantEle.API.PrashantEle.Infrastructure.Connection;
 using System.Data;
 using System.Reflection;
 using System.Security.Claims;
-using PrashantApi.Application.Services;
 
 
 namespace PrashantApi.Infrastructure;
@@ -98,6 +100,7 @@ public static class DependencyInjection
         services.AddScoped<IRepairWorkRepository, RepairWorkRepository>();
         services.AddScoped<IInvoiceMasterRepository, InvoiceMasterRepository>();
         services.AddScoped<IChallanMasterRepository, ChallanMasterRepository>();
+        services.AddScoped<IDashboardRepository, DashboardRepository>();
 
         //services.AddScoped<ILedgerMasterRepository, LedgerMasterRepository>();
 

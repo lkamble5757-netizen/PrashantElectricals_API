@@ -130,5 +130,12 @@ public static class InvoiceMaster
             public const string GetLedgerMasterById = "dbo.usp_GetLedgerMasterById";
         }
 
+        public static class Dashboard
+        {
+            public const string GetCounts = "dbo.usp_GetDashboardCounts";
+            public const string GetMonthlySales = "dbo.usp_GetDashboardMonthlySales";
+            public const string GetTop5Customers = "dbo.usp_GetTop5CustomerMonthlyRevenue";
+        }
+
     }
 }
