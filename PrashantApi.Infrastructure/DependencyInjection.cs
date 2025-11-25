@@ -54,6 +54,7 @@ using PrashantEle.API.PrashantEle.Infrastructure.Connection;
 using System.Data;
 using System.Reflection;
 using System.Security.Claims;
+using PrashantApi.Application.Services;
 
 
 namespace PrashantApi.Infrastructure;
@@ -110,9 +111,16 @@ public static class DependencyInjection
         services.AddScoped<ISqlServerDataAccess, SqlServerDataAccess>();
         services.AddScoped<ISqlDbConnection, SqlDbConnection>();
         services.AddTransient<IReferenceDataMasterService, ReferenceDataMasterService>();
-        //services.AddScoped<PdfService>();
-        //services.AddScoped<EmailService>();
-        //services.AddScoped<GetEstimatePrintQuery>();
+
+
+        services.AddTransient<IDbConnection>(sp =>
+    new SqlConnection(configuration.GetConnectionString("DefaultConnection")));
+        services.AddTransient<PdfService>();
+        services.AddTransient<EmailService>();
+
+
+
+
 
         return services;
     }

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Tax Invoice</title>
+
+    <style>
+
+        @page {
+            margin: 10px;
+        }
+
+        body {
+            font-family: Cambria, serif;
+            font-size: 12px;
+            margin: 0;
+            padding: 0;
+            color: #000;
+        }
+
+        .page {
+            width: 750px;
+            margin: auto;
+            border: 1px solid #000;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* TOP HEADER */
+        .top-header {
+            position: relative;
+            text-align: center;
+            border-bottom: 1px solid #000;
+            padding: 6px 0;
+        }
+
+            .top-header .title {
+                font-size: 15px;
+                letter-spacing: 2px;
+                font-weight: bold;
+                color: #1e4da9;
+            }
+
+            .top-header .original {
+                position: absolute;
+                right: 5px;
+                top: 8px;
+                font-size: 11px;
+                font-weight: bold;
+                letter-spacing: 1px;
+            }
+
+        /* HEADER (COMPANY + INVOICE INFO) */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0;
+            border-bottom: 1px solid #000;
+        }
+
+        .company {
+            width: 58%;
+            padding: 8px;
+            border-right: 1px solid #000;
+        }
+
+            .company h2 {
+                margin: 0;
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .company .addr {
+                font-size: 11px;
+                line-height: 1.3;
+                margin-top: 4px;
+            }
+
+        /* UPDATED META (MATCHES SCREENSHOT EXACTLY) */
+        .meta {
+            width: 44%;
+            font-size: 11px;
+        }
+
+                .meta table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+            .meta td {
+                border: 1px solid #000;
+                padding: 6px 6px;
+/*                vertical-align: top;
+                font-size: 11px;*/
+            }
+
+
+
+            .meta strong {
+                font-weight: bold;
+            }
+
+        /* CUSTOMER + OTHER */
+        .hdr-grid {
+            display: flex;
+            margin-top: 0;
+            border-bottom: 1px solid #000;
+        }
+
+        .bill, .other {
+            padding: 8px;
+            font-size: 11px;
+        }
+
+        .bill {
+            width: 58%;
+            border-right: 1px solid #000;
+        }
+
+        .other {
+            width: 42%;
+        }
+
+            .other table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .other td {
+                border: 1px solid #000;
+                padding: 5px;
+            }
+
+        /* ITEMS TABLE */
+        .items {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 11px;
+        }
+
+            .items th {
+                border: 1px solid #000;
+                background: #f5f5f5;
+                padding: 5px 3px;
+                text-align: center;
+            }
+
+            .items td {
+                border: 1px solid #000;
+                padding: 5px 3px;
+            }
+
+        /* TOTAL ITEMS ROW */
+        .total-items {
+            font-weight: bold;
+            background: #f5f5f5;
+        }
+
+        /* SUMMARY */
+        .summary-full {
+            width: 100%;
+            border: 1px solid #000;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+            .summary-full td {
+                padding: 6px;
+                border: 1px solid #000;
+                font-size: 11px;
+            }
+
+        /* GST TABLE */
+        .gst-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 6px;
+            font-size: 11px;
+        }
+
+            .gst-table th, .gst-table td {
+                border: 1px solid #000;
+                padding: 5px;
+            }
+
+        /* BANK + DECLARATION */
+        .hdr-grid .bill strong {
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .note {
+            text-align: center;
+            margin-top: 6px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+
+        <!-- TOP HEADER -->
+        <div class="top-header">
+            <div class="title">TAX INVOICE</div>
+        </div>
+
+        <!-- COMPANY + META -->
+        <div class="header">
+            <div class="company">
+                <h2>PRASHANT ELECTRICALS &amp; FILM'S</h2>
+                <div class="addr">
+                    Plot No.105, Old MIDC, Pune-Bangalore Highway, Satara - 415 004.<br />
+                    Office: INDOOR, Shivaji Nagar, Indapur<br />
+                    Mobile: +91-XXXXXXXXXXXX | Email: PrashantElectricals100@gmail.com<br />
+                    GSTIN: 27AZPPS8962R1Z3 | PAN: AAZPP8962R
+                </div>
+            </div>
+
+            <!-- UPDATED META EXACTLY LIKE SCREENSHOT -->
+            <div class="meta">
+                <table>
+                    <tr>
+                        <td><strong>Invoice #:</strong><br>{{Model.InvoiceNo}}</td>
+                        <td><strong>Invoice Date:</strong><br>{{Model.InvoiceDate}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Place of Supply:</strong><br>27-MAHARASHTRA</td>
+                        <td><strong>Due Date:</strong><br>{{Model.InvoiceDate}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PO NO:</strong><br>{{Model.PONumber}}</td>
+                        <td><strong>Challan No:</strong><br>{{Model.ChallanNo}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- CUSTOMER + OTHER -->
+        <div class="hdr-grid">
+            <div class="bill">
+                <strong>Customer Details</strong><br>
+                <strong>{{Model.CustomerName}}</strong><br />
+                {{Model.CustomerAddress}}<br />
+                {{Model.CustomerAddress2}}<br />
+                {{Model.CustomerCity}} - {{Model.CustomerPin}}<br />
+                GSTIN: {{Model.CustomerGST}}
+            </div>
+
+            <div class="meta">
+                <table>
+                    <tr><td>Created By</td><td align="right">{{Model.CreatedBy}}</td></tr>
+                    <tr><td>Print Date</td><td align="right">{{Model.PrintDate}}</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- ITEMS TABLE -->
+        <table class="items">
+            <thead>
+                <tr>
+                    <th>Sr</th>
+                    <th>Item</th>
+                    <th>HSN/SAC</th>
+                    <th>Rate</th>
+                    <th>Qty</th>
+                    <th>Taxable Value</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {{#each Model.InvoiceDetails}}
+                <tr>
+                    <td align="center">{{SrNo}}</td>
+                    <td>{{ItemName}}</td>
+                    <td align="center">{{HsnNo}}</td>
+                    <td align="right">{{PricePerItem}}</td>
+                    <td align="center">{{ItemQty}}</td>
+                    <td align="right">{{TaxableValue}}</td>
+                    <td align="right">{{ItemTotal}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+
+            <tr class="total-items">
+                <td colspan="7">Total Items : Qty : {{Model.TotalItems}}</td>
+            </tr>
+        </table>
+
+        <!-- SUMMARY -->
+        <table class="summary-full">
+            <tr><td>Taxable Amount</td><td align="right">{{TaxableValue}}</td></tr>
+            <tr><td>GST Amount</td><td align="right">{{Model.GstAmount}}</td></tr>
+            <tr><td>Transport Charges</td><td align="right">{{Model.TransportCharges}}</td></tr>
+            <tr><td><strong>Total</strong></td><td align="right"><strong>{{Model.TotalAmount}}</strong></td></tr>
+        </table>
+
+        <!-- GST -->
+        <table class="gst-table">
+            <tr>
+                <th>HSN/SAC</th>
+                <th>Taxable Amount</th>
+                <th>CGST %</th>
+                <th>SGST %</th>
+                <th>Total Tax</th>
+            </tr>
+            <tr>
+                <td>{{Model.HSN}}</td>
+                <td>{{Model.TaxableValue}}</td>
+                <td>{{Model.GstPercent}}</td>
+                <td>{{Model.SGST}}</td>
+                <td>{{Model.TotalTax}}</td>
+            </tr>
+        </table>
+
+        <!-- BANK + DECLARATION -->
+        <div class="hdr-grid">
+            <div class="bill">
+                <strong>Bank Details</strong><br>
+                Bank: IDBI<br>
+                A/C No: 29210000000095<br>
+                IFSC: BKID0000291<br>
+                Branch: INDOAPUR
+                <br><br>
+                <strong>Declaration:</strong><br>
+                We declare that this invoice shows the actual price of goods/services described and all particulars are true.
+            </div>
+            <div class="other">
+                For Prashant Electricals & Films<br><br><br>
+
+                Authorized Signatory
+            </div>
+        </div>
+
+        <div class="note">This is a computer generated invoice and requires no signature.</div>
+
+    </div>
+</body>
+</html>
+
+
+
+<!-------------------------------------------------------------------------------------------------------->
+<!--<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Tax Invoice</title>
+
+    <style>
+
+        @page {
+            margin: 10px;
+        }
+
+        body {
+            font-family: Cambria, serif;
+            font-size: 12px;
+            margin: 0;
+            padding: 0;
+            color: #000;
+        }
+
+        .page {
+            width: 750px;
+            margin: auto;
+            border: 1px solid #000;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* TOP BLUE BAR */
+        .top-bar {
+            width: 100%;
+            background: #dce6ff;
+            text-align: center;
+            padding: 4px 0;
+            font-weight: bold;
+            border-bottom: 1px solid #000;
+            letter-spacing: 1px;
+        }
+
+        /* ORIGINAL RIGHT */
+        .original-right {
+            text-align: right;
+            font-size: 11px;
+            margin-top: 3px;
+            font-weight: bold;
+        }
+
+        /* HEADER (COMPANY + INVOICE INFO) */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+        }
+
+        .company h2 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .company .addr {
+            font-size: 11px;
+            line-height: 1.25;
+            margin-top: 4px;
+        }
+
+        .meta {
+            width: 38%;
+            position: relative;
+            margin-left:10px;
+            left: 81px;
+            border: 1px solid #000;
+            font-size: 11px;
+        }
+
+            .meta table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .meta td {
+                padding: 4px 6px;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .meta tr:last-child td {
+                border-bottom: none;
+            }
+
+        /* BILL + OTHER SECTION */
+        .hdr-grid {
+            display: flex;
+            margin-top: 8px;
+            gap: 8px;
+        }
+
+        .bill, .other {
+            border: 1px solid #000;
+            padding: 6px;
+            font-size: 11px;
+        }
+
+        .bill {
+            width: 65%;
+        }
+
+        .other {
+            width: 35%;
+        }
+
+        /* ITEMS TABLE CLEANED */
+        .items {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 11px;
+        }
+
+            .items th {
+                border: 1px solid #000;
+                background: #f5f5f5;
+                padding: 5px 3px;
+                text-align: center;
+            }
+
+            .items td {
+                border: 1px solid #000;
+                padding: 5px 3px;
+            }
+
+        /* TOTAL ITEMS ROW */
+        .total-items {
+            font-weight: bold;
+            background: #f5f5f5;
+        }
+
+        /* TOTAL SUMMARY (FULL WIDTH LIKE SCREENSHOT) */
+        .summary-full {
+            width: 100%;
+            border: 1px solid #000;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+            .summary-full td {
+                padding: 6px;
+                border: 1px solid #000;
+                font-size: 11px;
+            }
+
+        /* GST BREAKUP TABLE */
+        .gst-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 6px;
+            font-size: 11px;
+        }
+
+            .gst-table th, .gst-table td {
+                border: 1px solid #000;
+                padding: 5px;
+            }
+
+        /* BANK + DECLARATION (FULL WIDTH) */
+        .bottom-box {
+            width: 100%;
+            border: 1px solid #000;
+            padding: 6px;
+            margin-top: 8px;
+            font-size: 11px;
+        }
+
+        .sign {
+            margin-top: 20px;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .note {
+            text-align: center;
+            margin-top: 6px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+<div class="top-bar">TAX INVOICE</div>
+
+<div class="header">
+    <div class="company">
+        <h2>PRASHANT ELECTRICALS &amp; FILM'S</h2>
+        <div class="addr">
+            Plot No.105, Old MIDC, Pune-Bangalore Highway, Satara - 415 004.<br />
+            Office: INDOOR, Shivaji Nagar, Indapur<br />
+            Mobile: +91-XXXXXXXXXXXX | Email: PrashantElectricals100@gmail.com       <br />
+            GSTIN: 27AZPPS8962R1Z3 | PAN: AAZPP8962R
+        </div>
+    </div>
+
+<div class="meta">
+        <table>
+            <tr><td>Invoice No</td><td>{{Model.InvoiceNo}}</td></tr>
+            <tr><td>Invoice Date</td><td>{{Model.InvoiceDate}}</td></tr>
+            <tr><td>Place of Supply</td><td>27-MAHARASHTRA</td></tr>
+            <tr><td>Due Date</td><td>{{Model.InvoiceDate}}</td></tr>
+            <tr><td>PO No</td><td>{{Model.PONumber}}</td></tr>
+            <tr><td>Challan No</td><td>{{Model.ChallanNo}}</td></tr>
+        </table>
+    </div>
+</div>
+
+
+<div class="hdr-grid">
+    <div class="bill">
+        <strong>Customer Details</strong><br>
+        <strong>{{Model.CustomerName}}</strong><br />
+        {{Model.CustomerAddress}}<br />
+{{Model.CustomerAddress2}}<br />
+{{Model.CustomerCity}} - {{Model.CustomerPin}}<br />
+GSTIN: {{Model.CustomerGST}}
+    </div>
+
+    <div class="other">
+        <table style="width:100%; border-collapse: collapse;">
+            <tr><td>Created By</td><td align="right">{{Model.CreatedBy}}</td></tr>
+            <tr><td>Print Date</td><td align="right">{{Model.PrintDate}}</td></tr>
+        </table>
+    </div>
+</div>
+
+
+<table class="items">
+    <thead>
+        <tr>
+            <th>Sr</th>
+            <th>Item</th>
+            <th>HSN/SAC</th>
+            <th>Rate</th>
+            <th>Qty</th>
+            <th>Taxable Value</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each Model.InvoiceDetails}}
+        <tr>
+            <td align="center">{{SrNo}}</td>
+            <td>{{ItemName}}</td>
+            <td align="center">{{HsnNo}}</td>
+            <td align="right">{{PricePerItem}}</td>
+            <td align="center">{{ItemQty}}</td>
+            <td align="right">{{TaxableValue}}</td>
+            <td align="right">{{ItemTotal}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+
+<tr class="total-items">
+        <td colspan="7">Total Items : Qty : {{Model.TotalItems}}</td>
+    </tr>
+
+</table>
+
+<table class="summary-full">
+    <tr><td>Taxable Amount</td><td align="right">{{Model.GrandTotal}}</td></tr>
+    <tr><td>GST Amount</td><td align="right">{{Model.GstAmount}}</td></tr>
+    <tr><td>Transport Charges</td><td align="right">{{Model.TransportCharges}}</td></tr>
+    <tr><td><strong>Total</strong></td><td align="right"><strong>{{Model.TotalAmount}}</strong></td></tr>
+</table>
+
+<table class="gst-table">
+    <tr>
+        <th>HSN/SAC</th>
+        <th>Taxable Amount</th>
+        <th>CGST %</th>
+        <th>SGST %</th>
+        <th>Total Tax</th>
+    </tr>
+    <tr>
+        <td>{{Model.HSN}}</td>
+        <td>{{Model.GrandTotal}}</td>
+        <td>{{Model.GstPercent}}</td>
+        <td>{{Model.SGST}}</td>
+        <td>{{Model.TotalTax}}</td>
+    </tr>
+</table>
+
+<div class="hdr-grid">
+    <div class="bill">
+        <strong>Bank Details</strong><br>
+        Bank: IDBI<br>
+        A/C No: 29210000000095<br>
+        IFSC: BKID0000291<br>
+        Branch: INDOAPUR
+        <br><br>
+        <strong>Declaration:</strong><br>
+        We declare that this invoice shows the actual price of goods/services described and all particulars are true.
+    </div>
+    <div class="other">
+        For Prashant Electricals & Films<br><br><br>
+        Authorized Signatory
+    </div>
+</div>
+        <div class="note">This is a computer generated invoice and requires no signature.</div>
+
+    </div>
+</body>
+</html>-->

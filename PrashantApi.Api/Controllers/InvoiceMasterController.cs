@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PrashantApi.Application.DTOs.InvoiceMaster;
 using PrashantApi.Application.DTOs.RepairWork;
 using PrashantApi.Application.Feature.InvoiceMaster.Commands;
+using PrashantApi.Application.Feature.InvoiceMaster.Queries;
 using PrashantApi.Application.Feature.RepairWork.Commands;
 using PrashantApi.Application.Interfaces.InvoiceMaster;
 using PrashantEle.API.PrashantEle.Application.Common;
@@ -85,6 +86,16 @@ namespace PrashantApi.Api.Controllers
         }
 
 
+
+        [HttpGet("print/{id}")]
+        public async Task<IActionResult> Print(int id)
+        {
+            var result = await _mediator.Send(new GetInvoicePrintQuery { Id = id });
+            if (result == null || result.Length == 0)
+                return NotFound("Invoice not found");
+
+            return File(result, "application/pdf", $"Invoice_{id}.pdf");
+        }
 
     }
 }
