@@ -22,7 +22,8 @@ namespace PrashantApi.Domain.Entities.InvoiceMaster
 
 
         //public List<InvoiceJobDetailsModel> JobDetails { get; set; } = new();
-        public List<InvoiceItemDetailsModel> ItemDetails { get; set; } = new();
+        public List<InvoiceItemDetailsModel> Items { get; set; } = new();
 
+    
     }
 }

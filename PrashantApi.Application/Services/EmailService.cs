@@ -15,10 +15,9 @@ namespace PrashantApi.Application.Services
 
             string html = File.ReadAllText(templatePath);
 
-            // Replace simple placeholders {{Model.Property}}
+            
             html = ReplaceSimpleValues(html, model);
 
-            // Replace repeating sections: {{#each Model.List}} ... {{/each}}
             html = ReplaceRepeatingSections(html, model);
 
             return html;
