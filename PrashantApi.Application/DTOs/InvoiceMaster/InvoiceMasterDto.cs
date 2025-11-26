@@ -19,7 +19,7 @@ namespace PrashantApi.Application.DTOs.InvoiceMaster
         public decimal TransportCharges { get; set; }
         public decimal Discount { get; set; }
         //public List<InvoiceJobDetailsDto> JobDetails { get; set; } = new();
-        public List<InvoiceItemDetailsDto> ItemDetails { get; set; } = new();
+        public List<InvoiceItemDetailsDto> Items { get; set; } = new();
 
     }
 

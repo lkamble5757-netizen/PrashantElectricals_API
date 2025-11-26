@@ -45,9 +45,7 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
                 commandType: CommandType.StoredProcedure
             );
 
-            // -----------------------
-            // Header Section
-            // -----------------------
+            
             var headerDyn = await multi.ReadFirstOrDefaultAsync<dynamic>();
             if (headerDyn == null) return Array.Empty<byte>();
 
@@ -60,15 +58,13 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
             string createdBy = SafeGet(header, "CreatedByName");
             string createdOn = SafeGet(header, "CreatedOn");
 
-            // read numeric header values safely (if needed later)
+            
             decimal.TryParse(SafeGet(header, "GstPercent"), out decimal gstPercent);
             decimal.TryParse(SafeGet(header, "GstAmount"), out decimal gstAmount);
             decimal.TryParse(SafeGet(header, "TransportCharges"), out decimal transportCharges);
             decimal.TryParse(SafeGet(header, "TotalAmount"), out decimal totalAmountHeader);
 
-            // -----------------------
-            // Details Section
-            // -----------------------
+            
             var detailsDyn = (await multi.ReadAsync<dynamic>()).ToList();
 
             var invoiceDetails = new List<object>();
@@ -78,28 +74,25 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
             foreach (var row in detailsDyn)
             {
                 var d = ToCaseInsensitiveDictionary(row);
-
-                // read values as strings first, then parse safely
-                string jobNo = SafeGet(d, "JobNo");
+                
                 string dateReceived = SafeGet(d, "DateReceived");
                 string itemName = SafeGet(d, "ItemName");
                 string hsnNo = SafeGet(d, "HsnNo");
 
-                // SP returns ItemQty (int), PricePerItem (decimal), ItemTotal (decimal), LabourCharges (decimal), RepairTotal (decimal)
+                
                 int.TryParse(SafeGet(d, "ItemQty"), out int itemQty);
                 decimal.TryParse(SafeGet(d, "PricePerItem"), out decimal pricePerItem);
                 decimal.TryParse(SafeGet(d, "ItemTotal"), out decimal itemTotal);
                 decimal.TryParse(SafeGet(d, "LabourCharges"), out decimal labourCharges);
                 decimal.TryParse(SafeGet(d, "RepairTotal"), out decimal repairTotal);
 
-                // compute line level totals if you need (here we treat itemTotal as item-only)
+               
                 decimal lineTotal = itemTotal + labourCharges + repairTotal;
                 grandTotal += lineTotal;
 
                 invoiceDetails.Add(new
                 {
                     SrNo = srNo++,
-                    JobNo = jobNo,
                     DateReceived = dateReceived,
                     ItemName = itemName,
                     HsnNo = hsnNo,
@@ -112,15 +105,8 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
                 });
             }
 
-            // -----------------------
-            // Barcode
-            // -----------------------
-            var barcodeBytes = _pdfService.GenerateBarcode(invoiceNo);
-            string barcodeBase64 = Convert.ToBase64String(barcodeBytes);
+            
 
-            // -----------------------
-            // Model for HTML Template
-            // -----------------------
             var model = new
             {
                 InvoiceNo = string.IsNullOrWhiteSpace(invoiceNo) ? "N/A" : invoiceNo,
@@ -129,7 +115,7 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
                 CustomerAddress = string.IsNullOrWhiteSpace(customerAddress) ? "" : customerAddress,
 
 
-                InvoiceDetails = invoiceDetails,               // matches template loop {{#each Model.InvoiceDetails}}
+                InvoiceDetails = invoiceDetails,               
                 GrandTotal = grandTotal.ToString("0.00"),
 
                 GstPercent = gstPercent.ToString("0.##"),
@@ -137,28 +123,33 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
                 TransportCharges = transportCharges.ToString("0.00"),
                 TotalAmount = totalAmountHeader.ToString("0.00"),
 
-                BarcodeImage = "data:image/png;base64," + barcodeBase64,
-
                 CreatedBy = createdBy,
                 CreatedOn = createdOn,
                 PrintDate = DateTime.Now.ToString("dd/MM/yyyy"),
                 Sign = ""
             };
 
-            // -----------------------
-            // Template Path
-            // -----------------------
-            string templatePath = @"D:\MyWorkSpace\PrashantElectricals\API\31-10-2025\PrashantApi.Application\Template\Invoice.html";
+
+
+
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+
+            var root = Directory.GetParent(baseDir).Parent.Parent.Parent.Parent.FullName;
+
+            var templatePath = Path.Combine(
+                root,
+                "PrashantApi.Application",
+                "Template",
+                "Invoice.html"
+            );
 
             if (!File.Exists(templatePath))
-                throw new FileNotFoundException($"Invoice template not found at: {templatePath}");
+                throw new FileNotFoundException("Invoice template not found at: " + templatePath);
 
-            // Render HTML (EmailService.Render expects template + model)
+
             string html = _email_service.Render(templatePath, model);
 
-            // -----------------------
-            // Generate PDF
-            // -----------------------
+           
             return _pdfService.GeneratePdf(
                 DocumentType.Invoice,
                 html,
@@ -169,15 +160,11 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
             );
         }
 
-        // -----------------------
-        // Helper: Convert dynamic to case-insensitive dictionary safely
-        // -----------------------
         private static IDictionary<string, object> ToCaseInsensitiveDictionary(dynamic dyn)
         {
             var dict = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
             if (dyn == null) return dict;
 
-            // If it's an Expando or dictionary
             if (dyn is IDictionary<string, object> expando)
             {
                 foreach (var kv in expando)
@@ -185,7 +172,7 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
                 return dict;
             }
 
-            // For Dapper's dynamic objects (anonymous objects), use reflection safely
+            
             var props = dyn.GetType().GetProperties();
             foreach (var prop in props)
             {
@@ -196,7 +183,7 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
                 }
                 catch
                 {
-                    // ignore properties that can't be read for any reason
+                    
                     dict[prop.Name] = "";
                 }
             }
@@ -204,9 +191,7 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
             return dict;
         }
 
-        // -----------------------
-        // Helper: safe get string from dictionary
-        // -----------------------
+        
         private static string SafeGet(IDictionary<string, object> dict, string key)
         {
             if (dict == null) return string.Empty;

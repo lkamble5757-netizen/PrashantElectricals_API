@@ -103,7 +103,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
 
                 var tableItem = new DataTable();
                 
-                        if (entity.ItemDetails != null && entity.ItemDetails.Any())
+                        if (entity.Items != null && entity.Items.Any())
                         {
                            
                             tableItem.Columns.Add("Id", typeof(int));
@@ -116,7 +116,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                             tableItem.Columns.Add("CreatedBy", typeof(int));
                             tableItem.Columns.Add("CreatedOn", typeof(DateTime));
 
-                            foreach (var item in entity.ItemDetails)
+                            foreach (var item in entity.Items)
                             {
                                 
                                 tableItem.Rows.Add(
@@ -223,7 +223,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
 
        
                   
-                    if (entity.ItemDetails != null && entity.ItemDetails.Any())
+                    if (entity.Items != null && entity.Items.Any())
                     {
                         var tableItem = new DataTable();
                         tableItem.Columns.Add("Id", typeof(int));
@@ -236,7 +236,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
                         tableItem.Columns.Add("ModifiedBy", typeof(int));
                         tableItem.Columns.Add("ModifiedOn", typeof(DateTime));
 
-                        foreach (var item in entity.ItemDetails)
+                        foreach (var item in entity.Items)
                         {
                             tableItem.Rows.Add(
                                 item.Id,
