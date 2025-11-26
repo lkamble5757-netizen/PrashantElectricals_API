@@ -310,7 +310,7 @@ namespace PrashantApi.Infrastructure.Repositories.InvoiceMaster
             
                     var items = (await multi.ReadAsync<dynamic>()).ToList();
 
-                    master.ItemDetails = items;
+                    master.Items = items;
 
                     return master;
                 }
