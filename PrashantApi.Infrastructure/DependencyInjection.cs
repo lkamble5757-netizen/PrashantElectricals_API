@@ -101,6 +101,8 @@ public static class DependencyInjection
         services.AddScoped<IInvoiceMasterRepository, InvoiceMasterRepository>();
         services.AddScoped<IChallanMasterRepository, ChallanMasterRepository>();
         services.AddScoped<IDashboardRepository, DashboardRepository>();
+        services.AddScoped<IReportRepository, ReportRepository>();
+
 
         //services.AddScoped<ILedgerMasterRepository, LedgerMasterRepository>();
 
