@@ -137,5 +137,10 @@ public static class InvoiceMaster
             public const string GetTop5Customers = "dbo.usp_GetTop5CustomerMonthlyRevenue";
         }
 
+        public static class Report
+        {
+            public const string GetReport = "dbo.usp_GetAllReport";
+        }
+
     }
 }
