@@ -60,5 +60,18 @@ namespace PrashantApi.Api.Controllers
 
             return Ok(machine);
         }
+
+
+        [HttpPost("UploadExcel")]
+        public async Task<ActionResult<CommandResult>> ImportExcel(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest(CommandResult.Fail("Please upload a valid Excel file"));
+
+            var command = new ImportMachineMasterExcelCommand  {  File = file };
+
+            var result = await _mediator.Send(command);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
     }
 }
