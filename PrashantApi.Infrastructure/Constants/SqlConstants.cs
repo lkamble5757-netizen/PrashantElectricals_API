@@ -53,6 +53,7 @@
             public const string MachineMasterr = "dbo.usp_SaveMachineMaster";
             public const string GetAllMachineMaster = "dbo.usp_GetAllMachines";
             public const string GetMachineMasterById = "dbo.usp_GetMachineById";
+            public const string ImportExcel = "dbo.usp_BulkInsertMachineMaster";
         }
 
 

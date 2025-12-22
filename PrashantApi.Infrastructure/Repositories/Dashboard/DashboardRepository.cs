@@ -146,7 +146,7 @@ namespace PrashantApi.Infrastructure.Repositories.Dashboard
             response.OrderDistribution = topCustomers.Select(t => new OrderDistributionDto
             {
                 Label = t.CustName ?? $"Customer {t.Id}",
-                Value = (decimal)t.CurrentMonthRevenue
+                Value = (decimal)t.TotalRevenue
             }).ToList();
 
             return response;

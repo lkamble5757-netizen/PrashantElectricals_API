@@ -129,6 +129,81 @@ namespace PrashantApi.Infrastructure.Repositories.MachineMaster
 
             return result;
         }
+
+ 
+
+        public async Task<CommandResult> BulkInsertAsync(List<MachineMasterModel> machines)
+        {
+            if (machines == null || machines.Count == 0)
+                return CommandResult.Fail("No machine data to insert.");
+
+            using var connection = _dbConnectionString.GetConnection();
+
+            try
+            {
+                var table = new DataTable();
+                table.Columns.Add("BrandName", typeof(string));
+                table.Columns.Add("HpKw", typeof(int));
+                table.Columns.Add("Slot", typeof(int));
+                table.Columns.Add("RPM", typeof(int));
+                table.Columns.Add("Pitch", typeof(string));
+                table.Columns.Add("Gauge", typeof(string));
+                table.Columns.Add("AlterGauge", typeof(string));
+                table.Columns.Add("Turn", typeof(int));
+                table.Columns.Add("CoilMeasurement", typeof(string));
+                table.Columns.Add("WindingType", typeof(int));
+                table.Columns.Add("ConnectionType", typeof(string));
+                table.Columns.Add("StatorLobby", typeof(string));
+                table.Columns.Add("CoilGroupWeight", typeof(decimal));
+                table.Columns.Add("TotalWireWeight", typeof(decimal));
+                table.Columns.Add("PhaseSize", typeof(string));
+                table.Columns.Add("Amperes", typeof(decimal));
+                table.Columns.Add("WindingDate", typeof(DateTime));
+                table.Columns.Add("GpDc", typeof(string));
+                table.Columns.Add("CreatedBy", typeof(int));
+
+                foreach (var m in machines)
+                {
+                    table.Rows.Add(
+                        m.BrandName,
+                        m.HpKw,
+                        m.Slot,
+                        m.RPM,
+                        m.Pitch,
+                        m.Gauge,
+                        m.AlterGauge,
+                        m.Turn,
+                        m.CoilMeasurement,
+                        m.WindingType,
+                        m.ConnectionType,
+                        m.StatorLobby,
+                        m.CoilGroupWeight,
+                        m.TotalWireWeight,
+                        m.PhaseSize,
+                        m.Amperes,
+                        m.WindingDate,
+                        m.GpDc,
+                        m.CreatedBy
+                    );
+                }
+
+                var parameters = new DynamicParameters();
+                parameters.Add( "@MachineMaster",  table.AsTableValuedParameter("dbo.MachineMasterT"));
+
+                await connection.ExecuteAsync(
+                     SqlConstants.MachineMaster.ImportExcel,
+                    parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return CommandResult.SuccessWithOutput("Machines imported successfully");
+            }
+            catch (Exception ex)
+            {
+                return CommandResult.Fail(ex.Message);
+            }
+        }
+
     }
 }
 

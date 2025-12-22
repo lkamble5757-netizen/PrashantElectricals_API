@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
 {
@@ -69,7 +70,7 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
 
             var invoiceDetails = new List<object>();
             int srNo = 1;
-            decimal grandTotal = 0m;
+            int ItemQTotal = 0;
 
             foreach (var row in detailsDyn)
             {
@@ -83,12 +84,8 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
                 int.TryParse(SafeGet(d, "ItemQty"), out int itemQty);
                 decimal.TryParse(SafeGet(d, "PricePerItem"), out decimal pricePerItem);
                 decimal.TryParse(SafeGet(d, "ItemTotal"), out decimal itemTotal);
-                decimal.TryParse(SafeGet(d, "LabourCharges"), out decimal labourCharges);
-                decimal.TryParse(SafeGet(d, "RepairTotal"), out decimal repairTotal);
-
-               
-                decimal lineTotal = itemTotal + labourCharges + repairTotal;
-                grandTotal += lineTotal;
+                
+                ItemQTotal = ItemQTotal + itemQty;
 
                 invoiceDetails.Add(new
                 {
@@ -100,8 +97,6 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
                     PricePerItem = pricePerItem.ToString("0.00"),
                     TaxableValue = 0,
                     ItemTotal = itemTotal.ToString("0.00"),
-                    LabourCharges = labourCharges.ToString("0.00"),
-                    RepairTotal = repairTotal.ToString("0.00")
                 });
             }
 
@@ -115,8 +110,8 @@ namespace PrashantApi.Application.Feature.InvoiceMaster.Queries
                 CustomerAddress = string.IsNullOrWhiteSpace(customerAddress) ? "" : customerAddress,
 
 
-                InvoiceDetails = invoiceDetails,               
-                GrandTotal = grandTotal.ToString("0.00"),
+                InvoiceDetails = invoiceDetails,
+                ItemQTotal = ItemQTotal.ToString("0.00"),
 
                 GstPercent = gstPercent.ToString("0.##"),
                 GstAmount = gstAmount.ToString("0.00"),

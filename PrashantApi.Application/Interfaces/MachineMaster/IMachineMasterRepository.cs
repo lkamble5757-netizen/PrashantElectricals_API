@@ -14,5 +14,6 @@ namespace PrashantApi.Application.Interfaces.MachineMaster
         Task<CommandResult> UpdateAsync(MachineMasterModel entity);
         Task<dynamic> GetAllAsync();
         Task<dynamic> GetByIdAsync(int id);
+        Task<CommandResult> BulkInsertAsync(List<MachineMasterModel> machines);
     }
 }
