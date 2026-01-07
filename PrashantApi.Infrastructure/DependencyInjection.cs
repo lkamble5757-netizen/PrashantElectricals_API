@@ -57,6 +57,11 @@ using PrashantEle.API.PrashantEle.Infrastructure.Connection;
 using System.Data;
 using System.Reflection;
 using System.Security.Claims;
+using PrashantApi.Application.Services;
+using PrashantApi.Application.Interfaces.PurchaseOrder;
+using PrashantApi.Infrastructure.Repositories.PurchaseOrder;
+using PrashantApi.Application.Interfaces.StockUpdateMaster;
+using PrashantApi.Infrastructure.Repositories.StockUpdateMaster;
 
 
 namespace PrashantApi.Infrastructure;
@@ -102,6 +107,8 @@ public static class DependencyInjection
         services.AddScoped<IChallanMasterRepository, ChallanMasterRepository>();
         services.AddScoped<IDashboardRepository, DashboardRepository>();
         services.AddScoped<IReportRepository, ReportRepository>();
+        services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>(); 
+        services.AddScoped<IStockUpdateRepository, StockUpdateRepository>();
 
 
         //services.AddScoped<ILedgerMasterRepository, LedgerMasterRepository>();

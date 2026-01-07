@@ -25,6 +25,7 @@ namespace PrashantApi.Domain.Entities.ItemMaster
         public bool IsActive { get; set; }
         //public int LedgerId { get; set; }
         public required string HsnNo { get; set; }
+        public int AvailableStock { get; set; }
     }
 }
 
