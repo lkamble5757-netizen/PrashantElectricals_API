@@ -143,5 +143,22 @@ public static class InvoiceMaster
             public const string GetReport = "dbo.usp_GetAllReport";
         }
 
+
+        public static class PurchaseOrder
+        {
+            public const string SavePurchaseOrderMaster = "dbo.usp_SavePurchaseOrderMaster";
+            public const string SavePurchaseOrderDetails = "dbo.usp_SavePurchaseOrderDetails";
+            public const string GetAllPurchaseOrders = "dbo.usp_GetAllPurchaseOrders";
+            public const string GetPurchaseOrderById = "dbo.usp_GetPurchaseOrderById";
+        }
+
+        public static class StockUpdate
+        {
+            public const string SaveStockUpdateMaster = "usp_SaveStockUpdateMaster";
+            public const string SaveStockUpdateDetails = "usp_SaveStockUpdateDetails";
+            public const string GetAllStockUpdates = "usp_GetAllStockUpdates";
+            public const string GetStockUpdateById = "usp_GetStockUpdateById";
+        }
+
     }
 }

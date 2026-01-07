@@ -40,6 +40,7 @@ namespace PrashantApi.Infrastructure.Repositories.ItemMaster
                 parameters.Add("@IsActive", entity.IsActive);
                 //parameters.Add("@LedgerId", entity.LedgerId);
                 parameters.Add("@HsnNo", entity.HsnNo);
+                parameters.Add("@AvailableStock", entity.AvailableStock);
                 parameters.Add("@mode", "INSERT");
 
                 var output = await connection.ExecuteAsync(
@@ -76,6 +77,7 @@ namespace PrashantApi.Infrastructure.Repositories.ItemMaster
                 parameters.Add("@IsActive", entity.IsActive);
                 //parameters.Add("@LedgerId", entity.LedgerId);
                 parameters.Add("@HsnNo", entity.HsnNo);
+                parameters.Add("@AvailableStock", entity.AvailableStock);
                 parameters.Add("@mode", "UPDATE");
 
                 var output = await connection.ExecuteAsync(

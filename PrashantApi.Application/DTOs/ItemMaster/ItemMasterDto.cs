@@ -23,6 +23,8 @@ namespace PrashantApi.Application.DTOs.ItemMaster
         public DateTime ModifiedOn { get; set; }
         //public int LedgerId { get; set; }
         public required string HsnNo { get; set; }
+        public int AvailableStock { get; set; }
+
     }
 }
 
