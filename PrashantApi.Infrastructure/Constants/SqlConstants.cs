@@ -160,5 +160,10 @@ public static class InvoiceMaster
             public const string GetStockUpdateById = "usp_GetStockUpdateById";
         }
 
+        public static class StockReport
+        {
+            public const string GetStockReport = "dbo.usp_GetStockReport";
+        }
+
     }
 }

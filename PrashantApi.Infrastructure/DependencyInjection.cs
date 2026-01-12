@@ -62,6 +62,8 @@ using PrashantApi.Application.Interfaces.PurchaseOrder;
 using PrashantApi.Infrastructure.Repositories.PurchaseOrder;
 using PrashantApi.Application.Interfaces.StockUpdateMaster;
 using PrashantApi.Infrastructure.Repositories.StockUpdateMaster;
+using PrashantApi.Application.Interfaces.StockReport;
+using PrashantApi.Infrastructure.Repositories.StockReport;
 
 
 namespace PrashantApi.Infrastructure;
@@ -109,6 +111,7 @@ public static class DependencyInjection
         services.AddScoped<IReportRepository, ReportRepository>();
         services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>(); 
         services.AddScoped<IStockUpdateRepository, StockUpdateRepository>();
+        services.AddScoped<IStockReportRepository, StockReportRepository>();
 
 
         //services.AddScoped<ILedgerMasterRepository, LedgerMasterRepository>();
