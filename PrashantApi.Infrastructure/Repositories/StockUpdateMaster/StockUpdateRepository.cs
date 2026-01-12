@@ -63,7 +63,7 @@ namespace PrashantApi.Infrastructure.Repositories.StockUpdateMaster
                     foreach (var item in entity.Items)
                     {
                         table.Rows.Add(
-                            item.Id,
+                            item.Id == 0 ? DBNull.Value : item.Id,
                             stockUpdateId,
                             item.ItemId,
                             item.AvailableStock,
@@ -74,9 +74,11 @@ namespace PrashantApi.Infrastructure.Repositories.StockUpdateMaster
                         );
                     }
 
+                   
                     var dp = new DynamicParameters();
                     dp.Add("@StockUpdateDetails", table.AsTableValuedParameter("dbo.Type_StockUpdateDetails"));
-                    dp.Add("@Mode", "INSERT");
+                    dp.Add("@StockUpdateId", stockUpdateId);
+
 
                     await connection.ExecuteAsync(
                         SqlConstants.StockUpdate.SaveStockUpdateDetails,
@@ -144,9 +146,11 @@ namespace PrashantApi.Infrastructure.Repositories.StockUpdateMaster
                         );
                     }
 
+                    
                     var dp = new DynamicParameters();
                     dp.Add("@StockUpdateDetails", table.AsTableValuedParameter("dbo.Type_StockUpdateDetails"));
-                    dp.Add("@Mode", "UPDATE");
+                    dp.Add("@StockUpdateId", entity.Id);
+
 
                     await connection.ExecuteAsync(
                         SqlConstants.StockUpdate.SaveStockUpdateDetails,
