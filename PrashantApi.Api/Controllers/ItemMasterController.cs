@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using PrashantApi.Application.DTOs.ItemMaster;
 using PrashantApi.Application.Feature.BranchMaster.Commands;
 using PrashantApi.Application.Feature.ItemMaster.Commands;
+using PrashantApi.Application.Feature.MachineMaster.Commands;
 using PrashantApi.Application.Interfaces;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using PrashantApi.Application.Interfaces.ItemMaster;
 using PrashantEle.API.PrashantEle.Application.Common;
 using PrashantEle.API.PrashantEle.Infrastructure.Constants;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PrashantApi.Api.Controllers
 {
@@ -65,5 +66,20 @@ namespace PrashantApi.Api.Controllers
 
             return Ok(item);
         }
+
+        // ★ CHANGE
+        [HttpPost("UploadExcel")]
+        public async Task<ActionResult<CommandResult>> ImportExcel(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest(CommandResult.Fail("Please upload a valid Excel file"));
+
+            var command = new ImportItemMasterExcelCommand { File = file };
+
+            var result = await _mediator.Send(command);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+        // ★ CHANGE END
+
     }
 }
