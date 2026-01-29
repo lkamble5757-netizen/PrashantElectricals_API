@@ -12,6 +12,7 @@
     <PackageReference Include="BarcodeLib" Version="3.1.5" />
     <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="DinkToPdf" Version="1.0.8" />
+    <PackageReference Include="EPPlus" Version="8.4.1" />
     <PackageReference Include="Handlebars.Net" Version="2.1.6" />
     <PackageReference Include="itext7" Version="8.0.0" />
     <PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.0" />

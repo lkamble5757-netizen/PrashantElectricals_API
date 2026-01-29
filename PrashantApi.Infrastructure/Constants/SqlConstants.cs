@@ -7,6 +7,7 @@
             public const string ItemMasterr = "dbo.usp_SaveItem";
             public const string GetAllItemMaster = "dbo.usp_GetAllItemMaster";
             public const string GetItemMasterById = "dbo.usp_GetItemMasterById";
+            public const string ImportExcel = "dbo.usp_BulkInsertItemMaster";
         }
 
         public static class UserMaster
